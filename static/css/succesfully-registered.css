@@ -31,3 +31,28 @@ body {
     margin-left: 33%;
     line-height: 17px;
 }
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.option {
+  display: block;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.5rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.option:hover {
+  background-color: #0069d9;
+}
