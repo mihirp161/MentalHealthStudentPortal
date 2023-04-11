@@ -1,0 +1,79 @@
+.login-form {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 320px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+.login-form h2 {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  line-height: 17px;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 8px;
+
+}
+
+.form-group input[type="email"]::placeholder,
+.form-group input[type="password"]::placeholder {
+  color: #aaa;
+}
+
+.form-group a {
+  font-size: 14px;
+  text-align: right;
+}
+
+.center-button {
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+}
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #0069d9;
+}
+
+p {
+  font-size: 14px;
+  text-align: center;
+}
+
+p a {
+  font-weight: 400;
+  text-decoration: underline;
+}

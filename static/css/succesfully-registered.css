@@ -1,0 +1,19 @@
+body
+{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 400;
+}
+
+h2{
+  text-align: center;
+}
+
+.text{
+    /* margin-top: 15%; */
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 2.5%;
+    margin-left: 33%;
+    line-height: 17px;
+}

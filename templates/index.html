@@ -1,0 +1,30 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="static\css\login-form.css">
+<title>Home</title>
+</head>
+    <body>
+        <main>
+              <form class="login-form">
+                <h2>Login</h2>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" placeholder="example@email.com">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" name="password" placeholder="************">
+                  <a href="#">Forgot password?</a>
+                </div>
+                <button class="center-button" type="submit">Login</button>
+                <p>Don`t have an account? <a href="{{url_for('register')}}">Create new account</a></p>
+              </form>
+        </main>
+    </body>
+</html>
+ 
