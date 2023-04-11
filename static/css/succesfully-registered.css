@@ -4,9 +4,23 @@ body
   font-size: 400;
 }
 
-h2{
-  text-align: center;
-}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 5%;
+  }
+  header {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    margin: 0;
+  }
 
 .text{
     /* margin-top: 15%; */

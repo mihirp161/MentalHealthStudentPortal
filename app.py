@@ -29,10 +29,15 @@ def register():
         print("Date of Birth:", dob)
         
         # TO DO: 
-        # Insert student and return its ID
+        # Create student obj using the variables above, insert it to your data structure
+        #  Return its ID to the variable below 
         ID = "0000001"
         return render_template('succesfully-registered.html', name = name, ID=ID)
     return render_template('register.html')
+
+@app.route('/student-home', methods=['GET'])
+def student_home():
+    return render_template('student-home.html')
 
 if __name__ == '__main__':
     app.run()
