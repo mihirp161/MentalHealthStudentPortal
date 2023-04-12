@@ -16,6 +16,7 @@ def register():
         name = request.form.get("name")
         address = request.form.get("address")
         phone = request.form.get("phone")
+        email = request.form.get("email")
         school = request.form.get("school")
         year = request.form.get("year")
         dob = request.form.get("dob")
@@ -27,11 +28,12 @@ def register():
         print("School:", school)
         print("Year:", year)
         print("Date of Birth:", dob)
-        
+
         # TO DO: 
         # Create student obj using the variables above, insert it to your data structure
         #  Return its ID to the variable below 
         ID = "0000001"
+
         return render_template('succesfully-registered.html', name = name, ID=ID)
     return render_template('register.html')
 
@@ -39,5 +41,5 @@ def register():
 def student_home():
     return render_template('student-home.html')
 
-if __name__ == '__main__':
+if __name__ == '__main__':    
     app.run()
