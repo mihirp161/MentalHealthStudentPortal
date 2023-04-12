@@ -96,3 +96,7 @@ p a {
   font-weight: 400;
   text-decoration: underline;
 }
+
+.error{
+  color: red;
+}

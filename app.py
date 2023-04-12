@@ -6,8 +6,22 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/home', methods=['GET'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        # Get the user's input email and password
+        email = request.form['email']
+        password = request.form['password']
+
+        # Check if the email and password match some stored credentials
+        if email == 'user@example.com' and password == 'password123':
+            # If the credentials are valid, redirect to the student home page
+            return render_template('student-home.html')
+        else:
+            # If the credentials are invalid, show an error message
+            error_message = 'Invalid email or password'
+            return render_template('index.html', error_message=error_message)
+
     return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
