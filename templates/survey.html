@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/css/survey.css" />
+    <title>Student Survey</title>
+  </head>
+  <body>
+    <script>
+      function validateForm()
+      {
+        // Get form values
+        const depressedMood = document.querySelector('#depressed-mood').value;
+        const depressedHopeless = document.querySelector('#depressed-hopeless').value;
+        const lossOfInterestAndEnjoyment = document.querySelector('#loss-interest-and-enjoyment').value;
+
+        // Validate form values (for example, check that required fields are not empty)
+        if (!depressedMood || !depressedHopeless || !lossOfInterestAndEnjoyment) {
+        alert('Please fill in all required fields.');
+          return false;
+        }
+        return true;
+      }
+    </script>
+    <form onsubmit= "return validateForm()" class="registration-form" id="registration-form" action='survey' method="POST">
+      <h2>Student Survey</h2>
+      
+      <div class="form-field">
+        <label for="depressed-mood">Have you been experiencing a persistently sad or down mood lately?</label>
+        <div class="radio-group">
+          <input type="radio" id="depressed-mood-yes" name="depressed-mood" value="true" required />
+          <label for="depressed-mood-yes">Yes</label>
+          <input type="radio" id="depressed-mood-no" name="depressed-mood" value="false" />
+          <label for="depressed-mood-no">No</label>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="depressed-hopeless">Have you been feeling hopeless or pessimistic about the future?</label>
+        <div class="radio-group">
+          <input type="radio" id="depressed-hopeless-yes" name="depressed-hopeless" value="true" required />
+          <label for="depressed-hopeless-yes">Yes</label>
+          <input type="radio" id="depressed-hopeless-no" name="depressed-hopeless" value="false" />
+          <label for="depressed-hopeless-no">No</label>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="loss-interest-and-enjoyment">Have you lost interest in activities that you used to enjoy?</label>
+        <div class="radio-group">
+          <input type="radio" id="loss-interest-and-enjoyment-yes" name="loss-interest-and-enjoyment" value="true" required />
+          <label for="loss-interest-and-enjoyment-yes">Yes</label>
+          <input type="radio" id="loss-interest-and-enjoyment-no" name="loss-interest-and-enjoyment" value="false" />
+          <label for="loss-interest-and-enjoyment-no">No</label>
+        </div>
+      </div>
+<!-- 
+      lossOfPleasureAndEnjoyment: Have you been unable to experience pleasure or enjoyment from activities that you used to enjoy?
+
+lessenedEnergy: Have you been feeling fatigued or lacking in energy?
+
+lessenedActive: Have you been less active or less productive than usual?
+
+reducedDecisionMaking: Have you had difficulty making decisions or solving problems?
+
+reducedConcentration: Have you had difficulty concentrating or paying attention?
+
+reducedSelfConfidence: Have you been feeling less confident in yourself or your abilities?
+
+reducedSelfEsteem: Have you been feeling worse about yourself or your worth as a person?
+
+ideasOfGuilt: Have you been experiencing feelings of guilt or worthlessness?
+
+ideasOfUnworthiness: Have you been feeling unworthy or undeserving of good things?
+
+bleakViewsOfTheFuture: Have you been having bleak or negative views of the future?
+
+pessimisticViewsOfTheFuture: Have you been feeling pessimistic or hopeless about the future?
+
+ideasOrActsOfSelfHarmOrSuicide: Have you had thoughts or engaged in acts of self-harm or suicide?
+
+disturbedSleep: Have you been experiencing disturbed sleep, such as difficulty falling asleep or frequent waking during the night?
+
+diminishedAppetite: Have you had a reduced appetite or weight loss?
+
+understandingParent: Do you feel like you have an understanding and supportive parent or caregiver?
+
+missedClasses: Have you been missing classes or work due to mental health concerns?
+
+smokeDrink: Do you smoke or drink alcohol regularly?
+
+lostRelative: Have you experienced the loss of a close relative or friend recently?
+
+relationshipTrouble: Have you been experiencing relationship difficulties or conflicts with others?
+
+plagrisedHw: Have you been struggling with academic dishonesty or plagiarism?
+
+leftJob: Have you left a job due to mental health concerns?
+
+takingMedication: Are you currently taking medication for mental health concerns?
+
+diagnosedBefore: Have you been previously diagnosed with a mental health condition? -->
+      
+      <button class="center-button" id="register-button" type="submit">Submit</button>
+      <p id="success-message"></p>
+      <span id="registration-message"></span>
+    </form>
+    <!-- <button type="button" id="back-button" style="display: none;">Back</button>
+    <script src="static/js/register.js"></script> -->
+  </body>
+</html>

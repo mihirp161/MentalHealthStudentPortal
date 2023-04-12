@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
+# TO DO
+# Read and store the datasets in a variable to be used by the application below
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -44,8 +47,8 @@ def register():
         print("Date of Birth:", dob)
 
         # TO DO: 
-        # Create student obj using the variables above, insert it to your data structure
-        #  Return its ID to the variable below 
+        # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
+        # Return its ID to the variable below 
         ID = "0000001"
 
         return render_template('succesfully-registered.html', name = name, ID=ID)
@@ -54,6 +57,25 @@ def register():
 @app.route('/student-home', methods=['GET'])
 def student_home():
     return render_template('student-home.html')
+
+
+@app.route('/survey', methods=['GET', 'POST'])
+def survey():
+    if request.method == "POST":
+        isDepressed = request.form.get("is-feeling-depressed")
+        hasPreviousDiagnostic = request.form.get("previous-diagnostic")
+
+        #To-DO store the data in a database or file
+
+        print(isDepressed, flush=True)
+        print("Has Previous Diagnostic?", hasPreviousDiagnostic)
+        # TO DO: 
+        # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
+        # Return its ID to the variable below 
+        ID = "0000001"
+
+        return render_template('succesfully-registered.html', name = isDepressed, ID=ID)
+    return render_template('survey.html')
 
 if __name__ == '__main__':    
     app.run()
