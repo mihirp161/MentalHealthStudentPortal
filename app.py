@@ -15,17 +15,29 @@ def home():
         # Get the user's input email and password
         email = request.form['email']
         password = request.form['password']
+        userType = request.form['user-type']
 
-        # Check if the email and password match some stored credentials
-        if email == 'user@example.com' and password == 'password123':
-            # If the credentials are valid, redirect to the student home page
-            # return render_template('student-home.html')    
-            return redirect(url_for('student_home'))        
-        else:
-            # If the credentials are invalid, show an error message
-            error_message = 'Invalid email or password'
-            return render_template('index.html', error_message=error_message)
-
+        #TO DO:
+        #If student, search in the Hash Table
+        if userType == "student":
+            # Check if the email and password match some stored credentials
+            if email == 'user@example.com' and password == 'password123':
+                # If the credentials are valid, redirect to the student home page
+                return redirect(url_for('student_home'))        
+            else:
+                # If the credentials are invalid, show an error message
+                error_message = 'Invalid email or password'
+                return render_template('index.html', error_message=error_message)
+        #If student, search in the B_Tree
+        elif userType == "employee":
+             # Check if the email and password match some stored credentials
+            if email == 'user@example.com' and password == 'password123':
+                # If the credentials are valid, redirect to the student home page
+                return redirect(url_for('student_home'))        
+            else:
+                # If the credentials are invalid, show an error message
+                error_message = 'Invalid email or password'
+                return render_template('index.html', error_message=error_message)
     return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -39,7 +51,7 @@ def register():
         year = request.form.get("year")
         dob = request.form.get("dob")
 
-        #To-DO store the data in a database or file
+        #TO DO store the data in a database or file
         print(name, flush=True)
         print("Address:", address)
         print("Phone Number:", phone)
@@ -93,7 +105,7 @@ def survey():
         takingMedication = request.form.get("taking-medication")
         diagnosedBefore = request.form.get("diagnosed-before")
 
-        #To-DO store the data in a database or file
+        #To DO store the data in a database or file
         print("depressedMood: ", depressedMood)
         print("depressedHopeless: ", depressedHopeless)
         print("lossOfInterestAndEnjoyment: ", lossOfInterestAndEnjoyment)
@@ -136,6 +148,8 @@ def account_deleted():
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
+    #TO DO:
+    #Query the variable to get the following info
     name = "First Last"
     address = "Gainesville, FL 32611"
     phone = "012-345-6789"

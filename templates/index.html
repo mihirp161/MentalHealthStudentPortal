@@ -19,6 +19,13 @@
                 <p class="error">{{ error_message }}</p>
                 {% endif %}
                 <div class="form-group">
+                  <label for="user-type">Are you a Student or an Employee?</label>
+                  <select id="user-type" name="user-type">
+                    <option value="student">Student</option>
+                    <option value="employee">Employee</option>
+                  </select>
+                </div>
+                <div class="form-group">
                   <label for="email">Email</label>
                   <input type="email" id="email" name="email" placeholder="example@email.com">
                 </div>
