@@ -333,3 +333,27 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    
+''''   
+# converting inputs to student key to dictionary
+import pandas as pd
+
+df = pd.DataFrame(columns=["ID", "Q1", "Q2"])
+parts = input("Enter the number of day parts:")
+
+for _ in range(1):
+    dp = input("Enter ID ")
+    st = input("Enter Q1 {}".format(dp))
+    et = input("Enter Q2 {}".format(dp))
+    df1 = pd.DataFrame(data=[[dp,st,et]],columns=["ID", "Q1", "Q2"])
+    df = pd.concat([df,df1], axis=0)
+
+df.index = range(len(df.index))
+print(df)
+
+df.set_index("ID", drop=True, inplace=True)
+dictionary = df.to_dict(orient="index")
+print(dictionary)
+''''
+    
