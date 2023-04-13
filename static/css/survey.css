@@ -4,9 +4,17 @@ body
   font-size: 16px;
 }
 .form-field {
-  margin-bottom: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
-h2 {
+h1{
+  text-align: center;
+  font-size: 32px;
+}
+
+h3{
+  color: rgb(248, 45, 45);
   text-align: center;
 }
 /* label {
@@ -29,9 +37,11 @@ input[type="date"] {
 
 .radio-group {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 1rem;
     margin-top: 0.5rem;
+
   }
   
   input[type="radio"] {
@@ -50,7 +60,7 @@ select:focus {
   outline: none;
   border-color: #007bff;
 }
-.center-button {
+/* .center-button {
   display: block;
   margin: 0 auto;
   width: 30%;
@@ -69,4 +79,37 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: #0069d9;
+} */
+.center-button {
+  display: inline-block;
+  margin: 0.5rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.center-button:hover {
+  background-color: #0069d9;
+}
+
+#update-button {
+  margin-right: 0.5rem;
+}
+
+#back-button {
+  margin-left: 0.5rem;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }

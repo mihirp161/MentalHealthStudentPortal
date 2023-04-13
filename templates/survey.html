@@ -15,18 +15,42 @@
         const depressedMood = document.querySelector('#depressed-mood').value;
         const depressedHopeless = document.querySelector('#depressed-hopeless').value;
         const lossOfInterestAndEnjoyment = document.querySelector('#loss-interest-and-enjoyment').value;
+        const lossOfPleasureAndEnjoyment = document.querySelector('#loss-pleasure-and-enjoyment').value;
+        const lessenedEnergy = document.querySelector('#fatigued-and-lack-of-energy').value;
+        const lessenedActive = document.querySelector('#less-active-and-productive').value;
+        const reducedDecisionMaking = document.querySelector('#reduced-decision-making').value;
+        const reducedConcentration = document.querySelector('#reduced-concentration').value;
+        const reducedSelfConfidence = document.querySelector('#reduced-self-confidence').value;
+
+        const reducedSelfEsteem = document.querySelector('#reduced-self-steem').value;
+        const ideasOfGuilt = document.querySelector('#ideas-of-guilt').value;
+        const ideasOfUnworthiness = document.querySelector('#ideas-of-unworthiness').value;
+        const bleakViewsOfTheFuture = document.querySelector('#bleack-views-of-the-future').value;
+        const pessimisticViewsOfTheFuture = document.querySelector('#pessimistic-views-of-the-future').value;
+        const ideasOrActsOfSelfHarmOrSuicide = document.querySelector('#ideas-or-acts-of-self-harm-or-suicide').value;
+        const disturbedSleep = document.querySelector('#disturbed-sleep').value;
+        const diminishedAppetite = document.querySelector('#diminished-apetite').value;
+        const understandingParent = document.querySelector('#understanding-parent').value;
+        const missedClasses = document.querySelector('#missed-classes').value;
+        const smokeDrink = document.querySelector('#smoke-drink').value;
+        const lostRelative = document.querySelector('#lost-relative').value;
+        const relationshipTrouble = document.querySelector('#relationship-trouble').value;
+        const plagrisedHw = document.querySelector('#plagiarized-homework').value;
+        const leftJob = document.querySelector('#left-job').value;
+        const takingMedication = document.querySelector('#taking-medication').value;
+        const diagnosedBefore = document.querySelector('#diagnosed-before').value;
 
         // Validate form values (for example, check that required fields are not empty)
-        if (!depressedMood || !depressedHopeless || !lossOfInterestAndEnjoyment) {
-        alert('Please fill in all required fields.');
-          return false;
-        }
+        // if (!depressedMood || !depressedHopeless || !lossOfInterestAndEnjoyment) {
+        // alert('Please fill in all required fields.');
+        //   return false;
+        // }
         return true;
       }
     </script>
     <form onsubmit= "return validateForm()" class="registration-form" id="registration-form" action='survey' method="POST">
-      <h2>Student Survey</h2>
-      
+      <h1>Student Survey</h1>
+      <h3>*All fields are mandatory.</h2>
       <div class="form-field">
         <label for="depressed-mood">Have you been experiencing a persistently sad or down mood lately?</label>
         <div class="radio-group">
@@ -56,58 +80,240 @@
           <label for="loss-interest-and-enjoyment-no">No</label>
         </div>
       </div>
-<!-- 
-      lossOfPleasureAndEnjoyment: Have you been unable to experience pleasure or enjoyment from activities that you used to enjoy?
 
-lessenedEnergy: Have you been feeling fatigued or lacking in energy?
+      <div class="form-field">
+        <label for="loss-pleasure-and-enjoyment">Have you been unable to experience pleasure or enjoyment from activities that you used to enjoy?</label>
+        <div class="radio-group">
+          <input type="radio" id="loss-pleasure-and-enjoyment-yes" name="loss-pleasure-and-enjoyment" value="true" required />
+          <label for="loss-pleasure-and-enjoyment-yes">Yes</label>
+          <input type="radio" id="loss-pleasure-and-enjoyment-no" name="loss-pleasure-and-enjoyment" value="false" />
+          <label for="loss-pleasure-and-enjoyment-no">No</label>
+        </div>
+      </div>
 
-lessenedActive: Have you been less active or less productive than usual?
+      <div class="form-field">
+        <label for="fatigued-and-lack-of-energy">Have you been feeling fatigued or lacking in energy?</label>
+        <div class="radio-group">
+          <input type="radio" id="fatigued-and-lack-of-energy-yes" name="fatigued-and-lack-of-energy" value="true" required />
+          <label for="fatigued-and-lack-of-energy-yes">Yes</label>
+          <input type="radio" id="fatigued-and-lack-of-energy-no" name="fatigued-and-lack-of-energy" value="false" />
+          <label for="fatigued-and-lack-of-energy-no">No</label>
+        </div>
+      </div>
 
-reducedDecisionMaking: Have you had difficulty making decisions or solving problems?
+      <div class="form-field">
+        <label for="less-active-and-productive">Have you been less active or less productive than usual?</label>
+        <div class="radio-group">
+          <input type="radio" id="less-active-and-productive-yes" name="less-active-and-productive" value="true" required />
+          <label for="less-active-and-productive-yes">Yes</label>
+          <input type="radio" id="less-active-and-productive-no" name="less-active-and-productive" value="false" />
+          <label for="less-active-and-productive">No</label>
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="reduced-decision-making"> Have you had difficulty making decisions or solving problems?</label>
+        <div class="radio-group">
+          <input type="radio" id="reduced-decision-making-yes" name="reduced-decision-making" value="true" required />
+          <label for="reduced-decision-making-yes">Yes</label>
+          <input type="radio" id="reduced-decision-making-no" name="reduced-decision-making" value="false" />
+          <label for="reduced-decision-making">No</label>
+        </div>
+      </div>
 
-reducedConcentration: Have you had difficulty concentrating or paying attention?
+      <div class="form-field">
+        <label for="reduced-concentration">Have you had difficulty concentrating or paying attention?</label>
+        <div class="radio-group">
+          <input type="radio" id="reduced-concentration-yes" name="reduced-concentration" value="true" required />
+          <label for="reduced-concentration-yes">Yes</label>
+          <input type="radio" id="reduced-concentration-no" name="reduced-concentration" value="false" />
+          <label for="reduced-concentration">No</label>
+        </div>
+      </div>
 
-reducedSelfConfidence: Have you been feeling less confident in yourself or your abilities?
+      <div class="form-field">
+        <label for="reduced-self-confidence">Have you been feeling less confident in yourself or your abilities?</label>
+        <div class="radio-group">
+          <input type="radio" id="reduced-self-confidence-yes" name="reduced-self-confidence" value="true" required />
+          <label for="reduced-self-confidence-yes">Yes</label>
+          <input type="radio" id="reduced-self-confidence-no" name="reduced-self-confidence" value="false" />
+          <label for="reduced-self-confidence">No</label>
+        </div>
+      </div>
 
-reducedSelfEsteem: Have you been feeling worse about yourself or your worth as a person?
+      <div class="form-field">
+        <label for="reduced-self-steem">Have you been feeling worse about yourself or your worth as a person?</label>
+        <div class="radio-group">
+          <input type="radio" id="reduced-self-steem-yes" name="reduced-self-steem" value="true" required />
+          <label for="reduced-self-steem-yes">Yes</label>
+          <input type="radio" id="reduced-self-steem-no" name="reduced-self-steem" value="false" />
+          <label for="reduced-self-steem">No</label>
+        </div>
+      </div>
 
-ideasOfGuilt: Have you been experiencing feelings of guilt or worthlessness?
+      <div class="form-field">
+        <label for="ideas-of-guilt">Have you been experiencing feelings of guilt or worthlessness?</label>
+        <div class="radio-group">
+          <input type="radio" id="ideas-of-guilt-yes" name="ideas-of-guilt" value="true" required />
+          <label for="ideas-of-guilt-yes">Yes</label>
+          <input type="radio" id="ideas-of-guilt-no" name="ideas-of-guilt" value="false" />
+          <label for="ideas-of-guilt">No</label>
+        </div>
+      </div>
 
-ideasOfUnworthiness: Have you been feeling unworthy or undeserving of good things?
+      <div class="form-field">
+        <label for="ideas-of-unworthiness">Have you been feeling unworthy or undeserving of good things?</label>
+        <div class="radio-group">
+          <input type="radio" id="ideas-of-unworthiness-yes" name="ideas-of-unworthiness" value="true" required />
+          <label for="ideas-of-unworthiness-yes">Yes</label>
+          <input type="radio" id="ideas-of-unworthiness-no" name="ideas-of-unworthiness" value="false" />
+          <label for="ideas-of-unworthiness">No</label>
+        </div>
+      </div>
 
-bleakViewsOfTheFuture: Have you been having bleak or negative views of the future?
+      <div class="form-field">
+        <label for="bleack-views-of-the-future">Have you been having bleak or negative views of the future?</label>
+        <div class="radio-group">
+          <input type="radio" id="bleack-views-of-the-future-yes" name="bleack-views-of-the-future" value="true" required />
+          <label for="bleack-views-of-the-future-yes">Yes</label>
+          <input type="radio" id="bleack-views-of-the-future-no" name="bleack-views-of-the-future" value="false" />
+          <label for="bleack-views-of-the-future">No</label>
+        </div>
+      </div>
 
-pessimisticViewsOfTheFuture: Have you been feeling pessimistic or hopeless about the future?
+      <div class="form-field">
+        <label for="pessimistic-views-of-the-future">Have you been feeling pessimistic or hopeless about the future?</label>
+        <div class="radio-group">
+          <input type="radio" id="pessimistic-views-of-the-future-yes" name="pessimistic-views-of-the-future" value="true" required />
+          <label for="pessimistic-views-of-the-future-yes">Yes</label>
+          <input type="radio" id="pessimistic-views-of-the-future-no" name="pessimistic-views-of-the-future" value="false" />
+          <label for="pessimistic-views-of-the-future">No</label>
+        </div>
+      </div>
 
-ideasOrActsOfSelfHarmOrSuicide: Have you had thoughts or engaged in acts of self-harm or suicide?
+      <div class="form-field">
+        <label for="ideas-or-acts-of-self-harm-or-suicide">Have you had thoughts or engaged in acts of self-harm or suicide?</label>
+        <div class="radio-group">
+          <input type="radio" id="ideas-or-acts-of-self-harm-or-suicide-yes" name="ideas-or-acts-of-self-harm-or-suicide" value="true" required />
+          <label for="ideas-or-acts-of-self-harm-or-suicide-yes">Yes</label>
+          <input type="radio" id="ideas-or-acts-of-self-harm-or-suicide-no" name="ideas-or-acts-of-self-harm-or-suicide" value="false" />
+          <label for="ideas-or-acts-of-self-harm-or-suicide">No</label>
+        </div>
+      </div>
 
-disturbedSleep: Have you been experiencing disturbed sleep, such as difficulty falling asleep or frequent waking during the night?
+      <div class="form-field">
+        <label for="disturbed-sleep">Have you been experiencing disturbed sleep, such as difficulty falling asleep or frequent waking during the night?</label>
+        <div class="radio-group">
+          <input type="radio" id="disturbed-sleep-yes" name="disturbed-sleep" value="true" required />
+          <label for="disturbed-sleep-yes">Yes</label>
+          <input type="radio" id="disturbed-sleep-no" name="disturbed-sleep" value="false" />
+          <label for="disturbed-sleep">No</label>
+        </div>
+      </div>
 
-diminishedAppetite: Have you had a reduced appetite or weight loss?
+      <div class="form-field">
+        <label for="diminished-apetite">Have you had a reduced appetite or weight loss?</label>
+        <div class="radio-group">
+          <input type="radio" id="diminished-apetite-yes" name="diminished-apetite" value="true" required />
+          <label for="diminished-apetite-yes">Yes</label>
+          <input type="radio" id="diminished-apetite-no" name="diminished-apetite" value="false" />
+          <label for="diminished-apetite">No</label>
+        </div>
+      </div>
 
-understandingParent: Do you feel like you have an understanding and supportive parent or caregiver?
+      <div class="form-field">
+        <label for="understanding-parent">Do you feel like you have an understanding and supportive parent or caregiver?</label>
+        <div class="radio-group">
+          <input type="radio" id="understanding-parent-yes" name="understanding-parent" value="true" required />
+          <label for="understanding-parent-yes">Yes</label>
+          <input type="radio" id="understanding-parent-no" name="understanding-parent" value="false" />
+          <label for="understanding-parent">No</label>
+        </div>
+      </div>
 
-missedClasses: Have you been missing classes or work due to mental health concerns?
+      <div class="form-field">
+        <label for="missed-classes">Have you been missing classes or work due to mental health concerns?</label>
+        <div class="radio-group">
+          <input type="radio" id="missed-classes-yes" name="missed-classes" value="true" required />
+          <label for="missed-classes-yes">Yes</label>
+          <input type="radio" id="missed-classes-no" name="missed-classes" value="false" />
+          <label for="missed-classes">No</label>
+        </div>
+      </div>
 
-smokeDrink: Do you smoke or drink alcohol regularly?
+      <div class="form-field">
+        <label for="smoke-drink">Do you smoke or drink alcohol regularly?</label>
+        <div class="radio-group">
+          <input type="radio" id="smoke-drink-yes" name="smoke-drink" value="true" required />
+          <label for="smoke-drink-yes">Yes</label>
+          <input type="radio" id="smoke-drink-no" name="smoke-drink" value="false" />
+          <label for="smoke-drink">No</label>
+        </div>
+      </div>
 
-lostRelative: Have you experienced the loss of a close relative or friend recently?
-
-relationshipTrouble: Have you been experiencing relationship difficulties or conflicts with others?
-
-plagrisedHw: Have you been struggling with academic dishonesty or plagiarism?
-
-leftJob: Have you left a job due to mental health concerns?
-
-takingMedication: Are you currently taking medication for mental health concerns?
-
-diagnosedBefore: Have you been previously diagnosed with a mental health condition? -->
+      <div class="form-field">
+        <label for="lost-relative">Have you experienced the loss of a close relative or friend recently?</label>
+        <div class="radio-group">
+          <input type="radio" id="lost-relative-yes" name="lost-relative" value="true" required />
+          <label for="lost-relative-yes">Yes</label>
+          <input type="radio" id="lost-relative-no" name="lost-relative" value="false" />
+          <label for="lost-relative">No</label>
+        </div>
+      </div>
       
-      <button class="center-button" id="register-button" type="submit">Submit</button>
-      <p id="success-message"></p>
+      <div class="form-field">
+        <label for="relationship-trouble">Have you been experiencing relationship difficulties or conflicts with others?</label>
+        <div class="radio-group">
+          <input type="radio" id="relationship-trouble-yes" name="relationship-trouble" value="true" required />
+          <label for="relationship-trouble-yes">Yes</label>
+          <input type="radio" id="relationship-trouble-no" name="relationship-trouble" value="false" />
+          <label for="relationship-trouble">No</label>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="plagiarized-homework">Have you been struggling with academic dishonesty or plagiarism?</label>
+        <div class="radio-group">
+          <input type="radio" id="plagiarized-homework-yes" name="plagiarized-homework" value="true" required />
+          <label for="plagiarized-homework-yes">Yes</label>
+          <input type="radio" id="plagiarized-homework-no" name="plagiarized-homework" value="false" />
+          <label for="plagiarized-homework">No</label>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="left-job">Have you left a job due to mental health concerns?</label>
+        <div class="radio-group">
+          <input type="radio" id="left-job-yes" name="left-job" value="true" required />
+          <label for="left-job-yes">Yes</label>
+          <input type="radio" id="left-job-no" name="left-job" value="false" />
+          <label for="left-job">No</label>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="taking-medication">Are you currently taking medication for mental health concerns?</label>
+        <div class="radio-group">
+          <input type="radio" id="taking-medication-yes" name="taking-medication" value="true" required />
+          <label for="taking-medication-yes">Yes</label>
+          <input type="radio" id="taking-medication-no" name="taking-medication" value="false" />
+          <label for="taking-medication">No</label>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="diagnosed-before">Have you been previously diagnosed with a mental health condition?</label>
+        <div class="radio-group">
+          <input type="radio" id="diagnosed-before-yes" name="diagnosed-before" value="true" required />
+          <label for="diagnosed-before-yes">Yes</label>
+          <input type="radio" id="diagnosed-before-no" name="diagnosed-before" value="false" />
+          <label for="diagnosed-before">No</label>
+        </div>
+      </div>
+      <div class="options">
+        <button class="center-button" id="register-button" type="submit">Submit</button>
+      </div>
+        <p id="success-message"></p>
       <span id="registration-message"></span>
     </form>
-    <!-- <button type="button" id="back-button" style="display: none;">Back</button>
-    <script src="static/js/register.js"></script> -->
   </body>
 </html>

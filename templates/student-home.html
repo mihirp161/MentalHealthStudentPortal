@@ -13,13 +13,11 @@
   <main>
     <div class="profile">
       <img src="static/images/profile-icon.png" alt="Profile picture" class="profile-pic">
-      <p class="profile-name">John Doe</p>
+      <p class="profile-name">{{ name }}</p>
     </div>
     <div class="options">
       <a href="{{url_for('survey')}}" class="option">Complete survey</a>
-      <a href="search.html" class="option">Search info</a>
-      <a href="update.html" class="option">Update Info</a>
-      <a href="delete.html" class="option">Delete Info</a>
+      <a href="{{url_for('profile')}}" class="option">Update Profile Info</a>
       <a href="{{url_for('home')}}" class="option">Logout</a>
     </div>
   </main>
