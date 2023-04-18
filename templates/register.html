@@ -11,9 +11,6 @@
     <script>
       function validateForm()
       {
-        //Prevent form from submitting
-        // event.preventDefault();
-
         // Get form values
         const name = document.querySelector('#name').value;
         const address = document.querySelector('#address').value;
@@ -21,10 +18,11 @@
         const school = document.querySelector('#school').value;
         const year = document.querySelector('#year').value;
         const dob = document.querySelector('#dob').value;
+        const password = document.querySelector('#password').value; // Get password value
 
         // Validate form values (for example, check that required fields are not empty)
-        if (!name || !address || !phone || !school || !year || !dob) {
-        alert('Please fill in all required fields.');
+        if (!name || !address || !phone || !school || !year || !dob || !password) {
+          alert('Please fill in all required fields.');
           return false;
         }
         return true;
@@ -65,6 +63,10 @@
       <div class="form-field">
         <label for="dob">Date of Birth</label>
         <input type="date" id="dob" name="dob" required />
+      </div>
+      <div class="form-field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
       </div>
       <button class="center-button" id="register-button" type="submit">
         Register

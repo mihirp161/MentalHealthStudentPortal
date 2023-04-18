@@ -13,7 +13,7 @@ def index():
 def home():
     if request.method == 'POST':
         # Get the user's input email and password
-        email = request.form['email']
+        studentID = request.form['studentID']
         password = request.form['password']
         userType = request.form['user-type']
 
@@ -21,22 +21,22 @@ def home():
         #If student, search in the Hash Table
         if userType == "student":
             # Check if the email and password match some stored credentials
-            if email == 'user@example.com' and password == 'password123':
+            if studentID == 'user@example.com' and password == 'password123':
                 # If the credentials are valid, redirect to the student home page
                 return redirect(url_for('student_home'))        
             else:
                 # If the credentials are invalid, show an error message
-                error_message = 'Invalid email or password'
+                error_message = 'Invalid StudentID or password'
                 return render_template('index.html', error_message=error_message)
         #If student, search in the B_Tree
         elif userType == "employee":
              # Check if the email and password match some stored credentials
-            if email == 'user@example.com' and password == 'password1234':
+            if studentID == 'user@example.com' and password == 'password1234':
                 # If the credentials are valid, redirect to the student home page
                 return redirect(url_for('employee_home'))        
             else:
                 # If the credentials are invalid, show an error message
-                error_message = 'Invalid email or password'
+                error_message = 'Invalid StudentID or password'
                 return render_template('index.html', error_message=error_message)
     return render_template('index.html')
 
@@ -50,6 +50,7 @@ def register():
         school = request.form.get("school")
         year = request.form.get("year")
         dob = request.form.get("dob")
+        password = request.form.get("password")
 
         #TO DO store the data in a database or file
         print(name, flush=True)
@@ -59,6 +60,7 @@ def register():
         print("School:", school)
         print("Year:", year)
         print("Date of Birth:", dob)
+        print("Password:", password)
 
         # TO DO: 
         # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
