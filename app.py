@@ -31,9 +31,9 @@ def home():
         #If student, search in the B_Tree
         elif userType == "employee":
              # Check if the email and password match some stored credentials
-            if email == 'user@example.com' and password == 'password123':
+            if email == 'user@example.com' and password == 'password1234':
                 # If the credentials are valid, redirect to the student home page
-                return redirect(url_for('student_home'))        
+                return redirect(url_for('employee_home'))        
             else:
                 # If the credentials are invalid, show an error message
                 error_message = 'Invalid email or password'
@@ -68,12 +68,45 @@ def register():
         return render_template('succesfully-registered.html', name = name, ID=ID)
     return render_template('register.html')
 
+@app.route('/register-OBO', methods=['GET', 'POST'])
+def register_OBO():
+    if request.method == "POST":
+        name = request.form.get("name")
+        address = request.form.get("address")
+        phone = request.form.get("phone")
+        email = request.form.get("email")
+        school = request.form.get("school")
+        year = request.form.get("year")
+        dob = request.form.get("dob")
+
+        #TO DO store the data in a database or file
+        print(name, flush=True)
+        print("Address:", address)
+        print("Phone Number:", phone)
+        print("Email:", email)
+        print("School:", school)
+        print("Year:", year)
+        print("Date of Birth:", dob)
+
+        # TO DO: 
+        # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
+        # Return its ID to the variable below 
+        ID = "0000001"
+
+        return render_template('succesfully-registered-obo.html', name = name, ID=ID)
+    return render_template('register-OBO.html')
+
 @app.route('/student-home', methods=['GET'])
 def student_home():
     name = "First Last"
     print(name)
     return render_template('student-home.html', name=name)
 
+@app.route('/employee-home', methods=['GET'])
+def employee_home():
+    name = "First Last"
+    print(name)
+    return render_template('employee-home.html', name=name)
 
 @app.route('/survey', methods=['GET', 'POST'])
 def survey():
