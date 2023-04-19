@@ -8,10 +8,10 @@ class BTreeNode:
 
 
 class BTree:
-    def __init__(self, t):
+    def __init__(self, order):
         self.root = BTreeNode(True)
-        #'t' is order of B Tree
-        self.t = t
+        #'order' is order of B Tree
+        self.order = order
 
     def print_tree(self, x, l=0):
         print("Level ", l, " ", len(x.keys), end=":")
@@ -57,7 +57,7 @@ class BTree:
         """
         root = self.root
         # Keys are full, hence we must split child
-        if len(root.keys) == (2 * self.t) - 1:
+        if len(root.keys) == (2 * self.order) - 1:
             temp = BTreeNode()
             self.root = temp
             # Former root becomes 0th child of new root 'temp'
@@ -85,7 +85,7 @@ class BTree:
             while i >= 0 and k[0] < x.keys[i][0]:
                 i -= 1
             i += 1
-            if len(x.child[i].keys) == (2 * self.t) - 1:
+            if len(x.child[i].keys) == (2 * self.order) - 1:
                 self._split_child(x, i)
                 if k[0] > x.keys[i][0]:
                     i += 1
@@ -98,16 +98,16 @@ class BTree:
                 x -- parent node of the node to be split
                 i -- index value of the child
         """
-        t = self.t
+        order = self.order
         y = x.child[i]
         z = BTreeNode(y.leaf)
         x.child.insert(i + 1, z)
-        x.keys.insert(i, y.keys[t - 1])
-        z.keys = y.keys[t : (2 * t) - 1]
-        y.keys = y.keys[0 : t - 1]
+        x.keys.insert(i, y.keys[order - 1])
+        z.keys = y.keys[order : (2 * order) - 1]
+        y.keys = y.keys[0 : order - 1]
         if not y.leaf:
-            z.child = y.child[t : 2 * t]
-            y.child = y.child[0 : t - 1]
+            z.child = y.child[order : 2 * order]
+            y.child = y.child[0 : order - 1]
 
     def delete(self, x, k):
         """Calls helper functions to delete key 'k' after searching from node 'x'
@@ -116,7 +116,7 @@ class BTree:
                 x -- node, according to whose relative position, helper functions are called
                 k -- key to be deleted
         """
-        t = self.t
+        order = self.order
         i = 0
         while i < len(x.keys) and k > x.keys[i][0]:
             i += 1
@@ -131,24 +131,24 @@ class BTree:
         if i < len(x.keys) and x.keys[i][0] == k:
             return self._delete_internal_node(x, k, i)
         # Recursively calling 'delete' on x's child
-        elif len(x.child[i].keys) >= t:
+        elif len(x.child[i].keys) >= order:
             self.delete(x.child[i], k)
-        # Ensuring that a child always has atleast 't' keys
+        # Ensuring that a child always has atleast 'order' keys
         else:
             if i != 0 and i + 2 < len(x.child):
-                if len(x.child[i - 1].keys) >= t:
+                if len(x.child[i - 1].keys) >= order:
                     self._delete_sibling(x, i, i - 1)
-                elif len(x.child[i + 1].keys) >= t:
+                elif len(x.child[i + 1].keys) >= order:
                     self._delete_sibling(x, i, i + 1)
                 else:
                     self._del_merge(x, i, i + 1)
             elif i == 0:
-                if len(x.child[i + 1].keys) >= t:
+                if len(x.child[i + 1].keys) >= order:
                     self._delete_sibling(x, i, i + 1)
                 else:
                     self._del_merge(x, i, i + 1)
             elif i + 1 == len(x.child):
-                if len(x.child[i - 1].keys) >= t:
+                if len(x.child[i - 1].keys) >= order:
                     self._delete_sibling(x, i, i - 1)
                 else:
                     self._del_merge(x, i, i - 1)
@@ -163,7 +163,7 @@ class BTree:
                 i -- index position of key in the list
 
         """
-        t = self.t
+        order = self.order
         # Deleting the key if the node is a leaf
         if x.leaf:
             if x.keys[i][0] == k[0]:
@@ -172,17 +172,17 @@ class BTree:
             return
 
         # Replacing the key with its predecessor and deleting predecessor
-        if len(x.child[i].keys) >= t:
+        if len(x.child[i].keys) >= order:
             x.keys[i] = self._delete_predecessor(x.child[i])
             return
         # Replacing the key with its successor and deleting successor
-        elif len(x.child[i + 1].keys) >= t:
+        elif len(x.child[i + 1].keys) >= order:
             x.keys[i] = self._delete_successor(x.child[i + 1])
             return
         # Merging the child, its left sibling and the key 'k'
         else:
             self._del_merge(x, i, i + 1)
-            self._delete_internal_node(x.child[i], k, self.t - 1)
+            self._delete_internal_node(x.child[i], k, self.order - 1)
 
     def _delete_predecessor(self, x):
         """Returns and deletes predecessor of key 'k' which is to be deleted
@@ -193,7 +193,7 @@ class BTree:
         if x.leaf:
             return x.pop()
         n = len(x.keys) - 1
-        if len(x.child[n].keys) >= self.t:
+        if len(x.child[n].keys) >= self.order:
             self._delete_sibling(x, n + 1, n)
         else:
             self._del_merge(x, n, n + 1)
@@ -207,7 +207,7 @@ class BTree:
         """
         if x.leaf:
             return x.keys.pop(0)
-        if len(x.child[1].keys) >= self.t:
+        if len(x.child[1].keys) >= self.order:
             self._delete_sibling(x, 0, 1)
         else:
             self._del_merge(x, 0, 1)
@@ -324,7 +324,7 @@ def main():
                     if x.keys[j][2] == place:
                         print("Pin:", x.keys[j][1])
             else:
-                print("studentID doesn't exist!")
+                print("studentID doesn'order exist!")
         elif c == 4:
             B.print_tree(B.root)
         else:
