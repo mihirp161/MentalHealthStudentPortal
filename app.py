@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 
+import time
 app = Flask(__name__)
 
 # TO DO
@@ -12,7 +13,7 @@ def index():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        # Get the user's input email and password
+        # Get the user's input StudentID and password
         studentID = request.form['studentID']
         password = request.form['password']
         userType = request.form['user-type']
@@ -20,7 +21,7 @@ def home():
         #TO DO:
         #If student, search in the Hash Table
         if userType == "student":
-            # Check if the email and password match some stored credentials
+            # Check if the StudentID and password match some stored credentials
             if studentID == 'user@example.com' and password == 'password123':
                 # If the credentials are valid, redirect to the student home page
                 return redirect(url_for('student_home'))        
@@ -30,7 +31,7 @@ def home():
                 return render_template('index.html', error_message=error_message)
         #If student, search in the B_Tree
         elif userType == "employee":
-             # Check if the email and password match some stored credentials
+             # Check if the StudentID and password match some stored credentials
             if studentID == 'user@example.com' and password == 'password1234':
                 # If the credentials are valid, redirect to the student home page
                 return redirect(url_for('employee_home'))        
@@ -100,6 +101,7 @@ def register_OBO():
 
 @app.route('/student-home', methods=['GET'])
 def student_home():
+    #TO DO GET FIRST AND LAST NAME
     name = "First Last"
     print(name)
     return render_template('student-home.html', name=name)
@@ -107,6 +109,7 @@ def student_home():
 @app.route('/employee-home', methods=['GET'])
 def employee_home():
     name = "First Last"
+
     print(name)
     return render_template('employee-home.html', name=name)
 
@@ -168,9 +171,6 @@ def survey():
         print("takingMedication: ", takingMedication)
         print("diagnosedBefore: ", diagnosedBefore)
         # TO DO: 
-        # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
-        # Return its ID to the variable below 
-        ID = "0000001"
 
         name = "student name"
 
@@ -185,6 +185,7 @@ def account_deleted():
 def profile():
     #TO DO:
     #Query the variable to get the following info
+    #name = search student ID get their name
     name = "First Last"
     address = "Gainesville, FL 32611"
     phone = "012-345-6789"
@@ -199,6 +200,8 @@ def profile():
         if action == 'update':
             # handle update action
             print("update")
+            #name = search student ID get their name
+            #update value on dataset
             address = request.form.get("address")
             phone = request.form.get("phone")
             year = request.form.get("year")
@@ -215,6 +218,63 @@ def profile():
         elif action == 'back':
             return redirect(url_for('student_home'))        
     return render_template('profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID)
+
+@app.route('/update-student-profile', methods=['GET', 'POST'])
+def update_student_profile():
+    #TO DO:
+    #Query the variable to get the following info
+    #name = search student ID get their name
+    student_id = request.args.get('student_info')
+    ID = student_id
+    name = "First Last"
+    address = "Gainesville, FL 32611"
+    phone = "012-345-6789"
+    email = "email@ufl.edu"
+    school = "University Of Florida"
+    year = "Freshman"
+    dob = "2000-01-01" #Must be in this format!!
+    ID = "0000001"
+    urgencyLevel = 0.01
+    if request.method == 'POST':
+        action = request.form['action']
+        if action == 'update':
+            # handle update action
+            print("update")
+            #name = search student ID get their name
+            #update value on dataset
+
+            address = request.form.get("address")
+            phone = request.form.get("phone")
+            year = request.form.get("year")
+            
+            #TO DO:
+            # Update user profile
+            return render_template('update-student-profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID, urgencyLevel=urgencyLevel)    
+
+        elif action == 'delete':
+            #TO DO:
+            # Delete user profile
+            print("delete")
+            return render_template('account-deleted.html')
+        elif action == 'back':
+            return redirect(url_for('employee_home'))        
+    return render_template('update-student-profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID, urgencyLevel=urgencyLevel)
+
+@app.route('/search-student', methods=['GET', 'POST'])
+def search_student():
+    # Get the student ID from the form
+    if request.method == 'POST':
+        
+        student_id = request.form['student-id']
+        #TO DO Search Student    
+        #If found:
+        if student_id == "0000001":
+            return redirect(url_for('update_student_profile', student_id=student_id))
+        #If not found
+        else:
+            error_message = 'Invalid StudentID: ' + student_id
+            return render_template('search-student.html', error_message=error_message)
+    return render_template('search-student.html')
 
 if __name__ == '__main__':    
     app.run()

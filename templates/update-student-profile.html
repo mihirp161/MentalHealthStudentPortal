@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="static/css/profile.css" />
-    <title>Profile</title>
+    <title>Update Profile OBO Student</title>
   </head>
   <body>
-    <form class="update-profile-form" id="update-profile-form" action='profile' method="POST">
-      <h2>Profile Info</h2>
+    <form class="update-profile-form" id="update-profile-form" action='update-student-profile' method="POST">
+      <h2>Update Profile OBO Student</h2>
       <div class="form-field">
         <label for="name">Full Name</label>
         <input type="text" id="name" name="name" placeholder="{{name}}" disabled />
@@ -43,6 +43,10 @@
       <div class="form-field">
         <label for="dob">Date of Birth</label>
         <input type="date" id="dob" name="dob" value="{{dob}}" disabled />
+      </div>
+      <div class="form-field">
+        <label for="urgency-level">Urgency Level</label>
+        <input type="text" id="urgency-level" name="urgency-level" value="{{urgencyLevel}}" disabled />
       </div>
     <div class="options">
         <button class="center-button" id="update-button" type="submit" name="action" value="update">Update Profile</button>
