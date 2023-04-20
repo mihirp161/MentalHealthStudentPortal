@@ -6,6 +6,10 @@ app = Flask(__name__)
 # TO DO
 # Read and store the datasets in a variable to be used by the application below
 
+#Hash Table
+
+#B-Tree need to store Student ID created by Hash Function
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -13,15 +17,16 @@ def index():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        # Get the user's input StudentID and password
+        # Gets the user's input StudentID and password
         studentID = request.form['studentID']
         password = request.form['password']
         userType = request.form['user-type']
 
         #TO DO:
-        #If student, search in the Hash Table
+        #If student, go to the Hash Table
         if userType == "student":
-            # Check if the StudentID and password match some stored credentials
+            #Check if the StudentID and password match some stored credentials
+            #Check if Student ID exist, if it does, check if the password matches (line 30)
             if studentID == 'user@example.com' and password == 'password123':
                 # If the credentials are valid, redirect to the student home page
                 return redirect(url_for('student_home'))        
@@ -29,9 +34,9 @@ def home():
                 # If the credentials are invalid, show an error message
                 error_message = 'Invalid StudentID or password'
                 return render_template('index.html', error_message=error_message)
-        #If student, search in the B_Tree
+        #If employee, go to the B_Tree
         elif userType == "employee":
-             # Check if the StudentID and password match some stored credentials
+            #Check if Student ID exist, if it does, check if the password matches(line 40)
             if studentID == 'user@example.com' and password == 'password1234':
                 # If the credentials are valid, redirect to the student home page
                 return redirect(url_for('employee_home'))        
@@ -53,7 +58,7 @@ def register():
         dob = request.form.get("dob")
         password = request.form.get("password")
 
-        #TO DO store the data in a database or file
+        #TO DO store the data in the B Tree and Hash Table
         print(name, flush=True)
         print("Address:", address)
         print("Phone Number:", phone)
@@ -82,7 +87,7 @@ def register_OBO():
         year = request.form.get("year")
         dob = request.form.get("dob")
 
-        #TO DO store the data in a database or file
+        #TO DO store the data in the B Tree and Hash Table
         print(name, flush=True)
         print("Address:", address)
         print("Phone Number:", phone)
@@ -101,13 +106,14 @@ def register_OBO():
 
 @app.route('/student-home', methods=['GET'])
 def student_home():
-    #TO DO GET FIRST AND LAST NAME
+    #TO DO GET FIRST AND LAST NAME from the Hash Table according to the student ID
     name = "First Last"
     print(name)
     return render_template('student-home.html', name=name)
 
 @app.route('/employee-home', methods=['GET'])
 def employee_home():
+    #TO DO GET FIRST AND LAST NAME from the B Tree according to the student ID
     name = "First Last"
 
     print(name)
@@ -143,7 +149,7 @@ def survey():
         takingMedication = request.form.get("taking-medication")
         diagnosedBefore = request.form.get("diagnosed-before")
 
-        #To DO store the data in a database or file
+        #To DO store the data in the B Tree and Hash Table
         print("depressedMood: ", depressedMood)
         print("depressedHopeless: ", depressedHopeless)
         print("lossOfInterestAndEnjoyment: ", lossOfInterestAndEnjoyment)
@@ -170,8 +176,9 @@ def survey():
         print("leftJob: ", leftJob)
         print("takingMedication: ", takingMedication)
         print("diagnosedBefore: ", diagnosedBefore)
-        # TO DO: 
 
+        # TO DO: 
+        #Return student name and ID
         name = "student name"
 
         return render_template('survey-submitted.html', name = name, ID=ID)
@@ -184,7 +191,8 @@ def account_deleted():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     #TO DO:
-    #Query the variable to get the following info
+    ID = "0000001"
+    #Query the variable based on the ID to get the following info
     #name = search student ID get their name
     name = "First Last"
     address = "Gainesville, FL 32611"
@@ -193,7 +201,7 @@ def profile():
     school = "University Of Florida"
     year = "Freshman"
     dob = "2000-01-01" #Must be in this format!!
-    ID = "0000001"
+    
 
     if request.method == 'POST':
         action = request.form['action']

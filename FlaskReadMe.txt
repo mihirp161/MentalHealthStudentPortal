@@ -33,3 +33,23 @@ duration = end_time - start_time
 print("Duration: {:.5f} seconds".format(duration))
 ************************************************
 
+********************************************
+Please note this lines that need your input
+
+line 6-10
+line 25
+line 28-29
+line 37
+line 39
+Line 61
+Line 71-73
+Line 90
+Line 99-101
+Line 109 (Review this, Ricardo)
+Line 116 (Review this, Ricardo)
+Line 152-182
+Line 193-196 (Review this, Ricardo)
+
+... Adding more soon
+
+********************************************
