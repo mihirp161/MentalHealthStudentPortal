@@ -1,4 +1,5 @@
 import re
+import pandas as pd
 
 class BTreeNode:
     def __init__(self, leaf=False):
@@ -285,14 +286,68 @@ class BTree:
 
 def main():
 
-    B = BTree(154757)
-    print("==========Loading==========")
-    dict = {
-        "744301": {'Name': 'John', 'Age': '27', 'Sex': 'Male'},
-        "744302": {'Name': 'Marie', 'Age': '22', 'Sex': 'Female'}
-    }
+    B = BTree(500)
+    print("==========Loading==========") #remove after done
+    df = pd.DataFrame(columns=["studentName",
+                                "studentPhone",
+                                "studentEmail",
+                                "studentAddress",
+                                "studentIds",
+                                "studentVisitDateTime",
+                                "studentSexualOrientation",
+                                "studentAgeGroup",
+                                "studentRace",
+                                "studentDOB",
+                                "studentAreaOfInterest",
+                                "studentInstitutionName",
+                                "studentAcademicLevel",
+                                "studentGPA",
+                                "studentMaritalStatus",
+                                "studentHousingCondition",
+                                "studentFamilySize",
+                                "studentParentalMaritalStatus",
+                                "studentEducationOfMother",
+                                "studentEducationOfFather",
+                                "employeesId",
+                                "employeesName",
+                                "depressedMood",
+                                "depressedHopeless",
+                                "lossOfInterestAndEnjoyment",
+                                "lossOfPleasureAndEnjoyment",
+                                "lessenedEnergy",
+                                "lessenedActive",
+                                "reducedDecisionMaking",
+                                "reducedConcentration",
+                                "reducedSelfConfidence",
+                                "reducedSelfEsteem",
+                                "ideasOfGuilt",
+                                "ideasOfUnworthiness",
+                                "bleakViewsOfTheFuture",
+                                "pessimisticViewsOfTheFuture",
+                                "ideasOrActsOfSelfHarmOrSuicide",
+                                "disturbedSleep",
+                                "diminishedAppetite",
+                                "understandingParent",
+                                "missedClasses",
+                                "smokeDrink",
+                                "lostRelative",
+                                "relationshipTrouble",
+                                "plagrisedHw",
+                                "leftJob",
+                                "takingMedication",
+                                "diagonsedBefore",
+                                "urgencyLevel"])
+    
+    df = pd.read_excel('C:/Users/ThinkPad/Downloads/fake_mentalHealth_data.xlsx')
+    df.index = range(len(df.index))
+    print(df)
+    
+    df.set_index("studentIds", drop=True, inplace=True)
+    dict = df.to_dict(orient="index")
+    
     for p_id, p_info in dict.items():
-        B.insert((hash(p_id), int(p_id), p_info))
+        B.insert((hash(p_id), p_id, p_info))
+        
     print("==========Loaded==========")
 
 
@@ -302,7 +357,7 @@ def main():
         print("1) Insert new dict info and studentID")
         print("2) Delete")
         print("3) Search by studentID")
-        print("4) Print the B-Tree")
+        print("4) XX--Print the B-Tree--XX")
         print("0) Exit")
         c = int(input())
 
@@ -324,9 +379,9 @@ def main():
                     if x.keys[j][2] == place:
                         print("Pin:", x.keys[j][1])
             else:
-                print("studentID doesn'order exist!")
-        elif c == 4:
-            B.print_tree(B.root)
+                print("studentID doesn't exist!")
+        #elif c == 4:
+         #   B.print_tree(B.root)
         else:
             break
 
@@ -335,7 +390,7 @@ if __name__ == "__main__":
     main()
 
     
-''''   
+'''  
 # converting inputs to student key to dictionary
 import pandas as pd
 
@@ -355,5 +410,4 @@ print(df)
 df.set_index("ID", drop=True, inplace=True)
 dictionary = df.to_dict(orient="index")
 print(dictionary)
-''''
-    
+'''
