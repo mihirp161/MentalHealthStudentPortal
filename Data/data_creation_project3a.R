@@ -14,33 +14,33 @@ phone_many <- generator::r_phone_numbers(1000000, use_hyphens = TRUE)
 phone <- sample(phone_many[!duplicated(phone_many)],size = 100000) 
 
 email <- paste0(gsub("[[:punct:]]", "", paste0(tolower(gsub("^(.*?),.*", "\\1", name)),
-                tolower(strtrim(sub('.*,\\s*', '', name), 1)))), "@datadocs.com")
+                                               tolower(strtrim(sub('.*,\\s*', '', name), 1)))), "@datadocs.com")
 
 
 pre_address <- readr::read_csv("FakeNameGenerator.com_c3db0f8e\\FakeNameGenerator.com_c3db0f8e.csv")
 cities <- sample(rep(c("Jacksonville",
-          "Tallahassee",
-          "Miami",
-          "Orlando",
-          "St Petersburg",
-          "Tampa",
-          "Fort Lauderdale",
-          "Clearwater",
-          "Hialeah",
-          "Hollywood",
-          "Coral Springs",
-          "Cape Coral",
-          "Daytona Beach"), 5000000), size = 100000)
+                       "Tallahassee",
+                       "Miami",
+                       "Orlando",
+                       "St Petersburg",
+                       "Tampa",
+                       "Fort Lauderdale",
+                       "Clearwater",
+                       "Hialeah",
+                       "Hollywood",
+                       "Coral Springs",
+                       "Cape Coral",
+                       "Daytona Beach"), 5000000), size = 100000)
 
 
 address <- paste0(pre_address$StreetAddress, ", ", cities,", ", pre_address$ZipCode, "-FL")
-  
+
 
 
 userids <- paste0("DD",1:100000)
-  
+
 visitDateTime <- sample(rep(seq(as.POSIXct('2013/01/01'), as.POSIXct('2017/05/01'), by=paste0(sample(1:60, 1), " mins")), 30),
-                  size = 100000)
+                        size = 100000)
 
 sexualOrientation <- sample(rep(c("Heterosexual", "Bisexual", "Homosexual", "Asexual"), 25000), size = 100000)   
 ageGroup <- sample(rep(c("Youth (15-24 years)", "Adults (25-34 years)",
@@ -58,8 +58,8 @@ race<- sample(rep(c("Hispanic",
                     "Multiracial"), 5000000), size = 100000)
 
 dob <- sample(rep(seq(as.Date('1967/01/01'), as.Date('2008/12/31'), 
-                                        by=paste0(sample(1:60, 1), " day")), 30000),
-                                size = 100000)
+                      by=paste0(sample(1:60, 1), " day")), 30000),
+              size = 100000)
 
 areaOfInterest <-sample(rep(c("Agriculture, Agriculture Operations, and Related Sciences",
                               "Architecture and Related Services",
@@ -106,7 +106,7 @@ institutionName <-sample(rep(c(paste0("University of ", state.name),
                                paste0(randomNames::randomNames(568, name.sep= " "), "Elementary School"),
                                paste0(randomNames::randomNames(568, which.names = "First"), "Community College"),
                                paste0(randomNames::randomNames(568, which.names = "Last"), "University")),
-                        2000), size = 100000)
+                             2000), size = 100000)
 
 academicLevel <- sample(rep(c("0.0-1.5", "1.6-2.5", "2.6-3.5", "3.6-4.0"), 25000), size = 100000)
 gradePointRange <-  sample(rep(c("0.0-1.5", "1.6-2.5", "2.6-3.5", "3.6-4.0"), 25000), size = 100000)
@@ -140,32 +140,32 @@ educationOfFather <- sample(rep(c("Not Applicable",
                                   "Doctoral degree or above"), 10000), size = 100000) 
 
 questions_colnames <- c("depressedMood", # Are you feeling depressed?
-                         "depressedHopeless", # Are you feeling hopeless?
-                         "lossOfInterestAndEnjoyment", # Do you feel like you are not interested in anything right now?
-                         "lossOfPleasureAndEnjoyment", # Do you have less pleasure in doing things you usually enjoy?
-                         "lessenedEnergy", # Do you currently have considerably less energy? 
-                         "lessenedActive", # Are your everyday tasks making you very tired currently?
-                         "reducedDecisionMaking", # Is it hard for you to make decisions currently?
-                         "reducedConcentration", # Is it hard for you to concentrate currently?
-                         "reducedSelfConfidence", # Is your self-confidence clearly lower than usual?
-                         "reducedSelfEsteem", # Are you feeling up to your tasks?
-                         "ideasOfGuilt", # Are you blaming yourself currently? 
-                         "ideasOfUnworthiness", # Do you think you are worth less than others right now?
-                         "bleakViewsOfTheFuture", # Are you thinking that you will be doing well in the future? 
-                         "pessimisticViewsOfTheFuture", # Are you looking hopefully into the future?
-                         "ideasOrActsOfSelfHarmOrSuicide", #Are you thinking about death more often than usual? 
-                         "disturbedSleep", # Did you sleep badly last night? 
-                         "diminishedAppetite", # Do you have less or no appetite today?
-                         "understandingParent", # Do you have understanding parents?
-                         "missedClasses", # Have you stopped going to classes or infrequently attending lectures?
-                         "smokeDrink", # Do you smoke or drink?
-                         "lostRelative", # Have you lost a close friend or family member recently?
-                         "relationshipTrouble", # Did you go through a breakup recently or having relationship trouble?
-                         "plagrisedHw", # Do you often copy assignments due to not being able to focus on your work?
-                         "leftJob", #Were you let go from or did you resign your job recently?
-                         "takingMedication", # Are you currently taking any presecribed medication?
-                         "diagonsedBefore" # Have you ever been diagonsed with depression or anxity before?
-                         )
+                        "depressedHopeless", # Are you feeling hopeless?
+                        "lossOfInterestAndEnjoyment", # Do you feel like you are not interested in anything right now?
+                        "lossOfPleasureAndEnjoyment", # Do you have less pleasure in doing things you usually enjoy?
+                        "lessenedEnergy", # Do you currently have considerably less energy? 
+                        "lessenedActive", # Are your everyday tasks making you very tired currently?
+                        "reducedDecisionMaking", # Is it hard for you to make decisions currently?
+                        "reducedConcentration", # Is it hard for you to concentrate currently?
+                        "reducedSelfConfidence", # Is your self-confidence clearly lower than usual?
+                        "reducedSelfEsteem", # Are you feeling up to your tasks?
+                        "ideasOfGuilt", # Are you blaming yourself currently? 
+                        "ideasOfUnworthiness", # Do you think you are worth less than others right now?
+                        "bleakViewsOfTheFuture", # Are you thinking that you will be doing well in the future? 
+                        "pessimisticViewsOfTheFuture", # Are you looking hopefully into the future?
+                        "ideasOrActsOfSelfHarmOrSuicide", #Are you thinking about death more often than usual? 
+                        "disturbedSleep", # Did you sleep badly last night? 
+                        "diminishedAppetite", # Do you have less or no appetite today?
+                        "understandingParent", # Do you have understanding parents?
+                        "missedClasses", # Have you stopped going to classes or infrequently attending lectures?
+                        "smokeDrink", # Do you smoke or drink?
+                        "lostRelative", # Have you lost a close friend or family member recently?
+                        "relationshipTrouble", # Did you go through a breakup recently or having relationship trouble?
+                        "plagrisedHw", # Do you often copy assignments due to not being able to focus on your work?
+                        "leftJob", #Were you let go from or did you resign your job recently?
+                        "takingMedication", # Are you currently taking any presecribed medication?
+                        "diagonsedBefore" # Have you ever been diagonsed with depression or anxity before?
+)
 
 employeesId <- sample(rep(c("E1",
                             "E2",
@@ -176,9 +176,11 @@ employeesId <- sample(rep(c("E1",
 
 employeesName <- sample(rep(randomNames::randomNames(6), 500000), size = 100000)
 
+studentPassword <- "12345"
 
 fake_dataframe <- data.frame(studentName = name, studentPhone = phone, studentEmail = email,
                              studentAddress = address, studentIds = userids,
+                             studentPassword = studentPassword,
                              studentVisitDateTime = visitDateTime, 
                              studentSexualOrientation = sexualOrientation,
                              studentAgeGroup = ageGroup, studentRace = race,
@@ -192,7 +194,7 @@ fake_dataframe <- data.frame(studentName = name, studentPhone = phone, studentEm
                              studentEducationOfFather = educationOfFather,
                              employeesId = employeesId,
                              employeesName = employeesName
-                             )
+)
 
 for(x in 1:26){
   fake_dataframe[questions_colnames[x]] <- sample(rep(c(1,0), 500000), size = 100000)
@@ -200,7 +202,7 @@ for(x in 1:26){
 
 range01 <- function(x){(x-min(x))/(max(x)-min(x))}
 
-fake_dataframe$urgencyLevel <- range01(rowSums(fake_dataframe[ ,23:48])/26)
+fake_dataframe$urgencyLevel <- range01(rowSums(fake_dataframe[ ,24:49])/26)
 
 openxlsx::write.xlsx(fake_dataframe, "fake_mentalHealth_data.xlsx")
 
