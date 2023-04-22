@@ -31,7 +31,7 @@ def home():
             #Check if Student ID exist, if it does, check if the password matches (line 30)
             if studentIds == 'user@example.com' and studentPassword  == 'password123':
                 # If the credentials are valid, redirect to the student home page
-                return redirect(url_for('student_home', studentID=studentID))        
+                return redirect(url_for('student_home', studentID=studentIds))        
             else:
                 # If the credentials are invalid, show an error message
                 error_message = 'Invalid StudentID or password'
@@ -42,7 +42,7 @@ def home():
             #Check if Student ID exist, if it does, check if the password matches(line 40)
             if employeesId == 'user@example.com' and studentPassword  == 'password1234':
                 # If the credentials are valid, redirect to the student home page
-                return redirect(url_for('employee_home', studentID=studentID))        
+                return redirect(url_for('employee_home', employeesId=employeesId))        
             else:
                 # If the credentials are invalid, show an error message
                 error_message = 'Invalid StudentID or password'
@@ -124,9 +124,9 @@ def student_home():
     return render_template('student-home.html', name=name, studentID=studentID)
 
 @app.route('/employee-home', methods=['GET'])
-def employee_home():
-    
+def employee_home():    
     #TO DO GET FIRST AND LAST NAME from the B Tree according to the student ID
+    studentID = request.args.get('studentID') # Get the studentID from the URL parameter
     name = "First Last"
 
     print(name)
@@ -134,6 +134,8 @@ def employee_home():
 
 @app.route('/survey', methods=['GET', 'POST'])
 def survey():
+    studentID = request.args.get('studentID') # Get the studentID from the URL parameter
+    print(studentID)
     if request.method == "POST":
         depressedMood = request.form.get("depressed-mood")
         depressedHopeless = request.form.get("depressed-hopeless")
@@ -190,12 +192,18 @@ def survey():
         print("takingMedication: ", takingMedication)
         print("diagnosedBefore: ", diagnosedBefore)
 
-        # TO DO: 
-        #Return student name and ID
-        name = "student name"
+        return redirect(url_for('survey_submitted', studentID=studentID))      
+    return render_template('survey.html', studentID=studentID)
 
-        return render_template('survey-submitted.html', name = name, ID=ID)
-    return render_template('survey.html')
+@app.route('/survey-submitted', methods=['GET', 'POST'])
+def survey_submitted():
+    studentID = request.args.get('studentID') # Get the studentID from the URL parameter
+    print(studentID)
+    print(studentID)
+    # TO DO: 
+    #Return student name from ID
+    name = "student name"
+    return render_template('survey-submitted.html', name = name, studentID=studentID)
 
 @app.route('/deleted', methods=['GET'])
 def account_deleted():
@@ -216,8 +224,9 @@ def profile():
     school = "University Of Florida"
     year = "Freshman"
     dob = "2000-01-01" #Must be in this format!!
+    if studentID == None:
+        studentID = ID
     print(studentID)
-
     if request.method == 'POST':
         action = request.form['action']
         if action == 'update':
@@ -247,8 +256,8 @@ def update_student_profile():
     #TO DO:
     #Query the variable to get the following info
     #name = search student ID get their name
-    student_id = request.args.get('student_info')
-    ID = student_id
+    employeesId = request.args.get('employeesId')
+    ID = employeesId
     name = "First Last"
     address = "Gainesville, FL 32611"
     phone = "012-345-6789"
@@ -259,6 +268,7 @@ def update_student_profile():
     ID = "0000001"
     urgencyLevel = 0.01
     if request.method == 'POST':
+        student_id = request.args.get('student_info')
         action = request.form['action']
         if action == 'update':
             # handle update action

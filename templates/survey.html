@@ -51,6 +51,7 @@
     <form onsubmit= "return validateForm()" class="registration-form" id="registration-form" action='survey' method="POST">
       <h1>Student Survey</h1>
       <h3>*All fields are mandatory.</h2>
+      <h4>Hello, {{ name }}, {{  studentID }}/</h4>
       <div class="form-field">
         <label for="depressed-mood">Have you been experiencing a persistently sad or down mood lately?</label>
         <div class="radio-group">
@@ -308,6 +309,9 @@
           <input type="radio" id="diagnosed-before-no" name="diagnosed-before" value="false" />
           <label for="diagnosed-before">No</label>
         </div>
+      </div>
+      <div class="form-field">
+        <input type="hidden" id="studentID" name="studentID" value="{{studentID}}" />
       </div>
       <div class="options">
         <button class="center-button" id="register-button" type="submit">Submit</button>
