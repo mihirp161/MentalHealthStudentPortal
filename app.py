@@ -1,10 +1,5 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 
-# import sumOfTwo
-
-# sum = sumOfTwo.sum(2,3)
-# print(sumOfTwo.sum(2,3))
-
 import time
 
 app = Flask(__name__)
@@ -25,15 +20,16 @@ def home():
     if request.method == 'POST':
         # Gets the user's input StudentID and password
         studentID = request.form['studentID']
-        password = request.form['password']
+        studentPassword  = request.form['password']
         userType = request.form['user-type']
 
         #TO DO:
         #If student, go to the Hash Table
         if userType == "student":
+            studentIds = studentID
             #Check if the StudentID and password match some stored credentials
             #Check if Student ID exist, if it does, check if the password matches (line 30)
-            if studentID == 'user@example.com' and password == 'password123':
+            if studentIds == 'user@example.com' and studentPassword  == 'password123':
                 # If the credentials are valid, redirect to the student home page
                 return redirect(url_for('student_home', studentID=studentID))        
             else:
@@ -42,8 +38,9 @@ def home():
                 return render_template('index.html', error_message=error_message)
         #If employee, go to the B_Tree
         elif userType == "employee":
+            employeesId = studentID
             #Check if Student ID exist, if it does, check if the password matches(line 40)
-            if studentID == 'user@example.com' and password == 'password1234':
+            if employeesId == 'user@example.com' and studentPassword  == 'password1234':
                 # If the credentials are valid, redirect to the student home page
                 return redirect(url_for('employee_home', studentID=studentID))        
             else:
@@ -55,60 +52,66 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
-        name = request.form.get("name")
-        phone = request.form.get("phone")
-        email = request.form.get("email")
-        address = request.form.get("address")
-        school = request.form.get("school")
-        year = request.form.get("year")
-        dob = request.form.get("dob")
-        password = request.form.get("password")
+        studentName = request.form.get("name")
+        studentPhone = request.form.get("phone")
+        studentEmail = request.form.get("email")
+        studentAddress = request.form.get("address")
+        studentInstitutionName = request.form.get("school")
+        studentAcademicLevel = request.form.get("year")
+        studentDOB = request.form.get("dob")
+        studentSexualOrientation = request.form.get("sexual-orientation")
+        studentAgeGroup = request.form.get("age-group")
+        studentRace = request.form.get("race")
+        studentAreaOfInterest = request.form.get("area-of-interest")
+        studentGPA = request.form.get("gpa")
+        studentMaritalStatus = request.form.get("marital-status")
+        studentHousingCondition = request.form.get("housing-condition")
+        studentFamilySize = request.form.get("family-size")
+        studentParentalMaritalStatus = request.form.get("parental-marital-status")
+        studentEducationOfMother = request.form.get("education-mother")
+        studentEducationOfFather = request.form.get("education-father")
+        studentPassword = request.form.get("password")
 
         #TO DO store the data in the B Tree and Hash Table
-        print(name, flush=True)
-        print("Address:", address)
-        print("Phone Number:", phone)
-        print("Email:", email)
-        print("School:", school)
-        print("Year:", year)
-        print("Date of Birth:", dob)
-        print("Password:", password)
-        print(type(dob))
 
         # TO DO: 
         # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
         # Return its ID to the variable below 
-        ID = "0000001"
+        studentIds = "0000001"
 
-        return render_template('succesfully-registered.html', name = name, ID=ID)
+        return render_template('succesfully-registered.html', name = studentName, ID=studentIds)
     return render_template('register.html')
 
 @app.route('/register-OBO', methods=['GET', 'POST'])
 def register_OBO():
     if request.method == "POST":
-        name = request.form.get("name")
-        address = request.form.get("address")
-        phone = request.form.get("phone")
-        email = request.form.get("email")
-        school = request.form.get("school")
-        year = request.form.get("year")
-        dob = request.form.get("dob")
+        studentName = request.form.get("name")
+        studentPhone = request.form.get("phone")
+        studentEmail = request.form.get("email")
+        studentAddress = request.form.get("address")
+        studentInstitutionName = request.form.get("school")
+        studentAcademicLevel = request.form.get("year")
+        studentDOB = request.form.get("dob")
+        studentSexualOrientation = request.form.get("sexual-orientation")
+        studentAgeGroup = request.form.get("age-group")
+        studentRace = request.form.get("race")
+        studentAreaOfInterest = request.form.get("area-of-interest")
+        studentGPA = request.form.get("gpa")
+        studentMaritalStatus = request.form.get("marital-status")
+        studentHousingCondition = request.form.get("housing-condition")
+        studentFamilySize = request.form.get("family-size")
+        studentParentalMaritalStatus = request.form.get("parental-marital-status")
+        studentEducationOfMother = request.form.get("education-mother")
+        studentEducationOfFather = request.form.get("education-father")
 
         #TO DO store the data in the B Tree and Hash Table
-        print(name, flush=True)
-        print("Address:", address)
-        print("Phone Number:", phone)
-        print("Email:", email)
-        print("School:", school)
-        print("Year:", year)
-        print("Date of Birth:", dob)
 
         # TO DO: 
         # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
         # Return its ID to the variable below 
-        ID = "0000001"
+        studentIds = "0000001"
 
-        return render_template('succesfully-registered-obo.html', name = name, ID=ID)
+        return render_template('succesfully-registered-obo.html', name = studentName, ID=studentIds)
     return render_template('register-OBO.html')
 
 @app.route('/student-home', methods=['GET'])
