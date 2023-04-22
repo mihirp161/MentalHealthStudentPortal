@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 
-import sumOfTwo
+# import sumOfTwo
 
-sum = sumOfTwo.sum(2,3)
-print(sumOfTwo.sum(2,3))
+# sum = sumOfTwo.sum(2,3)
+# print(sumOfTwo.sum(2,3))
 
 import time
 
