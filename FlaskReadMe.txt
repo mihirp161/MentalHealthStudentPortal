@@ -5,8 +5,10 @@ To run the application in debug mode, go to the folder where the flask applicati
 flask --app app --debug run
 
 Credentials currently registered are:
-ID == 'user@example.com' 
+ID == '0001' 
 password == 'password123'
+
+
 
 This validations occur on app.py on the home() function
 

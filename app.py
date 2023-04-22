@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 
+import sumOfTwo
+
+sum = sumOfTwo.sum(2,3)
+print(sumOfTwo.sum(2,3))
+
 import time
+
 app = Flask(__name__)
 
 # TO DO
@@ -29,7 +35,7 @@ def home():
             #Check if Student ID exist, if it does, check if the password matches (line 30)
             if studentID == 'user@example.com' and password == 'password123':
                 # If the credentials are valid, redirect to the student home page
-                return redirect(url_for('student_home'))        
+                return redirect(url_for('student_home', studentID=studentID))        
             else:
                 # If the credentials are invalid, show an error message
                 error_message = 'Invalid StudentID or password'
@@ -39,7 +45,7 @@ def home():
             #Check if Student ID exist, if it does, check if the password matches(line 40)
             if studentID == 'user@example.com' and password == 'password1234':
                 # If the credentials are valid, redirect to the student home page
-                return redirect(url_for('employee_home'))        
+                return redirect(url_for('employee_home', studentID=studentID))        
             else:
                 # If the credentials are invalid, show an error message
                 error_message = 'Invalid StudentID or password'
@@ -50,9 +56,9 @@ def home():
 def register():
     if request.method == "POST":
         name = request.form.get("name")
-        address = request.form.get("address")
         phone = request.form.get("phone")
         email = request.form.get("email")
+        address = request.form.get("address")
         school = request.form.get("school")
         year = request.form.get("year")
         dob = request.form.get("dob")
@@ -67,6 +73,7 @@ def register():
         print("Year:", year)
         print("Date of Birth:", dob)
         print("Password:", password)
+        print(type(dob))
 
         # TO DO: 
         # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
@@ -107,12 +114,15 @@ def register_OBO():
 @app.route('/student-home', methods=['GET'])
 def student_home():
     #TO DO GET FIRST AND LAST NAME from the Hash Table according to the student ID
+    studentID = request.args.get('studentID') # Get the studentID from the URL parameter
     name = "First Last"
     print(name)
-    return render_template('student-home.html', name=name)
+    print(studentID)
+    return render_template('student-home.html', name=name, studentID=studentID)
 
 @app.route('/employee-home', methods=['GET'])
 def employee_home():
+    
     #TO DO GET FIRST AND LAST NAME from the B Tree according to the student ID
     name = "First Last"
 
@@ -191,7 +201,9 @@ def account_deleted():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     #TO DO:
-    ID = "0000001"
+    studentID = request.args.get('studentID')
+
+    ID = studentID
     #Query the variable based on the ID to get the following info
     #name = search student ID get their name
     name = "First Last"
@@ -201,7 +213,7 @@ def profile():
     school = "University Of Florida"
     year = "Freshman"
     dob = "2000-01-01" #Must be in this format!!
-    
+    print(studentID)
 
     if request.method == 'POST':
         action = request.form['action']
