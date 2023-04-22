@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 
 import time
 
 app = Flask(__name__)
-
+app.secret_key = 'your_secret_key'  # Set a secret key for session
 # TO DO
 # Read and store the datasets in a variable to be used by the application below
 
@@ -17,6 +17,11 @@ def index():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+    print("home")
+    if 'studentID' in session:
+        session.pop('studentID', None)  # Clear studentID from session if it exists
+    if 'employeeID' in session:
+        session.pop('employeeID', None)  # Clear studentID from session if it exists
     if request.method == 'POST':
         # Gets the user's input StudentID and password
         studentID = request.form['studentID']
@@ -31,6 +36,7 @@ def home():
             #Check if Student ID exist, if it does, check if the password matches (line 30)
             if studentIds == 'user@example.com' and studentPassword  == 'password123':
                 # If the credentials are valid, redirect to the student home page
+                session['studentID'] = studentIds
                 return redirect(url_for('student_home', studentID=studentIds))        
             else:
                 # If the credentials are invalid, show an error message
@@ -42,6 +48,7 @@ def home():
             #Check if Student ID exist, if it does, check if the password matches(line 40)
             if employeesId == 'user@example.com' and studentPassword  == 'password1234':
                 # If the credentials are valid, redirect to the student home page
+                session['employeeID'] = employeesId
                 return redirect(url_for('employee_home', employeesId=employeesId))        
             else:
                 # If the credentials are invalid, show an error message
@@ -117,24 +124,23 @@ def register_OBO():
 @app.route('/student-home', methods=['GET'])
 def student_home():
     #TO DO GET FIRST AND LAST NAME from the Hash Table according to the student ID
-    studentID = request.args.get('studentID') # Get the studentID from the URL parameter
+    studentIds = session.get('studentID')
+    
     name = "First Last"
-    print(name)
-    print(studentID)
-    return render_template('student-home.html', name=name, studentID=studentID)
+
+    return render_template('student-home.html', name=name, studentID=studentIds)
 
 @app.route('/employee-home', methods=['GET'])
 def employee_home():    
-    #TO DO GET FIRST AND LAST NAME from the B Tree according to the student ID
-    studentID = request.args.get('studentID') # Get the studentID from the URL parameter
-    name = "First Last"
+    #TO DO GET FIRST AND LAST NAME from the B Tree according to the employeesId
+    employeesId = session.get('employeeID')
 
-    print(name)
+    name = "First Last"
     return render_template('employee-home.html', name=name)
 
 @app.route('/survey', methods=['GET', 'POST'])
 def survey():
-    studentID = request.args.get('studentID') # Get the studentID from the URL parameter
+    studentID = session.get('studentID')
     print(studentID)
     if request.method == "POST":
         depressedMood = request.form.get("depressed-mood")
@@ -197,8 +203,7 @@ def survey():
 
 @app.route('/survey-submitted', methods=['GET', 'POST'])
 def survey_submitted():
-    studentID = request.args.get('studentID') # Get the studentID from the URL parameter
-    print(studentID)
+    studentID = session.get('studentID')
     print(studentID)
     # TO DO: 
     #Return student name from ID
@@ -212,7 +217,8 @@ def account_deleted():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     #TO DO:
-    studentID = request.args.get('studentID')
+    studentID = session.get('studentID')
+    # studentID = request.args.get('studentID')
 
     ID = studentID
     #Query the variable based on the ID to get the following info
@@ -246,8 +252,12 @@ def profile():
             #TO DO:
             # Delete user profile
             print("delete")
+            if 'studentID' in session:
+                session.pop('studentID', None)  # Clear studentID from session if it exists
             return render_template('account-deleted.html')
         elif action == 'back':
+            if 'studentID' in session:
+                session.pop('studentID', None)  # Clear studentID from session if it exists
             return redirect(url_for('student_home'))        
     return render_template('profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID)
 
@@ -256,8 +266,14 @@ def update_student_profile():
     #TO DO:
     #Query the variable to get the following info
     #name = search student ID get their name
-    employeesId = request.args.get('employeesId')
-    ID = employeesId
+    studentID = session.get('studentID')
+
+    # studentID = session.get('studentID')
+
+    employeesId = session.get('employeeID')
+    print(studentID)
+    print(employeesId)
+    ID = studentID
     name = "First Last"
     address = "Gainesville, FL 32611"
     phone = "012-345-6789"
@@ -288,7 +304,7 @@ def update_student_profile():
             #TO DO:
             # Delete user profile
             print("delete")
-            return render_template('account-deleted.html')
+            return render_template('account-deleted-OBO.html')
         elif action == 'back':
             return redirect(url_for('employee_home'))        
     return render_template('update-student-profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID, urgencyLevel=urgencyLevel)
@@ -298,14 +314,17 @@ def search_student():
     # Get the student ID from the form
     if request.method == 'POST':
         
-        student_id = request.form['student-id']
+        studentID = request.form['student-id']
+        print(studentID)
+
         #TO DO Search Student    
         #If found:
-        if student_id == "0000001":
-            return redirect(url_for('update_student_profile', student_id=student_id))
+        if studentID == "0000001":
+            session['studentID'] = studentID
+            return redirect(url_for('update_student_profile', studentID=studentID))
         #If not found
         else:
-            error_message = 'Invalid StudentID: ' + student_id
+            error_message = 'Invalid StudentID: ' + studentID
             return render_template('search-student.html', error_message=error_message)
     return render_template('search-student.html')
 
