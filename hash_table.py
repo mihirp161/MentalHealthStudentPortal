@@ -1,4 +1,5 @@
 import csv
+import hashlib
 
 class HashTable:
     """
@@ -15,6 +16,16 @@ class HashTable:
         self._hashing_function = hashing_function
         self._len = 0
 
+    # def _hash(self, key):
+    #     """
+    #     Applies SHA256 hashing process to a given key and return an index
+    #     from the table slots.
+    #     """
+    #     if isinstance(key, str):
+    #         key = key.encode('utf-8')
+    #     hash_value = int.from_bytes(hashlib.sha256(key).digest(), byteorder='big')
+    #     return hash_value % self._size
+
     def _hash(self, key):
         """
         Applies hashing process to a given key and return an index
@@ -27,6 +38,23 @@ class HashTable:
         return {
             'division': lambda: key % self._size
         }.get(self._hashing_function, lambda: None)()
+        # if isinstance(key, str):
+        #     key = key.encode('utf-8')
+        # hash_value = int.from_bytes(hashlib.sha256(key).digest(), byteorder='big')
+        # return hash_value % self._size
+
+
+
+    # def get(self, key, default=None):
+    #     """
+    #     Returns the value for given key if the key exists,
+    #     else returns default value.
+    #     Default value is None if not specified.
+    #     """
+    #     index = self._hash(key)
+    #     slot = self._slots[index]
+    #     for pair in slot:
+    #         return pair[1] if pair[0] == key else default
 
     def get(self, key, default=None):
         """
@@ -37,7 +65,9 @@ class HashTable:
         index = self._hash(key)
         slot = self._slots[index]
         for pair in slot:
-            return pair[1] if pair[0] == key else default
+            if pair[0] == key:
+                return pair[1]
+        return default
 
     def exist(self, key):
         """
@@ -46,6 +76,23 @@ class HashTable:
         index = self._hash(key)
         slot = self._slots[index]
         return key in dict(slot)
+
+    # def put(self, key, value):
+    #     """
+    #     Inserts a key and value pair inside the hash table.
+    #     The collisions are resolved using separate chaining.
+    #     Repeated keys cannot be added.
+    #     """
+    #     index = self._hash(key)
+    #     slot = self._slots[index]
+    #     for pair in slot:
+    #         if pair[0] == key:
+    #             pair[1] = value
+    #             return  # update value if key already exists
+    #     slot.append((key, value))  # add new (key, value) pair to list
+    #     self._len += 1
+    #     if self._len > self._size:
+    #         self._expand()
 
     def put(self, key, value):
         """
@@ -124,19 +171,29 @@ if __name__ == "__main__":
     #main()
     h = HashTable()
 
-    h.put(1, "test")
-    print(h.get(1))
+    # h.put(1, "test")
+    # print(h.get(1))
+
+    # print(h._hash("test"))
+    # print(h.get("8"))
+    # print(h.put("test","test"))
+    # print(h.get("8"))
+
 
     with open('fake_dataframe_testSubset.csv') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for idx, row in enumerate(csv_reader):
-            print(f"{idx}: {row[2]}")
-            h.put(idx, row[2])
+            # h.put(row[4], row)
+            print(f'{idx}: {h._hash(row[4])}')
+            h.put(row[4], row)
 
-
-    for i in range(1, 49):
-        print(h.get(i))
+    with open('fake_dataframe_testSubset.csv') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)
+        for idx, row in enumerate(csv_reader):
+            print(row[4])
+            print(f'{idx}: {h.get(row[4])}')
 
 
 
