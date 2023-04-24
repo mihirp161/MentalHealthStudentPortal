@@ -1,5 +1,8 @@
 import csv
 import hashlib
+import pandas as pd
+import openpyxl
+
 
 class HashTable:
     """
@@ -11,6 +14,7 @@ class HashTable:
     MIN_SIZE = 8
 
     def __init__(self, hashing_function='division'):
+        self.ID = 0
         self._size = self.MIN_SIZE
         self._slots = [[] for _ in range(self._size)]
         self._hashing_function = hashing_function
@@ -167,9 +171,9 @@ class HashTable:
             self.put(pair[0], pair[1])
 
 
-if __name__ == "__main__":
-    #main()
-    h = HashTable()
+# if __name__ == "__main__":
+#     #main()
+#     h = HashTable()
 
     # h.put(1, "test")
     # print(h.get(1))
@@ -179,21 +183,26 @@ if __name__ == "__main__":
     # print(h.put("test","test"))
     # print(h.get("8"))
 
+    # df = pd.read_excel('Data/fake_mentalHealth_data.xlsx', sheet_name='Sheet1')
+    #
+    # row = df.iloc[1]
+    #
+    # print(row)
 
-    with open('fake_dataframe_testSubset.csv') as csv_file:
-        csv_reader = csv.reader(csv_file)
-        next(csv_reader)
-        for idx, row in enumerate(csv_reader):
-            # h.put(row[4], row)
-            print(f'{idx}: {h._hash(row[4])}')
-            h.put(row[4], row)
-
-    with open('fake_dataframe_testSubset.csv') as csv_file:
-        csv_reader = csv.reader(csv_file)
-        next(csv_reader)
-        for idx, row in enumerate(csv_reader):
-            print(row[4])
-            print(f'{idx}: {h.get(row[4])}')
+    # with open('Data/fake_mentalHealth_data.xlsx') as csv_file:
+    #     csv_reader = csv.reader(csv_file)
+    #     next(csv_reader)
+    #     for idx, row in enumerate(csv_reader):
+    #         # h.put(row[4], row)
+    #         print(f'{idx}: {h._hash(row[4])}')
+    #         h.put(row[4], row)
+    #
+    # with open('Data/fake_mentalHealth_data.xlsx') as csv_file:
+    #     csv_reader = csv.reader(csv_file)
+    #     next(csv_reader)
+    #     for idx, row in enumerate(csv_reader):
+    #         print(row[4])
+    #         print(f'{idx}: {h.get(row[4])}')
 
 
 
