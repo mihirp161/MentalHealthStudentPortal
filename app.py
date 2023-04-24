@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
-
-import time
+from hash_table import HashTable
+import datetime
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set a secret key for session
@@ -8,6 +8,9 @@ app.secret_key = 'your_secret_key'  # Set a secret key for session
 # Read and store the datasets in a variable to be used by the application below
 
 #Hash Table
+
+hash_table = HashTable();
+
 
 #B-Tree need to store Student ID created by Hash Function
 
@@ -30,11 +33,12 @@ def home():
 
         #TO DO:
         #If student, go to the Hash Table
+        student_information = hash_table.get(studentID)
         if userType == "student":
             studentIds = studentID
             #Check if the StudentID and password match some stored credentials
             #Check if Student ID exist, if it does, check if the password matches (line 30)
-            if studentIds == 'user@example.com' and studentPassword  == 'password123':
+            if studentIds == student_information[4] and studentPassword  == student_information[5]:
                 # If the credentials are valid, redirect to the student home page
                 session['studentID'] = studentIds
                 return redirect(url_for('student_home', studentID=studentIds))        
@@ -84,7 +88,16 @@ def register():
         # TO DO: 
         # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
         # Return its ID to the variable below 
-        studentIds = "0000001"
+        hash_table.ID += 1
+        studentIds = "DD" + str(hash_table.ID)
+        student_list = [studentName, studentPhone, studentEmail, studentAddress, studentIds,
+                        studentPassword, datetime.date.today(), studentSexualOrientation,
+                        studentAgeGroup, studentRace, studentDOB, studentAreaOfInterest,
+                        studentInstitutionName, studentAcademicLevel, studentGPA, studentMaritalStatus,
+                        studentHousingCondition, studentFamilySize, studentParentalMaritalStatus, studentEducationOfMother,
+                        studentEducationOfFather]
+
+        hash_table.put(studentIds, student_list)
 
         return render_template('succesfully-registered.html', name = studentName, ID=studentIds)
     return render_template('register.html')
@@ -112,21 +125,33 @@ def register_OBO():
         studentEducationOfFather = request.form.get("education-father")
 
         #TO DO store the data in the B Tree and Hash Table
+        # Hash Table
+        hash_table.ID += 1
+        studentIds = "DD" + str(hash_table.ID)
+        student_list = [studentName, studentPhone, studentEmail, studentAddress, studentIds,
+                        "N/A", datetime.date.today(), studentSexualOrientation,
+                        studentAgeGroup, studentRace, studentDOB, studentAreaOfInterest,
+                        studentInstitutionName, studentAcademicLevel, studentGPA, studentMaritalStatus,
+                        studentHousingCondition, studentFamilySize, studentParentalMaritalStatus,
+                        studentEducationOfMother,
+                        studentEducationOfFather, 0.0]
+        hash_table.put(studentIds, student_list)
 
         # TO DO: 
         # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
-        # Return its ID to the variable below 
-        studentIds = "0000001"
+        # Return its ID to the variable below
 
-        return render_template('succesfully-registered-obo.html', name = studentName, ID=studentIds)
+
+    return render_template('succesfully-registered-obo.html', name = studentName, ID=studentIds)
     return render_template('register-OBO.html')
 
 @app.route('/student-home', methods=['GET'])
 def student_home():
     #TO DO GET FIRST AND LAST NAME from the Hash Table according to the student ID
     studentIds = session.get('studentID')
-    
-    name = "First Last"
+    print(studentIds)
+    student_information = hash_table.get(studentIds)
+    name = student_information[0]
 
     return render_template('student-home.html', name=name, studentID=studentIds)
 
@@ -171,6 +196,17 @@ def survey():
         diagnosedBefore = request.form.get("diagnosed-before")
 
         #To DO store the data in the B Tree and Hash Table
+        #Hash Map
+        student_information = hash_table.get(studentID)
+        survey_information = [depressedMood, depressedHopeless, lossOfInterestAndEnjoyment, lossOfPleasureAndEnjoyment,
+                              lessenedEnergy, lessenedActive, reducedDecisionMaking, reducedConcentration, reducedSelfConfidence,
+                              reducedSelfEsteem, ideasOfGuilt, ideasOfUnworthiness, bleakViewsOfTheFuture, pessimisticViewsOfTheFuture,
+                              ideasOrActsOfSelfHarmOrSuicide, disturbedSleep, diminishedAppetite, understandingParent, missedClasses,
+                              smokeDrink, lostRelative, relationshipTrouble, plagrisedHw, leftJob, takingMedication, diagnosedBefore]
+        student_information.extend(survey_information)
+
+
+
         print("depressedMood: ", depressedMood)
         print("depressedHopeless: ", depressedHopeless)
         print("lossOfInterestAndEnjoyment: ", lossOfInterestAndEnjoyment)
@@ -207,7 +243,8 @@ def survey_submitted():
     print(studentID)
     # TO DO: 
     #Return student name from ID
-    name = "student name"
+    student_information = hash_table.get(studentID)
+    name = student_information[0]
     return render_template('survey-submitted.html', name = name, studentID=studentID)
 
 @app.route('/deleted', methods=['GET'])
@@ -220,16 +257,20 @@ def profile():
     studentID = session.get('studentID')
     # studentID = request.args.get('studentID')
 
+    #Hash Table
+    student_information = hash_table.get(studentID)
+
+
     ID = studentID
     #Query the variable based on the ID to get the following info
     #name = search student ID get their name
-    name = "First Last"
-    address = "Gainesville, FL 32611"
-    phone = "012-345-6789"
-    email = "email@ufl.edu"
-    school = "University Of Florida"
-    year = "Freshman"
-    dob = "2000-01-01" #Must be in this format!!
+    name = student_information[0]
+    address = student_information[3]
+    phone = student_information[1]
+    email = student_information[2]
+    school = student_information[12]
+    year = student_information[13]
+    dob = student_information[10] #Must be in this format!!
     if studentID == None:
         studentID = ID
     print(studentID)
@@ -246,11 +287,17 @@ def profile():
 
             #TO DO:
             # Update user profile
+            #Hash Table
+            student_information[3] = address
+            student_information[1] = phone
+            student_information[13] = year
             return render_template('profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID)    
 
         elif action == 'delete':
             #TO DO:
             # Delete user profile
+            #Hash Table
+            hash_table.remove(studentID)
             print("delete")
             if 'studentID' in session:
                 session.pop('studentID', None)  # Clear studentID from session if it exists
@@ -268,21 +315,24 @@ def update_student_profile():
     #name = search student ID get their name
     studentID = session.get('studentID')
 
+    #Hash Table
+    student_information = hash_table.get(studentID)
+
     # studentID = session.get('studentID')
 
     employeesId = session.get('employeeID')
     print(studentID)
     print(employeesId)
     ID = studentID
-    name = "First Last"
-    address = "Gainesville, FL 32611"
-    phone = "012-345-6789"
-    email = "email@ufl.edu"
-    school = "University Of Florida"
-    year = "Freshman"
-    dob = "2000-01-01" #Must be in this format!!
-    ID = "0000001"
-    urgencyLevel = 0.01
+    name = student_information[0]
+    address = student_information[3]
+    phone = student_information[1]
+    email = student_information[2]
+    school = student_information[12]
+    year = student_information[13]
+    dob = student_information[10] #Must be in this format!!
+    ID = student_information[4]
+    urgencyLevel = student_information[-1]
     if request.method == 'POST':
         student_id = request.args.get('student_info')
         action = request.form['action']
@@ -298,11 +348,19 @@ def update_student_profile():
             
             #TO DO:
             # Update user profile
+            #Hash Table
+            student_information[3] = address
+            student_information[1] = phone
+            student_information[13] = year
+
             return render_template('update-student-profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID, urgencyLevel=urgencyLevel)    
 
         elif action == 'delete':
             #TO DO:
             # Delete user profile
+
+            #Hash Table
+            hash_table.remove(studentID)
             print("delete")
             return render_template('account-deleted-OBO.html')
         elif action == 'back':
@@ -317,9 +375,12 @@ def search_student():
         studentID = request.form['student-id']
         print(studentID)
 
-        #TO DO Search Student    
+        #TO DO Search Student
+        #Hash Table
+        student_information = hash_table.get(studentID)
+
         #If found:
-        if studentID == "0000001":
+        if studentID == student_information[4]:
             session['studentID'] = studentID
             return redirect(url_for('update_student_profile', studentID=studentID))
         #If not found

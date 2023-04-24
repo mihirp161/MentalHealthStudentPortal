@@ -1,5 +1,6 @@
 import re
 import pandas as pd
+import hash_table as pd
 
 class BTreeNode:
     def __init__(self, leaf=False):
@@ -338,7 +339,7 @@ def main():
                                 "diagonsedBefore",
                                 "urgencyLevel"])
     
-    df = pd.read_excel('C:/Users/ThinkPad/Downloads/fake_mentalHealth_data.xlsx')
+    df = pd.read_excel('/Users/james/PycharmProjects/MentalHealthStudentPortal/Data/fake_mentalHealth_data.xlsx')
     df.index = range(len(df.index))
     print(df)
     
