@@ -30,18 +30,28 @@ def home():
         studentID = request.form['studentID']
         studentPassword  = request.form['password']
         userType = request.form['user-type']
-
+        print(studentID)
+        print(studentPassword)
         #TO DO:
         #If student, go to the Hash Table
-        student_information = hash_table.get(studentID)
         if userType == "student":
+            student_information = hash_table.get(studentID)
+
             studentIds = studentID
+            print(student_information)
             #Check if the StudentID and password match some stored credentials
             #Check if Student ID exist, if it does, check if the password matches (line 30)
-            if studentIds == student_information[4] and studentPassword  == student_information[5]:
-                # If the credentials are valid, redirect to the student home page
-                session['studentID'] = studentIds
-                return redirect(url_for('student_home', studentID=studentIds))        
+            if student_information is not None:
+                print(student_information[5])
+                print(student_information[4])
+                if studentIds == student_information[4] and studentPassword == student_information[5]:
+                    # If the credentials are valid, redirect to the student home page
+                    session['studentID'] = studentIds
+                    return redirect(url_for('student_home', studentID=studentIds))     
+                else:
+                    # If the credentials are invalid, show an error message
+                    error_message = 'Invalid StudentID or password'
+                    return render_template('index.html', error_message=error_message)   
             else:
                 # If the credentials are invalid, show an error message
                 error_message = 'Invalid StudentID or password'
