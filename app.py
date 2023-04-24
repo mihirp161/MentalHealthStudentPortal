@@ -153,7 +153,6 @@ def register_OBO():
 
 
     return render_template('succesfully-registered-obo.html', name = studentName, ID=studentIds)
-    return render_template('register-OBO.html')
 
 @app.route('/student-home', methods=['GET'])
 def student_home():
@@ -313,8 +312,6 @@ def profile():
                 session.pop('studentID', None)  # Clear studentID from session if it exists
             return render_template('account-deleted.html')
         elif action == 'back':
-            if 'studentID' in session:
-                session.pop('studentID', None)  # Clear studentID from session if it exists
             return redirect(url_for('student_home'))        
     return render_template('profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID)
 
