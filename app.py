@@ -369,10 +369,23 @@ def student_home():
 
 @app.route('/employee-home', methods=['GET'])
 def employee_home():    
-    #TO DO GET FIRST AND LAST NAME from the B Tree according to the employeesId
+  
+    #Get employee name from the B Tree according to the employeesId
     employeesId = session.get('employeeID')
-
     name = "First Last"
+    
+    temp_enam_list = {'E5': 'Kinder, Rachael',  
+                      'E6': 'Schenally, Ashley',
+                      'E3': 'Rivera, Yolotzi',  
+                      'E2': 'Edwards, Cacia',   
+                      'E1': 'Saiz, Antonio',   
+                      'E4': 'Mccarty, Nicolette'}
+    
+    for eid, ename in temp_enam_list.items():
+      if str(eid) == str(employeesId):
+          name = ename
+          break;
+        
     return render_template('employee-home.html', name=name)
 
 @app.route('/survey', methods=['GET', 'POST'])
@@ -555,6 +568,7 @@ def profile():
 
 @app.route('/update-student-profile', methods=['GET', 'POST'])
 def update_student_profile():
+    
     #TO DO:
     #Query the variable to get the following info
     #name = search student ID get their name
@@ -566,20 +580,20 @@ def update_student_profile():
     print(studentID)
     print(employeesId)
     ID = studentID
-    name = "First Last"
-    address = "Gainesville, FL 32611"
-    phone = "012-345-6789"
-    email = "email@ufl.edu"
-    school = "University Of Florida"
-    year = "Freshman"
-    dob = "2000-01-01" #Must be in this format!!
-    ID = "0000001"
-    urgencyLevel = 0.01
+    name = B.get_keys_value(k = studentID, v = 'studentName')
+    address =  B.get_keys_value(k = studentID, v = 'studentAddress')
+    phone = B.get_keys_value(k = studentID, v = 'studentPhone')
+    email = B.get_keys_value(k = studentID, v = 'studentEmail')
+    school = B.get_keys_value(k = studentID, v = 'studentInstitutionName')
+    year = B.get_keys_value(k = studentID, v = 'studentAcademicLevel') 
+    dob = str(datetime.strptime(str(B.get_keys_value(k = studentID, v = 'studentDOB')), "%Y-%m-%d %H:%M:%S").date()) #"YYYY-dd-mm" Must be in this format!!
+    urgencyLevel = B.get_keys_value(k = studentID, v = 'urgencyLevel') 
     
     if request.method == 'POST':
         student_id = request.args.get('student_info')
         action = request.form['action']
         if action == 'update':
+          
             # handle update action
             print("update")
             #name = search student ID get their name
@@ -591,9 +605,14 @@ def update_student_profile():
             
             #TO DO:
             # Update user profile
+            B.update_keys(studentID, 'studentAddress', address)
+            B.update_keys(studentID, 'studentPhone', phone)
+            B.update_keys(studentID, 'studentAcademicLevel', year)
+            
             return render_template('update-student-profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID, urgencyLevel=urgencyLevel)    
 
         elif action == 'delete':
+          
             #TO DO:
             # Delete user profile
             print("delete")
