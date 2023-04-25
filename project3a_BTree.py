@@ -1,7 +1,3 @@
-import re
-import pandas as pd
-import hash_table as pd
-
 class BTreeNode:
     def __init__(self, leaf=False):
         self.leaf = leaf
@@ -15,15 +11,22 @@ class BTree:
         #'order' is order of B Tree
         self.order = order
 
-    def print_tree(self, x, l=0):
-        print("Level ", l, " ", len(x.keys), end=":")
-        for i in x.keys:
-            print("(", i[1], ",", i[2], ")", end=" ")
-        print()
-        l += 1
-        if len(x.child) > 0:
-            for i in x.child:
-                self.print_tree(i, l)
+    def get_keys_value(self, k, v):
+        K = self.search(hash(k))
+        if K != None:
+            (x, i) = K
+            dict = x.keys[i][2]
+            return dict.get(v)
+
+    def update_keys(self, k, v, uv):
+        K = self.search(hash(k))
+        if K != None:
+            (x, i) = K
+            dict = x.keys[i][2]
+            dict.update({v: uv})
+            tpl = list(x.keys[i])
+            tpl[2] = dict
+            x.keys[i] = tuple(tpl)
 
     def search(self, k, x=None):
         """Search for key 'k' at position 'x'.
@@ -64,12 +67,12 @@ class BTree:
             self.root = temp
             # Former root becomes 0th child of new root 'temp'
             temp.child.insert(0, root)
-            self._split_child(temp, 0)
-            self._insert_nonfull(temp, k)
+            self.split_child(temp, 0)
+            self.insert_nonfull(temp, k)
         else:
-            self._insert_nonfull(root, k)
+            self.insert_nonfull(root, k)
 
-    def _insert_nonfull(self, x, k):
+    def insert_nonfull(self, x, k):
         """Insert key 'k' at position 'x' in a non-full node
 
         Arguments:
@@ -88,12 +91,12 @@ class BTree:
                 i -= 1
             i += 1
             if len(x.child[i].keys) == (2 * self.order) - 1:
-                self._split_child(x, i)
+                self.split_child(x, i)
                 if k[0] > x.keys[i][0]:
                     i += 1
-            self._insert_nonfull(x.child[i], k)
+            self.insert_nonfull(x.child[i], k)
 
-    def _split_child(self, x, i):
+    def split_child(self, x, i):
         """Splits the child of node at 'x' from index 'i'
 
         Arguments:
@@ -129,9 +132,9 @@ class BTree:
                 return
             return
 
-        # Calling '_delete_internal_node' when x is an internal node and contains the key 'k'
+        # Calling 'delete_internal_node' when x is an internal node and contains the key 'k'
         if i < len(x.keys) and x.keys[i][0] == k:
-            return self._delete_internal_node(x, k, i)
+            return self.delete_internal_node(x, k, i)
         # Recursively calling 'delete' on x's child
         elif len(x.child[i].keys) >= order:
             self.delete(x.child[i], k)
@@ -139,24 +142,24 @@ class BTree:
         else:
             if i != 0 and i + 2 < len(x.child):
                 if len(x.child[i - 1].keys) >= order:
-                    self._delete_sibling(x, i, i - 1)
+                    self.delete_sibling(x, i, i - 1)
                 elif len(x.child[i + 1].keys) >= order:
-                    self._delete_sibling(x, i, i + 1)
+                    self.delete_sibling(x, i, i + 1)
                 else:
-                    self._del_merge(x, i, i + 1)
+                    self.delete_merge(x, i, i + 1)
             elif i == 0:
                 if len(x.child[i + 1].keys) >= order:
-                    self._delete_sibling(x, i, i + 1)
+                    self.delete_sibling(x, i, i + 1)
                 else:
-                    self._del_merge(x, i, i + 1)
+                    self.delete_merge(x, i, i + 1)
             elif i + 1 == len(x.child):
                 if len(x.child[i - 1].keys) >= order:
-                    self._delete_sibling(x, i, i - 1)
+                    self.delete_sibling(x, i, i - 1)
                 else:
-                    self._del_merge(x, i, i - 1)
+                    self.delete_merge(x, i, i - 1)
             self.delete(x.child[i], k)
 
-    def _delete_internal_node(self, x, k, i):
+    def delete_internal_node(self, x, k, i):
         """Deletes internal node
 
         Arguments:
@@ -175,7 +178,7 @@ class BTree:
 
         # Replacing the key with its predecessor and deleting predecessor
         if len(x.child[i].keys) >= order:
-            x.keys[i] = self._delete_predecessor(x.child[i])
+            x.keys[i] = self.delete_predecessor_node(x.child[i])
             return
         # Replacing the key with its successor and deleting successor
         elif len(x.child[i + 1].keys) >= order:
@@ -183,10 +186,10 @@ class BTree:
             return
         # Merging the child, its left sibling and the key 'k'
         else:
-            self._del_merge(x, i, i + 1)
-            self._delete_internal_node(x.child[i], k, self.order - 1)
+            self.delete_merge(x, i, i + 1)
+            self.delete_internal_node(x.child[i], k, self.order - 1)
 
-    def _delete_predecessor(self, x):
+    def delete_predecessor_node(self, x):
         """Returns and deletes predecessor of key 'k' which is to be deleted
 
         Arguments:
@@ -196,12 +199,12 @@ class BTree:
             return x.pop()
         n = len(x.keys) - 1
         if len(x.child[n].keys) >= self.order:
-            self._delete_sibling(x, n + 1, n)
+            self.delete_sibling(x, n + 1, n)
         else:
-            self._del_merge(x, n, n + 1)
-        self._delete_predecessor(x.child[n])
+            self.delete_merge(x, n, n + 1)
+        self.delete_predecessor_node_node(x.child[n])
 
-    def _delete_successor(self, x):
+    def delete_successor_node(self, x):
         """Returns and deletes successor of key 'k' which is to be deleted
 
         Arguments:
@@ -210,12 +213,12 @@ class BTree:
         if x.leaf:
             return x.keys.pop(0)
         if len(x.child[1].keys) >= self.order:
-            self._delete_sibling(x, 0, 1)
+            self.delete_sibling(x, 0, 1)
         else:
-            self._del_merge(x, 0, 1)
-        self._delete_successor(x.child[0])
+            self.delete_merge(x, 0, 1)
+        self.delete_successor_node(x.child[0])
 
-    def _del_merge(self, x, i, j):
+    def delete_merge(self, x, i, j):
         """Merges the children of x and one of its own keys
 
         Arguments:
@@ -258,7 +261,7 @@ class BTree:
         if x == self.root and len(x.keys) == 0:
             self.root = new
 
-    def _delete_sibling(self, x, i, j):
+    def delete_sibling(self, x, i, j):
         """Borrows a key from jth child of x and appends it to ith child of x
 
         Arguments:
@@ -283,132 +286,3 @@ class BTree:
             x.keys[i - 1] = lsnode.keys.pop()
             if len(lsnode.child) > 0:
                 cnode.child.insert(0, lsnode.child.pop())
-
-
-def main():
-
-    B = BTree(500)
-    print("==========Loading==========") #remove after done
-    df = pd.DataFrame(columns=["studentName",
-                                "studentPhone",
-                                "studentEmail",
-                                "studentAddress",
-                                "studentIds",
-                                "studentVisitDateTime",
-                                "studentSexualOrientation",
-                                "studentAgeGroup",
-                                "studentRace",
-                                "studentDOB",
-                                "studentAreaOfInterest",
-                                "studentInstitutionName",
-                                "studentAcademicLevel",
-                                "studentGPA",
-                                "studentMaritalStatus",
-                                "studentHousingCondition",
-                                "studentFamilySize",
-                                "studentParentalMaritalStatus",
-                                "studentEducationOfMother",
-                                "studentEducationOfFather",
-                                "employeesId",
-                                "employeesName",
-                                "depressedMood",
-                                "depressedHopeless",
-                                "lossOfInterestAndEnjoyment",
-                                "lossOfPleasureAndEnjoyment",
-                                "lessenedEnergy",
-                                "lessenedActive",
-                                "reducedDecisionMaking",
-                                "reducedConcentration",
-                                "reducedSelfConfidence",
-                                "reducedSelfEsteem",
-                                "ideasOfGuilt",
-                                "ideasOfUnworthiness",
-                                "bleakViewsOfTheFuture",
-                                "pessimisticViewsOfTheFuture",
-                                "ideasOrActsOfSelfHarmOrSuicide",
-                                "disturbedSleep",
-                                "diminishedAppetite",
-                                "understandingParent",
-                                "missedClasses",
-                                "smokeDrink",
-                                "lostRelative",
-                                "relationshipTrouble",
-                                "plagrisedHw",
-                                "leftJob",
-                                "takingMedication",
-                                "diagonsedBefore",
-                                "urgencyLevel"])
-    
-    df = pd.read_excel('/Users/james/PycharmProjects/MentalHealthStudentPortal/Data/fake_mentalHealth_data.xlsx')
-    df.index = range(len(df.index))
-    print(df)
-    
-    df.set_index("studentIds", drop=True, inplace=True)
-    dict = df.to_dict(orient="index")
-    
-    for p_id, p_info in dict.items():
-        B.insert((hash(p_id), p_id, p_info))
-        
-    print("==========Loaded==========")
-
-
-    c = 5
-    while c > 0:
-        print("Enter your choice")
-        print("1) Insert new dict info and studentID")
-        print("2) Delete")
-        print("3) Search by studentID")
-        print("4) XX--Print the B-Tree--XX")
-        print("0) Exit")
-        c = int(input())
-
-        if c == 1:
-            pin = int(input("Enter the studentID: "))
-            place = input("Enter the dict info: ")
-            B.insert((hash(place), pin, place))
-            print("Your data has been entered")
-        elif c == 2:
-            place = input("Enter the studentID: ")
-            B.delete(B.root, hash(place))
-        elif c == 3:
-            place = input("Enter the studentID to be searched: ")
-            K = B.search(hash(place))
-            if K != None:
-                (x, i) = K
-                print("The studentID has following: ", x.keys[i][2])
-                for j in range(i, len(x.keys)):
-                    if x.keys[j][2] == place:
-                        print("Pin:", x.keys[j][1])
-            else:
-                print("studentID doesn't exist!")
-        #elif c == 4:
-         #   B.print_tree(B.root)
-        else:
-            break
-
-
-if __name__ == "__main__":
-    main()
-
-    
-'''  
-# converting inputs to student key to dictionary
-import pandas as pd
-
-df = pd.DataFrame(columns=["ID", "Q1", "Q2"])
-parts = input("Enter the number of day parts:")
-
-for _ in range(1):
-    dp = input("Enter ID ")
-    st = input("Enter Q1 {}".format(dp))
-    et = input("Enter Q2 {}".format(dp))
-    df1 = pd.DataFrame(data=[[dp,st,et]],columns=["ID", "Q1", "Q2"])
-    df = pd.concat([df,df1], axis=0)
-
-df.index = range(len(df.index))
-print(df)
-
-df.set_index("ID", drop=True, inplace=True)
-dictionary = df.to_dict(orient="index")
-print(dictionary)
-'''
