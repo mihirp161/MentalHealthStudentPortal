@@ -470,12 +470,16 @@ def survey():
         df_global = df_global.merge(df_temp, how='left', suffixes=('_',''))
         df_global['studentIds'] = df_global['studentIds'].fillna(df_global['studentIds_']).astype(str)
         df_global = df_global.drop('studentIds_', axis=1) #axis = 0 ??
+        
+        print(df_global)
+        
         df_global.reset_index(drop=True, inplace=True)
                 
         ##### NEED TO UPDATE THE COLS IN BTREE, NOT INSERT
         df_temp.set_index("studentIds", drop=False, inplace=True)
         temp_dict = df_temp.to_dict(orient="index")
         
+        #####B.update_keys(studentID, 'studentAcademicLevel', year)
         for p_id, p_info in temp_dict.items():
             B.insert((hash(p_id), p_id, p_info))
 
@@ -486,7 +490,6 @@ def survey():
 def survey_submitted():
     studentID = session.get('studentID')
     print(studentID)
-    # TO DO: 
     #Return student name from ID
     name = B.get_keys_value(k = studentID, v = 'studentName')
     return render_template('survey-submitted.html', name = name, studentID=studentID)
@@ -510,7 +513,7 @@ def profile():
     email = B.get_keys_value(k = studentID, v = 'studentEmail')
     school = B.get_keys_value(k = studentID, v = 'studentInstitutionName')
     year = B.get_keys_value(k = studentID, v = 'studentAcademicLevel') 
-    dob = str(datetime.strptime(str(B.get_keys_value(k = studentID, v = 'studentDOB')), "%Y-%m-%d %H:%M:%S").date()) #"2022-22-08" Must be in this format!!
+    dob = str(datetime.strptime(str(B.get_keys_value(k = studentID, v = 'studentDOB')), "%Y-%m-%d %H:%M:%S").date()) #"YYYY-dd-mm" Must be in this format!!
     
     if studentID == None:
         studentID = ID
@@ -540,7 +543,7 @@ def profile():
             print("delete")
             if 'studentID' in session:
                 
-                #!!!TODO!!
+                #~~~~~~~~!!!TODO!!~~~~~~~~
                 #****** change the data-frame and the data structure *****
                 
                 
