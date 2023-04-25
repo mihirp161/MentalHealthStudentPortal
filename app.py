@@ -99,8 +99,6 @@ def home():
             studentIds = studentID
             #Check if the StudentID and password match some stored credentials
             
-            #****** Check if Student ID exist, if it does, check if the password matches (line 30) *****
-
             if (B.get_keys_value(k = studentID, v = 'studentIds') != None):                
                 
                 if str(studentPassword)  == str(B.get_keys_value(k = studentID, v = 'studentPassword')):
@@ -467,7 +465,11 @@ def survey():
                                       })
         
         #update the dataframe
-        df_global = pd.concat([df_global, df_temp], axis=0) ####### TODO: REPLACE THE ROW WHERE ID MATCH NOT CONTENATE!!!
+        
+        #!!!!check!!!!
+        df_global = df_global.merge(df_temp, how='left', suffixes=('_',''))
+        df_global['studentIds'] = df_global['studentIds'].fillna(df_global['studentIds_']).astype(str)
+        df_global = df_global.drop('studentIds_', axis=1) #axis = 0 ??
         df_global.reset_index(drop=True, inplace=True)
                 
         ##### NEED TO UPDATE THE COLS IN BTREE, NOT INSERT
