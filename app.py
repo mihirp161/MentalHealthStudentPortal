@@ -408,34 +408,74 @@ def survey():
         leftJob = request.form.get("left-job")
         takingMedication = request.form.get("taking-medication")
         diagnosedBefore = request.form.get("diagnosed-before")
+        
+        global df_global
+        
+        #******* calculate an urgency levl here from dataframe then insert ******
 
         #To DO store the data in the B Tree and Hash Table
-        print("depressedMood: ", depressedMood)
-        print("depressedHopeless: ", depressedHopeless)
-        print("lossOfInterestAndEnjoyment: ", lossOfInterestAndEnjoyment)
-        print("lossOfPleasureAndEnjoyment: ", lossOfPleasureAndEnjoyment)
-        print("lessenedEnergy: ", lessenedEnergy)
-        print("lessenedActive: ", lessenedActive)
-        print("reducedDecisionMaking: ", reducedDecisionMaking)
-        print("reducedConcentration: ", reducedConcentration)
-        print("reducedSelfConfidence: ", reducedSelfConfidence)
-        print("reducedSelfEsteem: ", reducedSelfEsteem)
-        print("ideasOfGuilt: ", ideasOfGuilt)
-        print("ideasOfUnworthiness: ", ideasOfUnworthiness)
-        print("bleakViewsOfTheFuture: ", bleakViewsOfTheFuture)
-        print("pessimisticViewsOfTheFuture: ", pessimisticViewsOfTheFuture)
-        print("ideasOrActsOfSelfHarmOrSuicide: ", ideasOrActsOfSelfHarmOrSuicide)
-        print("disturbedSleep: ", disturbedSleep)
-        print("diminishedAppetite: ", diminishedAppetite)
-        print("understandingParent: ", understandingParent)
-        print("missedClasses: ", missedClasses)
-        print("smokeDrink: ", smokeDrink)
-        print("lostRelative: ", lostRelative)
-        print("relationshipTrouble: ", relationshipTrouble)
-        print("plagrisedHw: ", plagrisedHw)
-        print("leftJob: ", leftJob)
-        print("takingMedication: ", takingMedication)
-        print("diagnosedBefore: ", diagnosedBefore)
+        df_temp = pd.DataFrame({'studentName': [B.get_keys_value(k = studentID, v = 'studentName')],
+                                      'studentPhone': [B.get_keys_value(k = studentID, v = 'studentPhone')],
+                                      'studentEmail': [B.get_keys_value(k = studentID, v = 'studentEmail')],
+                                      'studentAddress': [B.get_keys_value(k = studentID, v = 'studentAddress')],
+                                      'studentIds': [B.get_keys_value(k = studentID, v = 'studentIds')],
+                                      'studentPassword': [B.get_keys_value(k = studentID, v = 'studentPassword')],
+                                      'studentInstitutionName': [B.get_keys_value(k = studentID, v = 'studentInstitutionName')],
+                                      'studentAcademicLevel': [B.get_keys_value(k = studentID, v = 'studentAcademicLevel')],
+                                      'studentSexualOrientation': [B.get_keys_value(k = studentID, v = 'studentSexualOrientation')],
+                                      'studentAgeGroup': [B.get_keys_value(k = studentID, v = 'studentAgeGroup')],
+                                      'studentRace': [B.get_keys_value(k = studentID, v = 'studentRace')],
+                                      'studentAreaOfInterest': [B.get_keys_value(k = studentID, v = 'studentAreaOfInterest')],
+                                      'studentGPA': [B.get_keys_value(k = studentID, v = 'studentGPA')],
+                                      'studentMaritalStatus': [B.get_keys_value(k = studentID, v = 'studentMaritalStatus')],
+                                      'studentHousingCondition': [B.get_keys_value(k = studentID, v = 'studentHousingCondition')],
+                                      'studentFamilySize': [B.get_keys_value(k = studentID, v = 'studentFamilySize')],
+                                      'studentParentalMaritalStatus': [B.get_keys_value(k = studentID, v = 'studentParentalMaritalStatus')],
+                                      'studentEducationOfMother': [B.get_keys_value(k = studentID, v = 'studentEducationOfMother')],
+                                      'studentEducationOfFather': [B.get_keys_value(k = studentID, v = 'studentEducationOfFather')],
+                                      'studentVisitDateTime': [B.get_keys_value(k = studentID, v = 'studentVisitDateTime')],
+                                      'studentDOB': [B.get_keys_value(k = studentID, v = 'studentDOB')],
+                                      'employeesId': [B.get_keys_value(k = studentID, v = 'employeesId')],
+                                      'employeesName': [B.get_keys_value(k = studentID, v = 'employeesName')],
+                                      'depressedMood': [depressedMood], 
+                                      'depressedHopeless': [depressedHopeless],
+                                      'lossOfInterestAndEnjoyment': [lossOfInterestAndEnjoyment],
+                                      'lossOfPleasureAndEnjoyment': [lossOfPleasureAndEnjoyment],
+                                      'lessenedEnergy': [lessenedEnergy],
+                                      'lessenedActive': [lessenedActive],
+                                      'reducedDecisionMaking': [reducedDecisionMaking],
+                                      'reducedConcentration': [reducedConcentration], 
+                                      'reducedSelfConfidence': [reducedSelfConfidence], 
+                                      'reducedSelfEsteem': [reducedSelfEsteem], 
+                                      'ideasOfGuilt': [ideasOfGuilt], 
+                                      'ideasOfUnworthiness': [ideasOfUnworthiness], 
+                                      'bleakViewsOfTheFuture': [bleakViewsOfTheFuture], 
+                                      'pessimisticViewsOfTheFuture': [pessimisticViewsOfTheFuture], 
+                                      'ideasOrActsOfSelfHarmOrSuicide': [ideasOrActsOfSelfHarmOrSuicide],
+                                      'disturbedSleep': [disturbedSleep], 
+                                      'diminishedAppetite': [diminishedAppetite], 
+                                      'understandingParent': [understandingParent], 
+                                      'missedClasses': [missedClasses], 
+                                      'smokeDrink': [smokeDrink], 
+                                      'lostRelative': [lostRelative],
+                                      'relationshipTrouble': [relationshipTrouble], 
+                                      'plagrisedHw': [plagrisedHw], 
+                                      'leftJob': [leftJob], 
+                                      'takingMedication': [takingMedication], 
+                                      'diagonsedBefore': [diagonsedBefore], 
+                                      'urgencyLevel': [-1.0]
+                                      })
+        
+        #update the dataframe
+        df_global = pd.concat([df_global, df_temp], axis=0) ####### TODO: REPLACE THE ROW WHERE ID MATCH NOT CONTENATE!!!
+        df_global.reset_index(drop=True, inplace=True)
+                
+        ##### NEED TO UPDATE THE COLS IN BTREE, NOT INSERT
+        df_temp.set_index("studentIds", drop=False, inplace=True)
+        temp_dict = df_temp.to_dict(orient="index")
+        
+        for p_id, p_info in temp_dict.items():
+            B.insert((hash(p_id), p_id, p_info))
 
         return redirect(url_for('survey_submitted', studentID=studentID))      
     return render_template('survey.html', studentID=studentID)
