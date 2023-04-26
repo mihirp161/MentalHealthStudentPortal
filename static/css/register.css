@@ -19,7 +19,8 @@
   input[type="text"],
   input[type="tel"],
   select,
-  input[type="date"] {
+  input[type="date"],
+  input[type="password"] {
     width: 100%;
     padding: 0.5rem;
     border: none;
@@ -53,3 +54,6 @@
     background-color: #0069d9;
   }
   
+  .error{
+    color: red;
+  }

@@ -29,6 +29,14 @@ class BTree:
             tpl[2] = dict
             x.keys[i] = tuple(tpl)
 
+
+    def pull_node_info(self, k):
+        K = self.search(hash(k))
+        if K != None:
+            (x, i) = K
+            print("The studentID has following: ", x.keys[i][2])
+            
+            
     def search(self, k, x=None):
         """Search for key 'k' at position 'x'.
         If 'x' is not specified, then search occurs from root.

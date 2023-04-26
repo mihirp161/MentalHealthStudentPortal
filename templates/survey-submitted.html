@@ -8,7 +8,7 @@
     <title>Survey Submitted</title>
     <script>
         setTimeout(function () {
-          window.location.href = "{{url_for('student_home')}}";
+          window.location.href = "{{ url_for('student_home', studentID=studentID )}}";
         }, 10000); //10 seconds in milliseconds
       </script>
   </head>
@@ -18,10 +18,10 @@
       <h1>Thanks for submitting the survey!!</h1>
     </header>
     <div class="text">
-        <p>Dear {{name}},</p>
-        <p>Thank you for your survey submission.</p>
+        <p>Dear {{ name }},</p>
+        <p>Thank you for your survey submission for student ID {{ studentID }}.</p>
         <p>You will be redirected to another page shortly.</p>
-        <p>If it takes longer than 10 seconds, please click <a href="{{url_for('student_home')}}">here</a></p>
+        <p>If it takes longer than 10 seconds, please click <a href="{{url_for('student_home', studentID=studentID)}}">here</a></p>
         <p>Best regards,</p>
         <p>The MentalHealth Team</p>
     </div>
