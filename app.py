@@ -5,6 +5,7 @@ import time
 import random
 import re
 from datetime import datetime
+from datetime import date
 import project3a_BTree as b3
 from hash_table import HashTable
 import csv
@@ -258,7 +259,7 @@ def register():
         hash_table.ID += 1
         studentIds = "DD" + str(hash_table.ID)
         student_list = [studentName, studentPhone, studentEmail, studentAddress, studentIds,
-                        studentPassword, datetime.date.today(), studentSexualOrientation,
+                        studentPassword, date.today(), studentSexualOrientation,
                         studentAgeGroup, studentRace, studentDOB, studentAreaOfInterest,
                         studentInstitutionName, studentAcademicLevel, studentGPA, studentMaritalStatus,
                         studentHousingCondition, studentFamilySize, studentParentalMaritalStatus, studentEducationOfMother,
@@ -380,13 +381,15 @@ def register_OBO():
         # Hash Table
         hash_table.ID += 1
         studentIds = "DD" + str(hash_table.ID)
+        
         student_list = [studentName, studentPhone, studentEmail, studentAddress, studentIds,
-                        "N/A", datetime.date.today(), studentSexualOrientation,
+                        "N/A", date.today(), studentSexualOrientation,
                         studentAgeGroup, studentRace, studentDOB, studentAreaOfInterest,
                         studentInstitutionName, studentAcademicLevel, studentGPA, studentMaritalStatus,
                         studentHousingCondition, studentFamilySize, studentParentalMaritalStatus,
                         studentEducationOfMother,
                         studentEducationOfFather, "N/A", "N/A"]
+        
         t0 = time.time()
         hash_table.put(studentIds, student_list)
         t1 = time.time()         
@@ -611,7 +614,16 @@ def profile():
     email = student_information[2]
     school = student_information[12]
     year = student_information[13]
-    dob = str(datetime.strptime(str(student_information[10]), "%Y-%m-%d %H:%M:%S").date())
+    
+    # dob = str(datetime.strptime(str(student_information[10]), "%Y-%m-%d %H:%M:%S").date())
+    
+    tempDob = str(student_information[10])
+
+    try:
+        dt_obj = datetime.strptime(tempDob, "%Y-%m-%d")
+        dob = tempDob
+    except:
+        dob = str(datetime.strptime(str(student_information[10]), "%Y-%m-%d %H:%M:%S").date())
 
     if studentID == None:
         studentID = ID
@@ -695,7 +707,15 @@ def update_student_profile():
     email = student_information[2]
     school = student_information[12]
     year = student_information[13]
-    dob = str(datetime.strptime(str(student_information[10]), "%Y-%m-%d %H:%M:%S").date())
+    
+    tempDob = str(student_information[10])
+
+    try:
+        dt_obj = datetime.strptime(tempDob, "%Y-%m-%d")
+        dob = tempDob
+    except:
+        dob = str(datetime.strptime(str(student_information[10]), "%Y-%m-%d %H:%M:%S").date())
+
     print(dob)
     ID = student_information[4]
     urgencyLevel = student_information[-1]
