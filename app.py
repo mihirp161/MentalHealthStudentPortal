@@ -223,7 +223,7 @@ def survey():
                               lessenedEnergy, lessenedActive, reducedDecisionMaking, reducedConcentration, reducedSelfConfidence,
                               reducedSelfEsteem, ideasOfGuilt, ideasOfUnworthiness, bleakViewsOfTheFuture, pessimisticViewsOfTheFuture,
                               ideasOrActsOfSelfHarmOrSuicide, disturbedSleep, diminishedAppetite, understandingParent, missedClasses,
-                              smokeDrink, lostRelative, relationshipTrouble, plagrisedHw, leftJob, takingMedication, diagnosedBefore]
+                              smokeDrink, lostRelative, relationshipTrouble, plagrisedHw, leftJob, takingMedication, diagnosedBefore, 0.0]
         student_information.extend(survey_information)
 
 
