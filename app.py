@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 import pandas as pd
+import numpy as np
 import time
-import re
 import random
 from datetime import datetime
 import project3a_BTree as b3
@@ -11,8 +11,6 @@ pd.set_option('display.max_rows', None)
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set a secret key for session
-# TO DO
-# Read and store the datasets in a variable to be used by the application below
 
 #Hash Table
 
@@ -25,6 +23,7 @@ df_global_nrows = 0
 
 # Read and store the datasets in a variable to be used by the application below
 B = b3.BTree(500)
+
 df_global = pd.DataFrame(columns=["studentName",
                             "studentPhone",
                             "studentEmail",
@@ -84,7 +83,7 @@ def index():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    print("home")
+       
     if 'studentID' in session:
         session.pop('studentID', None)  # Clear studentID from session if it exists
     if 'employeeID' in session:
@@ -132,10 +131,13 @@ def home():
                 # If the credentials are invalid, show an error message
                 error_message = 'Invalid EmployeeID or password'
                 return render_template('index.html', error_message=error_message)
+            
+    
     return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    
     if request.method == "POST":
         studentName = request.form.get("name")
         studentPhone = request.form.get("phone")
@@ -227,7 +229,7 @@ def register():
                                 'leftJob': [-1], 
                                 'takingMedication': [-1], 
                                 'diagnosedBefore': [-1], 
-                                'urgencyLevel': [-99999]
+                                'urgencyLevel': [0]
                                       })
         
         #update the dataframe
@@ -238,15 +240,25 @@ def register():
         df_temp.set_index("studentIds", drop=False, inplace=True)
         temp_dict = df_temp.to_dict(orient="index")
         
+        t0 = time.time()
+                
         for p_id, p_info in temp_dict.items():
             B.insert((hash(p_id), p_id, p_info))
             
-
+        t1 = time.time()
+         
+        print("\nTotal time to insert single datum: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
+         
+        #---------------------------
+        df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+        #---------------------------
+        
         return render_template('succesfully-registered.html', name = studentName, ID=studentIds)
     return render_template('register.html')
 
 @app.route('/register-OBO', methods=['GET', 'POST'])
 def register_OBO():
+    
     if request.method == "POST":
         studentName = request.form.get("name")
         studentPhone = request.form.get("phone")
@@ -340,7 +352,7 @@ def register_OBO():
                                 'leftJob': [-1], 
                                 'takingMedication': [-1], 
                                 'diagnosedBefore': [-1], 
-                                'urgencyLevel': [-1.0]
+                                'urgencyLevel': [0]
                             })
         
         #update the dataframe
@@ -351,10 +363,20 @@ def register_OBO():
         df_temp.set_index("studentIds", drop=False, inplace=True)
         temp_dict = df_temp.to_dict(orient="index")
         
+        t0 = time.time()
+                 
         for p_id, p_info in temp_dict.items():
             B.insert((hash(p_id), p_id, p_info))
             
-
+        t1 = time.time()
+         
+        print("\nTotal time to insert single datum: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")      
+        
+        #---------------------------
+        df_global.tail().("Data/fake_dataframe_testSubset.xlsx", index=False)
+        #---------------------------
+        
+        
         return render_template('succesfully-registered-obo.html', name = studentName, ID=studentIds)
     return render_template('register-OBO.html')
 
@@ -363,7 +385,9 @@ def student_home():
     #TO DO GET FIRST AND LAST NAME from the Hash Table according to the student ID
     studentIds = session.get('studentID')
     
+     
     name =  B.get_keys_value(k = studentIds, v = 'studentName')
+    
 
     return render_template('student-home.html', name=name, studentID=studentIds)
 
@@ -395,8 +419,9 @@ def to_bool(s):
 
 @app.route('/survey', methods=['GET', 'POST'])
 def survey():
+    
     studentID = session.get('studentID')
-    print(studentID)
+
     if request.method == "POST":
         depressedMood = request.form.get("depressed-mood")
         depressedHopeless = request.form.get("depressed-hopeless")
@@ -475,18 +500,54 @@ def survey():
         df_global.set_index("studentIds", drop=False, inplace=True)
         
         
-        cols_to_norm = df_global.loc[:, 'depressedMood':'diagnosedBefore'].columns
+
+        # Convert 'urgencyLevel' column to float
+        df_global['urgencyLevel'] = df_global['urgencyLevel'].astype(float)
         
-        df_global['urgencyLevel'] = df_global[cols_to_norm].apply(lambda x: (x - x.min()) / (x.max() - x.min()))
+        # Loop through rows in df.
+        for index, row in df_global.loc[:, 'depressedMood':'urgencyLevel'].iterrows():
+            ideasOrActsOfSelfHarmOrSuicide = row["ideasOrActsOfSelfHarmOrSuicide"]
+            
+            if ideasOrActsOfSelfHarmOrSuicide >= 1:
+                df_global.at[index, 'urgencyLevel'] = 1.0
+            else:
+                symptoms = row.tolist()[:-1]  # exclude 'urgencyLevel' column
+                
+                # Calculate average of symptom values in df_global
+                avg = sum(symptoms) / len(symptoms)
+                
+                # Check if denominator is not zero
+                if max(symptoms) - min(symptoms) > 0:
+                    # Normalize average value to be between 0.00 and 1.00
+                    normalized_avg = (avg - min(symptoms)) / (max(symptoms) - min(symptoms))
+                else:
+                    # Set normalized average value to NaN if denominator is zero
+                    normalized_avg = np.nan
+                
+                # Assign normalized average value to 'urgencyLevel' in df_global
+                df_global.at[index, 'urgencyLevel'] = normalized_avg
+        
+        # Replace NaN values with 0.00
+        df_global['urgencyLevel'].fillna(0.00, inplace=True)
         
         
         df_temp.loc[df_temp['studentIds'] == studentID, 'urgencyLevel'] =  df_global['urgencyLevel'].iloc[-1]
 
-        
+         
+        t0 = time.time()
+         
         for (col_name, col_value) in df_temp.iteritems():
             B.update_keys(studentID, col_name, col_value.values[0])
         
-        B.pull_node_info(studentID)
+        t1 = time.time()
+         
+        print("\nTotal time to update data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
+        
+        #B.pull_node_info(studentID)
+        
+        #---------------------------
+        df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+        #---------------------------
         
         return redirect(url_for('survey_submitted', studentID=studentID))      
     return render_template('survey.html', studentID=studentID)
@@ -494,7 +555,6 @@ def survey():
 @app.route('/survey-submitted', methods=['GET', 'POST'])
 def survey_submitted():
     studentID = session.get('studentID')
-    print(studentID)
     #Return student name from ID
     name = B.get_keys_value(k = studentID, v = 'studentName')
     return render_template('survey-submitted.html', name = name, studentID=studentID)
@@ -526,30 +586,56 @@ def profile():
         action = request.form['action']
         if action == 'update':
             # handle update action
-            print("update")
+
             #name = search student ID get their name
             #update value on dataset
             address = request.form.get("address")
             phone = request.form.get("phone")
             year = request.form.get("year")
             
+            
+            t0 = time.time()
+                         
             # Update user profile
             B.update_keys(studentID, 'studentAddress', address)
             B.update_keys(studentID, 'studentPhone', phone)
             B.update_keys(studentID, 'studentAcademicLevel', year)
-
+            
+            t1 = time.time()
+             
+            print("\nTotal time to update data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
+            
+             
+            df_global.loc[df_global['studentIds'] == studentID, 'studentAddress'] =  address
+            df_global.loc[df_global['studentIds'] == studentID, 'studentPhone'] =  phone
+            df_global.loc[df_global['studentIds'] == studentID, 'studentAcademicLevel'] =  year
+            
+            #---------------------------
+            df_global.tail().("Data/fake_dataframe_testSubset.xlsx", index=False)
+            #---------------------------
+            
             return render_template('profile.html', name=name, address=address, phone=phone,email=email, school=school, year=year, dob=dob, ID = ID)    
 
         elif action == 'delete':
-            #TO DO:
+            
             # Delete user profile
-            print("delete")
             if 'studentID' in session:
                 
-                #~~~~~~~~!!!TODO!!~~~~~~~~
-                #****** change the data-frame and the data structure *****
                 
+                df_global.drop(df_global.loc[df_global['studentIds']==studentID].index, inplace=True)
+                
+                
+                t0 = time.time()
+                 
                 B.delete(B.root, hash(studentID))
+                
+                t1 = time.time()
+                 
+                print("\nTotal time to delete single datum: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
+                
+                #---------------------------
+                df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+                #---------------------------                
                 
                 session.pop('studentID', None)  # Clear studentID from session if it exists
             return render_template('account-deleted.html')
@@ -559,10 +645,7 @@ def profile():
 
 @app.route('/update-student-profile', methods=['GET', 'POST'])
 def update_student_profile():
-    
-    #TO DO:
-    #Query the variable to get the following info
-    #name = search student ID get their name
+
     
     studentID = session.get('studentID')
 
@@ -580,6 +663,16 @@ def update_student_profile():
     dob = str(datetime.strptime(str(B.get_keys_value(k = studentID, v = 'studentDOB')), "%Y-%m-%d %H:%M:%S").date()) #"YYYY-dd-mm" Must be in this format!!
     urgencyLevel = B.get_keys_value(k = studentID, v = 'urgencyLevel') 
     
+    
+    tempUrgencyLevel = urgencyLevel
+    if type(tempUrgencyLevel) == str: urgencyLevel = "Survey not Submitted"
+    elif tempUrgencyLevel >=0.85: urgencyLevel = "Extreme"
+    elif tempUrgencyLevel >=0.7: urgencyLevel = "High"
+    elif tempUrgencyLevel >=0.3: urgencyLevel = "Medium"
+    else: urgencyLevel = "Low"
+    
+    
+    
     if request.method == 'POST':
         action = request.form['action']
         if action == 'update':
@@ -593,19 +686,48 @@ def update_student_profile():
             phone = request.form.get("phone")
             year = request.form.get("year")
             
-            #TO DO:
+            
+            t0 = time.time()
+             
             # Update user profile
             B.update_keys(studentID, 'studentAddress', address)
             B.update_keys(studentID, 'studentPhone', phone)
             B.update_keys(studentID, 'studentAcademicLevel', year)
             
+            t1 = time.time()
+             
+            print("\nTotal time to update data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
+            
+            #B.pull_node_info(studentID)
+            
+            
+            df_global.loc[df_global['studentIds'] == studentID, 'studentAddress'] =  address
+            df_global.loc[df_global['studentIds'] == studentID, 'studentPhone'] =  phone
+            df_global.loc[df_global['studentIds'] == studentID, 'studentAcademicLevel'] =  year
+            
+            #---------------------------
+            df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+            #---------------------------
+            
             return render_template('update-student-profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID, urgencyLevel=urgencyLevel)    
 
         elif action == 'delete':
           
-            #TO DO:
-            # ~~~~~~~~~~~~~Delete user profile~~~~~~~~~~~~~~~~~
-            print("delete")
+            df_global.drop(df_global.loc[df_global['studentIds']==studentID].index, inplace=True)
+
+            
+            t0 = time.time()
+
+            B.delete(B.root, hash(studentID))
+            
+            t1 = time.time()
+             
+            print("\nTotal time to delete single data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
+            
+            #---------------------------
+            df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+            #---------------------------
+            
             return render_template('account-deleted-OBO.html')
         elif action == 'back':
             return redirect(url_for('employee_home'))        
@@ -617,7 +739,6 @@ def search_student():
     if request.method == 'POST':
         
         studentID = request.form['student-id']
-        print(studentID)
 
         #earch Student    
         #If found:
@@ -628,12 +749,23 @@ def search_student():
         else:
             error_message = 'Invalid StudentID: ' + studentID
             return render_template('search-student.html', error_message=error_message)
+        
     return render_template('search-student.html')
+
+@app.route('/backup', methods=['GET'])
+def backup():
+    
+    # Python function to print "backup"
+    df_global.("Data/fake_mentalHealth_data.xlsx", index=False)
+    
+    # You can also return a response to the client if needed
+    return redirect(url_for('employee_home'))    
+
 
 if __name__ == '__main__':
     
     #----------- btree
-    df_global = pd.read_excel('Data/fake_dataframe_testSubset.xlsx')
+    df_global = pd.read_excel('Data/fake_mentalHealth_data.xlsx')
     df_global.index = range(len(df_global.index))
     
     
@@ -642,10 +774,15 @@ if __name__ == '__main__':
     
     df_global.set_index("studentIds", drop=False, inplace=True)
     dict = df_global.to_dict(orient="index")
-        
+       
+   
+    
+    t0 = time.time()
     for p_id, p_info in dict.items():
         B.insert((hash(p_id), p_id, p_info))
+    t1 = time.time()
     
+    print("\nTotal time to insert data:: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
     #-----------------
     
     app.run()
