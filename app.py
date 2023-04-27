@@ -151,8 +151,8 @@ def register_OBO():
         # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
         # Return its ID to the variable below
 
-
-    return render_template('succesfully-registered-obo.html', name = studentName, ID=studentIds)
+        return render_template('succesfully-registered-obo.html', name = studentName, ID=studentIds)
+    return render_template('register-OBO.html')
 
 @app.route('/student-home', methods=['GET'])
 def student_home():
@@ -398,5 +398,13 @@ def search_student():
             error_message = 'Invalid StudentID: ' + studentID
             return render_template('search-student.html', error_message=error_message)
     return render_template('search-student.html')
+
+@app.route('/backup', methods=['GET'])
+def backup():
+    # Python function to print "backup"
+    print("backup")
+    # You can also return a response to the client if needed
+    return redirect(url_for('employee_home'))     
+
 if __name__ == '__main__':    
     app.run()
