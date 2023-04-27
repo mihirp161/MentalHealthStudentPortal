@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from hash_table import HashTable
 import datetime
+import csv
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set a secret key for session
@@ -9,7 +10,18 @@ app.secret_key = 'your_secret_key'  # Set a secret key for session
 
 #Hash Table
 
-hash_table = HashTable();
+hash_table = HashTable()
+
+with open('Data/fake_mentalHealth_data.csv') as csv_file:
+    csv_reader = csv.reader(csv_file)
+    next(csv_reader)
+    for idx, row in enumerate(csv_reader):
+        # h.put(row[4], row)
+        #print(f'{idx}: {h._hash(row[4])}')
+        hash_table.put(row[4], row)
+        hash_table.ID = idx + 1
+
+print(f"ID starts with {hash_table.ID + 1}")
 
 
 #B-Tree need to store Student ID created by Hash Function
@@ -105,7 +117,7 @@ def register():
                         studentAgeGroup, studentRace, studentDOB, studentAreaOfInterest,
                         studentInstitutionName, studentAcademicLevel, studentGPA, studentMaritalStatus,
                         studentHousingCondition, studentFamilySize, studentParentalMaritalStatus, studentEducationOfMother,
-                        studentEducationOfFather]
+                        studentEducationOfFather, "N/A", "N/A"]
 
         hash_table.put(studentIds, student_list)
 
@@ -144,7 +156,7 @@ def register_OBO():
                         studentInstitutionName, studentAcademicLevel, studentGPA, studentMaritalStatus,
                         studentHousingCondition, studentFamilySize, studentParentalMaritalStatus,
                         studentEducationOfMother,
-                        studentEducationOfFather, 0.0]
+                        studentEducationOfFather, "N/A", "N/A"]
         hash_table.put(studentIds, student_list)
 
         # TO DO: 
