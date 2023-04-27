@@ -1,25 +1,26 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 import pandas as pd
+import numpy as np
 import time
-import re
 import random
 from datetime import datetime
 import project3a_BTree as b3
+from hash_table import HashTable
+import datetime
+import csv
+
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set a secret key for session
 # TO DO
 # Read and store the datasets in a variable to be used by the application below
 
-#Hash Table
-
 #B-Tree need to store Student ID created by Hash Function
-
 # Reference: https://pythonexamples.org/python-list-of-dictionaries/
-
 #other global vars (counter for studentID)
 df_global_nrows = 0
-
 # Read and store the datasets in a variable to be used by the application below
 B = b3.BTree(500)
 df_global = pd.DataFrame(columns=["studentName",
@@ -75,6 +76,23 @@ df_global = pd.DataFrame(columns=["studentName",
 
 #-----------------------------------------------------------------------------------
 
+hash_table = HashTable()
+with open('Data/fake_mentalHealth_data.csv') as csv_file:
+    csv_reader = csv.reader(csv_file)
+    next(csv_reader)
+    t0 = time.time()
+    for idx, row in enumerate(csv_reader):
+        # h.put(row[4], row)
+        #print(f'{idx}: {h._hash(row[4])}')
+        hash_table.put(row[4], row)
+        hash_table.ID = idx + 1
+    t1 = time.time()    
+    print("\nTotal time to insert data:: {:.05f} seconds for HashTable: ".format(t1-t0), "\n\n")
+# print(f"ID starts with {hash_table.ID + 1}")
+
+
+#B-Tree need to store Student ID created by Hash Function
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -91,7 +109,8 @@ def home():
         studentID = request.form['studentID']
         studentPassword  = request.form['password']
         userType = request.form['user-type']
-
+        print(studentID)
+        print(studentPassword)
         #TO DO:
         #If student, go to the B_Tree
         if userType == "student":
@@ -154,16 +173,14 @@ def register():
         studentEducationOfFather = request.form.get("education-father")
         studentPassword = request.form.get("password")
         
+        #BTree
         # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
-        # Return its ID to the variable below 
-        
+        # Return its ID to the variable below         
         global df_global_nrows
         global df_global
         
-        studentIds = "DD" + str(df_global_nrows +1)
-        
-        df_global_nrows = df_global_nrows + 1
-        
+        studentIds = "DD" + str(df_global_nrows +1)        
+        df_global_nrows = df_global_nrows + 1     
         
         #prep to include items in the btree & df
         # randomly assign employees
@@ -235,13 +252,29 @@ def register():
         df_temp.set_index("studentIds", drop=False, inplace=True)
         temp_dict = df_temp.to_dict(orient="index")
         
+        t0 = time.time()
         for p_id, p_info in temp_dict.items():
             B.insert((hash(p_id), p_id, p_info))
-            
-        
-        #TO DO store the data in the B Tree and Hash Table
-        
+        t1 = time.time()         
+        print("\nTotal time to insert single datum: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")              
 
+        #HashTable
+        hash_table.ID += 1
+        studentIds = "DD" + str(hash_table.ID)
+        student_list = [studentName, studentPhone, studentEmail, studentAddress, studentIds,
+                        studentPassword, datetime.date.today(), studentSexualOrientation,
+                        studentAgeGroup, studentRace, studentDOB, studentAreaOfInterest,
+                        studentInstitutionName, studentAcademicLevel, studentGPA, studentMaritalStatus,
+                        studentHousingCondition, studentFamilySize, studentParentalMaritalStatus, studentEducationOfMother,
+                        studentEducationOfFather, "N/A", "N/A"]
+        t0 = time.time()
+        hash_table.put(studentIds, student_list)
+        t1 = time.time()         
+        print("\nTotal time to insert single datum: {:.05f} seconds for HashTable: ".format(t1-t0), "\n\n")
+
+        #---------------------------
+        df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+        #---------------------------
         return render_template('succesfully-registered.html', name = studentName, ID=studentIds)
     return render_template('register.html')
 
@@ -267,19 +300,11 @@ def register_OBO():
         studentEducationOfMother = request.form.get("education-mother")
         studentEducationOfFather = request.form.get("education-father")
         
-
-        #TO DO store the data in the B Tree and Hash Table
-
-        # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
-        # Return its ID to the variable below 
-        
+        #BTree
         global df_global_nrows
-        global df_global
-        
-        studentIds = "DD" + str(df_global_nrows +1)
-        
-        df_global_nrows = df_global_nrows + 1
-        
+        global df_global        
+        studentIds = "DD" + str(df_global_nrows +1)        
+        df_global_nrows = df_global_nrows + 1       
         
         #prep to include items in the btree & df
         # randomly assign employees
@@ -345,32 +370,47 @@ def register_OBO():
         
         #update the dataframe
         df_global = pd.concat([df_global, df_temp], axis=0)
-        df_global.reset_index(drop=True, inplace=True)
-                
+        df_global.reset_index(drop=True, inplace=True)                
 
         df_temp.set_index("studentIds", drop=False, inplace=True)
         temp_dict = df_temp.to_dict(orient="index")
         
+        t0 = time.time()
         for p_id, p_info in temp_dict.items():
             B.insert((hash(p_id), p_id, p_info))
-            
+        t1 = time.time()         
+        print("\nTotal time to insert single datum: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
 
+        # Hash Table
+        hash_table.ID += 1
+        studentIds = "DD" + str(hash_table.ID)
+        student_list = [studentName, studentPhone, studentEmail, studentAddress, studentIds,
+                        "N/A", datetime.date.today(), studentSexualOrientation,
+                        studentAgeGroup, studentRace, studentDOB, studentAreaOfInterest,
+                        studentInstitutionName, studentAcademicLevel, studentGPA, studentMaritalStatus,
+                        studentHousingCondition, studentFamilySize, studentParentalMaritalStatus,
+                        studentEducationOfMother,
+                        studentEducationOfFather, "N/A", "N/A"]
+        t0 = time.time()
+        hash_table.put(studentIds, student_list)
+        t1 = time.time()         
+        print("\nTotal time to insert single datum: {:.05f} seconds for HashTable: ".format(t1-t0), "\n\n")
+
+        #---------------------------
+        df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+        #---------------------------
         return render_template('succesfully-registered-obo.html', name = studentName, ID=studentIds)
     return render_template('register-OBO.html')
 
 @app.route('/student-home', methods=['GET'])
 def student_home():
-    #TO DO GET FIRST AND LAST NAME from the Hash Table according to the student ID
-    studentIds = session.get('studentID')
-    
+    studentIds = session.get('studentID')    
     name =  B.get_keys_value(k = studentIds, v = 'studentName')
-
     return render_template('student-home.html', name=name, studentID=studentIds)
 
 @app.route('/employee-home', methods=['GET'])
 def employee_home():    
   
-    #Get employee name from the B Tree according to the employeesId
     employeesId = session.get('employeeID')
     name = "First Last"
     
@@ -384,8 +424,7 @@ def employee_home():
     for eid, ename in temp_enam_list.items():
       if str(eid) == str(employeesId):
           name = ename
-          break;
-        
+          break;        
     return render_template('employee-home.html', name=name)
 
 @app.route('/survey', methods=['GET', 'POST'])
@@ -495,6 +534,14 @@ def survey():
         #####B.update_keys(studentID, 'studentAcademicLevel', year)
         for p_id, p_info in temp_dict.items():
             B.insert((hash(p_id), p_id, p_info))
+        #Hash Map
+        student_information = hash_table.get(studentID)
+        survey_information = [depressedMood, depressedHopeless, lossOfInterestAndEnjoyment, lossOfPleasureAndEnjoyment,
+                              lessenedEnergy, lessenedActive, reducedDecisionMaking, reducedConcentration, reducedSelfConfidence,
+                              reducedSelfEsteem, ideasOfGuilt, ideasOfUnworthiness, bleakViewsOfTheFuture, pessimisticViewsOfTheFuture,
+                              ideasOrActsOfSelfHarmOrSuicide, disturbedSleep, diminishedAppetite, understandingParent, missedClasses,
+                              smokeDrink, lostRelative, relationshipTrouble, plagrisedHw, leftJob, takingMedication, diagnosedBefore, 0.0]
+        student_information.extend(survey_information)
 
         return redirect(url_for('survey_submitted', studentID=studentID))      
     return render_template('survey.html', studentID=studentID)
@@ -505,6 +552,9 @@ def survey_submitted():
     print(studentID)
     #Return student name from ID
     name = B.get_keys_value(k = studentID, v = 'studentName')
+ 
+    student_information = hash_table.get(studentID)
+    name = student_information[0]
     return render_template('survey-submitted.html', name = name, studentID=studentID)
 
 @app.route('/deleted', methods=['GET'])
@@ -513,13 +563,7 @@ def account_deleted():
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    #TO DO:
     studentID = session.get('studentID')
-    # studentID = request.args.get('studentID')
-
-    ID = studentID
-    #Query the variable based on the ID to get the following info
-    #name = search student ID get their name
     name = B.get_keys_value(k = studentID, v = 'studentName')
     address =  B.get_keys_value(k = studentID, v = 'studentAddress')
     phone = B.get_keys_value(k = studentID, v = 'studentPhone')
@@ -528,9 +572,21 @@ def profile():
     year = B.get_keys_value(k = studentID, v = 'studentAcademicLevel') 
     dob = str(datetime.strptime(str(B.get_keys_value(k = studentID, v = 'studentDOB')), "%Y-%m-%d %H:%M:%S").date()) #"YYYY-dd-mm" Must be in this format!!
     
+    #Hash Table
+    student_information = hash_table.get(studentID)
+
+
+    ID = studentID
+    name = student_information[0]
+    address = student_information[3]
+    phone = student_information[1]
+    email = student_information[2]
+    school = student_information[12]
+    year = student_information[13]
+    dob = student_information[10] 
     if studentID == None:
         studentID = ID
-    print(studentID)
+
     if request.method == 'POST':
         action = request.form['action']
         if action == 'update':
@@ -542,24 +598,36 @@ def profile():
             phone = request.form.get("phone")
             year = request.form.get("year")
             
-            # Update user profile
+            #BTREE
             B.update_keys(studentID, 'studentAddress', address)
             B.update_keys(studentID, 'studentPhone', phone)
             B.update_keys(studentID, 'studentAcademicLevel', year)
 
 
+            #Hash Table
+            student_information[3] = address
+            student_information[1] = phone
+            student_information[13] = year
             return render_template('profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID)    
 
         elif action == 'delete':
-            #TO DO:
-            # Delete user profile
-            print("delete")
+           #BTree
+            df_global.drop(df_global.loc[df_global['studentIds']==studentID].index, inplace=True)            
+            t0 = time.time()
+            B.delete(B.root, hash(studentID))            
+            t1 = time.time()             
+            print("\nTotal time to delete single data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
+
+            t0 = time.time()
+            hash_table.remove(studentID)
+            t1 = time.time()             
+            print("\nTotal time to delete single data: {:.05f} seconds for HashTable: ".format(t1-t0), "\n\n")
+
+             #---------------------------
+            df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+            #--------------------------- 
+
             if 'studentID' in session:
-                
-                #~~~~~~~~!!!TODO!!~~~~~~~~
-                #****** change the data-frame and the data structure *****
-                
-                
                 session.pop('studentID', None)  # Clear studentID from session if it exists
             return render_template('account-deleted.html')
         elif action == 'back':
@@ -568,18 +636,14 @@ def profile():
 
 @app.route('/update-student-profile', methods=['GET', 'POST'])
 def update_student_profile():
-    
-    #TO DO:
-    #Query the variable to get the following info
-    #name = search student ID get their name
-    
+       
     studentID = session.get('studentID')
-
-
+    #Hash Table
+    student_information = hash_table.get(studentID)
     employeesId = session.get('employeeID')
-    print(studentID)
-    print(employeesId)
     ID = studentID
+    
+    #BTree
     name = B.get_keys_value(k = studentID, v = 'studentName')
     address =  B.get_keys_value(k = studentID, v = 'studentAddress')
     phone = B.get_keys_value(k = studentID, v = 'studentPhone')
@@ -589,33 +653,67 @@ def update_student_profile():
     dob = str(datetime.strptime(str(B.get_keys_value(k = studentID, v = 'studentDOB')), "%Y-%m-%d %H:%M:%S").date()) #"YYYY-dd-mm" Must be in this format!!
     urgencyLevel = B.get_keys_value(k = studentID, v = 'urgencyLevel') 
     
-    if request.method == 'POST':
-        student_id = request.args.get('student_info')
-        action = request.form['action']
-        if action == 'update':
-          
-            # handle update action
-            print("update")
-            #name = search student ID get their name
-            #update value on dataset
+    #Hash Table
 
+    # name = student_information[0]
+    # address = student_information[3]
+    # phone = student_information[1]
+    # email = student_information[2]
+    # school = student_information[12]
+    # year = student_information[13]
+    # dob = student_information[10] 
+    # ID = student_information[4]
+    # urgencyLevel = student_information[-1]
+
+    if request.method == 'POST':
+        action = request.form['action']
+        if action == 'update':          
             address = request.form.get("address")
             phone = request.form.get("phone")
             year = request.form.get("year")
             
-            #TO DO:
-            # Update user profile
+            #BTree
+            t0 = time.time()
             B.update_keys(studentID, 'studentAddress', address)
             B.update_keys(studentID, 'studentPhone', phone)
             B.update_keys(studentID, 'studentAcademicLevel', year)
+            t1 = time.time()
+            print("\nTotal time to update data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
             
+            df_global.loc[df_global['studentIds'] == studentID, 'studentAddress'] =  address
+            df_global.loc[df_global['studentIds'] == studentID, 'studentPhone'] =  phone
+            df_global.loc[df_global['studentIds'] == studentID, 'studentAcademicLevel'] =  year
+
+            #Hash Table
+            t0 = time.time()
+            student_information[3] = address
+            student_information[1] = phone
+            student_information[13] = year
+            t1 = time.time()
+            print("\nTotal time to update data: {:.05f} seconds for HashTable: ".format(t1-t0), "\n\n")
+
+            #---------------------------
+            df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+            #---------------------------
             return render_template('update-student-profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID, urgencyLevel=urgencyLevel)    
 
         elif action == 'delete':
-          
-            #TO DO:
-            # Delete user profile
-            print("delete")
+
+            df_global.drop(df_global.loc[df_global['studentIds']==studentID].index, inplace=True)
+            t0 = time.time()
+            B.delete(B.root, hash(studentID))            
+            t1 = time.time()             
+            print("\nTotal time to delete single data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
+
+            #Hash Table
+            t0 = time.time()
+            hash_table.remove(studentID)
+            t1 = time.time()             
+            print("\nTotal time to delete single data: {:.05f} seconds for HashTable: ".format(t1-t0), "\n\n")
+            #---------------------------
+            df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+            #---------------------------
+
             return render_template('account-deleted-OBO.html')
         elif action == 'back':
             return redirect(url_for('employee_home'))        
@@ -625,11 +723,9 @@ def update_student_profile():
 def search_student():
     # Get the student ID from the form
     if request.method == 'POST':
-        
         studentID = request.form['student-id']
-        print(studentID)
 
-        #earch Student    
+        #Search Student    
         #If found:
         if B.get_keys_value(k = studentID, v = 'studentIds') != None:
             session['studentID'] = studentID
@@ -640,23 +736,32 @@ def search_student():
             return render_template('search-student.html', error_message=error_message)
     return render_template('search-student.html')
 
+@app.route('/backup', methods=['GET'])
+def backup():
+    # Python function to print "backup"
+    df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
+    
+    # You can also return a response to the client if needed
+    return redirect(url_for('employee_home'))  
+
+
 if __name__ == '__main__':
     
     #----------- btree
-    df_global = pd.read_excel('Data/fake_dataframe_testSubset.xlsx')
+    df_global = pd.read_excel('Data/fake_mentalHealth_data.xlsx')
     df_global.index = range(len(df_global.index))
     
     
     df_global_nrows = int(''.join(filter(str.isdigit, df_global['studentIds'].iloc[-1]) ))   #initial id of the dataframe
-
     
     df_global.set_index("studentIds", drop=False, inplace=True)
     dict = df_global.to_dict(orient="index")
     
     
+    t0 = time.time()
     for p_id, p_info in dict.items():
         B.insert((hash(p_id), p_id, p_info))
-    
-    #-----------------
-    
+    t1 = time.time()    
+    print("\nTotal time to insert data:: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
+    #-----------------    
     app.run()

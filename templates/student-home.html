@@ -16,8 +16,8 @@
       <p class="profile-name">{{ name }}</p>
     </div>
     <div class="options">
-      <a href="{{url_for('survey')}}" class="option">Complete survey</a>
-      <a href="{{url_for('profile')}}" class="option">Update Profile Info</a>
+      <a href="{{url_for('survey', studentID=studentID)}}" class="option">Complete survey</a>
+      <a href="{{url_for('profile', studentID=studentID)}}" class="option">Update Profile Info</a>
       <a href="{{url_for('home')}}" class="option">Logout</a>
     </div>
   </main>

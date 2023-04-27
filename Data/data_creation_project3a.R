@@ -39,7 +39,8 @@ address <- paste0(pre_address$StreetAddress, ", ", cities,", ", pre_address$ZipC
 
 userids <- paste0("DD",1:100000)
 
-visitDateTime <- sample(rep(seq(as.POSIXct('2013/01/01'), as.POSIXct('2017/05/01'), by=paste0(sample(1:60, 1), " mins")), 30),
+visitDateTime <- sample(rep(seq(as.POSIXct('2013/01/01'), 
+                                as.POSIXct('2017/05/01'), by=paste0(sample(1:60, 1), " mins")), 30),
                         size = 100000)
 
 sexualOrientation <- sample(rep(c("Heterosexual", "Bisexual", "Homosexual", "Asexual"), 25000), size = 100000)   
@@ -102,10 +103,10 @@ areaOfInterest <-sample(rep(c("Agriculture, Agriculture Operations, and Related 
                               "Visual and Performing Arts"), 5000), size = 100000)
 
 institutionName <-sample(rep(c(paste0("University of ", state.name), 
-                               paste0(randomNames::randomNames(568 , name.sep= " "), "High School"),
-                               paste0(randomNames::randomNames(568, name.sep= " "), "Elementary School"),
-                               paste0(randomNames::randomNames(568, which.names = "First"), "Community College"),
-                               paste0(randomNames::randomNames(568, which.names = "Last"), "University")),
+                               paste0(randomNames::randomNames(568 , name.sep= " "), " High School"),
+                               paste0(randomNames::randomNames(568, name.sep= " "), " Elementary School"),
+                               paste0(randomNames::randomNames(568, which.names = "First"), " Community College"),
+                               paste0(randomNames::randomNames(568, which.names = "Last"), " University")),
                              2000), size = 100000)
 
 academicLevel <- sample(rep(c("Freshman", "Sophomore", "Junior", "Senior"), 25000), size = 100000)
@@ -164,7 +165,7 @@ questions_colnames <- c("depressedMood", # Are you feeling depressed?
                         "plagrisedHw", # Do you often copy assignments due to not being able to focus on your work?
                         "leftJob", #Were you let go from or did you resign your job recently?
                         "takingMedication", # Are you currently taking any presecribed medication?
-                        "diagonsedBefore" # Have you ever been diagonsed with depression or anxity before?
+                        "diagnosedBefore" # Have you ever been diagonsed with depression or anxity before?
 )
 
 employeesId <- sample(rep(c("E1",
@@ -206,3 +207,4 @@ fake_dataframe$urgencyLevel <- range01(rowSums(fake_dataframe[ ,24:49])/26)
 
 openxlsx::write.xlsx(fake_dataframe, "fake_mentalHealth_data.xlsx")
 
+openxlsx::write.xlsx(fake_dataframe[1:50, ], "fake_dataframe_testSubset.xlsx")

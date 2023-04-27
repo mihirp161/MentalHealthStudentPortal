@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/css/register.css" />
+    <title>Register OBO Student</title>
+  </head>
+  <body>
+    <script>
+      function validateForm()
+      {
+        // Get form values
+        const name = document.querySelector('#name').value;
+        const address = document.querySelector('#address').value;
+        const phone = document.querySelector('#phone').value;
+        const school = document.querySelector('#school').value;
+        const year = document.querySelector('#year').value;
+        const dob = document.querySelector('#dob').value;
+        const password = document.querySelector('#password').value; // Get password value
+        const sexualOrientation= document.querySelector('#sexual-orientation').value;
+        const ageGroup = document.querySelector('#age-group').value;
+        const race = document.querySelector('#race').value;
+        const areaOfInterest = document.querySelector('#area-of-interest').value;
+        const gpa = document.querySelector('#gpa').value;
+        const maritalStatus = document.querySelector('#marital-status').value;
+        const housingCondition = document.querySelector('#housing-condition').value;
+        const familySize = document.querySelector('#family-size').value;
+        const parentalMaritalStatus = document.querySelector('#parental-marital-status').value;
+        const educationMother = document.querySelector('#education-mother').value;
+        const educationFather = document.querySelector('#education-father').value;
+        // Validate form values (for example, check that required fields are not empty)
+        if (!name || !address || !phone || !school || !year || !dob || !password || !sexualOrientation || !ageGroup || !race || !areaOfInterest || !gpa || !maritalStatus || !housingCondition || !familySize || !parentalMaritalStatus || !educationMother || !educationFather) {
+          alert('Please fill in all required fields.');
+          return false;
+        }
+        return true;
+      }
+    </script>
+    <form onsubmit= "return validateForm()" class="registration-form" id="registration-form" action='register-OBO' method="POST">
+      <h2>Student Registration</h2>
+      <div class="form-field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div class="form-field">
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" required />
+      </div>
+      <div class="form-field">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" required />
+      </div>
+      <div class="form-field">
+        <label for="email">Email Address</label>
+        <input type="text" id="email" name="email" required />
+      </div>
+      <div class="form-field">
+        <label for="school">School Name</label>
+        <input type="text" id="school" name="school" required />
+      </div>
+      <div class="form-field">
+        <label for="year">Year</label>
+        <select id="year" name="year" required>
+          <option value="">Select a year</option>
+          <option value="Freshman">Freshman</option>
+          <option value="Sophomore">Sophomore</option>
+          <option value="Junior">Junior</option>
+          <option value="Senior">Senior</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required />
+      </div><div class="form-field">
+        <label for="sexual-orientation">What is your sexual orientation?</label>
+        <select id="sexual-orientation" name="sexual-orientation" required>
+          <option value="Heterosexual">Heterosexual</option>
+          <option value="Asexual">Asexual</option>
+          <option value="Homosexual">Homosexual</option>
+          <option value="Bisexual">Bisexual</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="age-group">Age Group</label>
+        <select id="age-group" name="age-group" required>
+          <option value="" disabled selected>Select an age group</option>
+          <option value="Adults (25-34 years)">Adults (25-34 years)</option>
+          <option value="Middle-aged Adults (35-50 years)">Middle-aged Adults (35-50 years)</option>
+          <option value="Youth (15-24 years)">Youth (15-24 years)</option>
+          <option value="Old-aged Adults (Above 50)">Old-aged Adults (Above 50)</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="race">Race</label>
+        <select id="race" name="race" required>
+          <option value="Asian alone">Asian alone</option>
+          <option value="Multiracial">Multiracial</option>
+          <option value="White alone, Hispanic">White alone, Hispanic</option>          
+          <option value="American Indian and Alaska Native alone">American Indian and Alaska Native alone</option>
+          <option value="Some Other Race alone">Some Other Race alone</option>
+          <option value="Hispanic">Hispanic</option>
+          <option value="Black or African American alone, non-Hispanic">Black or African American alone, non-Hispanic</option>
+          <option value="Black or African American alone, Hispanic">Black or African American alone, Hispanic</option>
+          <option value="Native Hawaiian and Other Pacific Islander alone">Native Hawaiian and Other Pacific Islander alone</option>
+          <option value="White alone, non-Hispanic">White alone, non-Hispanic</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="area-of-interest">Area of Interest</label>
+        <select id="area-of-interest" name="area-of-interest" required>
+          <option value="Mechanic and Repair Technologies/technicians">Mechanic and Repair Technologies/technicians</option>
+          <option value="English Language and Literature/letters">English Language and Literature/letters</option>
+          <option value="Psychology">Psychology</option>
+          <option value="Construction Trades">Construction Trades</option>
+          <option value="Science Technologies/technicians">Science Technologies/technicians</option>
+          <option value="Engineering Technologies and Engineering-Related Fields">Engineering Technologies and Engineering-Related Fields</option>
+          <option value="Liberal Arts and Sciences Studies and Humanities">Liberal Arts and Sciences Studies and Humanities</option>
+          <option value="Communication, Journalism, and Related Programs">Communication, Journalism, and Related Programs</option>
+          <option value="Family and Consumer Sciences/human Sciences">Family and Consumer Sciences/human Sciences</option>
+          <option value="Military Technologies and Applied Sciences">Military Technologies and Applied Sciences</option>
+          <option value="Biological and Biomedical Sciences">Biological and Biomedical Sciences</option>
+          <option value="Business, Management, Marketing, and Related Support Services">Business, Management, Marketing, and Related Support Services</option>
+          <option value="Theology and Religious Vocations">Theology and Religious Vocations</option>
+          <option value="Visual and Performing Arts">Visual and Performing Arts</option>
+          <option value="Parks, Recreation, Leisure, and Fitness Studies">Parks, Recreation, Leisure, and Fitness Studies</option>
+          <option value="Human Services">Human Services</option>
+          <option value="Health Professions and Related Programs">Health Professions and Related Programs</option>
+          <option value="Transportation and Materials Moving">Transportation and Materials Moving</option>
+          <option value="Physical Sciences">Physical Sciences</option>
+          <option value="Homeland Security, Law Enforcement, Firefighting">Homeland Security, Law Enforcement, Firefighting</option>
+          <option value="Natural Resources and Conservation">Natural Resources and Conservation</option>
+          <option value="Personal and Culinary Services">Personal and Culinary Services</option>
+          <option value="Precision Production">Precision Production</option>
+          <option value="Communications Technologies/technicians and Support Services">Communications Technologies/technicians and Support Services</option>
+          <option value="Architecture and Related Services">Architecture and Related Services</option>
+          <option value="Mathematics and Statistics">Mathematics and Statistics</option>
+          <option value="Library Science">Library Science</option>
+          <option value="Multi/interdisciplinary Studies">Multi/interdisciplinary Studies</option>
+          <option value="Philosophy and Religious Studies">Philosophy and Religious Studies</option>
+          <option value="Legal Professions and Studies">Legal Professions and Studies</option>
+          <option value="Social Sciences">Social Sciences</option>
+          <option value="Education">Education</option>
+          <option value="History">History</option>
+          <option value="Foreign Languages, Literatures, and Linguistics">Foreign Languages, Literatures, and Linguistics</option>
+          <option value="Area, Ethnic, Cultural, Gender, and Group Studies">Area, Ethnic, Cultural, Gender, and Group Studies</option>
+          <option value="Aviation">Aviation</option>
+          <option value="Computer and Information Sciences and Support Services">Computer and Information Sciences and Support Services</option>
+          <option value="Agriculture, Agriculture Operations, and Related Sciences">Agriculture, Agriculture Operations, and Related Sciences</option>
+          <option value="Engineering">Engineering</option>          
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="gpa">GPA</label>
+        <select id="gpa" name="gpa" required>
+          <option value="" disabled selected>Select your GPA</option>
+          <option value="2.6-3.5">2.6-3.5</option>
+          <option value="3.6-4.0">3.6-4.0</option>
+          <option value="0.0-1.5">0.0-1.5</option>
+          <option value="1.6-2.5">1.6-2.5</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="marital-status">Marital Status</label>
+        <select id="marital-status" name="marital-status" required>
+          <option value="" disabled selected>Select your Marital Status</option>
+          <option value="Divorced">Divorced</option>
+          <option value="Widowed">Widowed</option>
+          <option value="Single">Single</option>
+          <option value="Separated">Separated</option>
+          <option value="Married">Married</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="housing-condition">Housing Condition</label>
+        <select id="housing-condition" name="housing-condition" required>
+          <option value="" disabled selected>Select your Housing Condition</option>
+          <option value="Live with the family">Live with the family</option>
+          <option value="Live with a partner">Live with a partner</option>
+          <option value="Live in a shelter home">Live in a shelter home</option>
+          <option value="Live alone">Live alone</option>
+          <option value="Orphanage">Orphanage</option>
+          <option value="Homeless">Homeless</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="family-size">Family Size</label>
+        <select id="family-size" name="family-size" required>
+          <option value="" disabled selected>Select your Family Size</option>
+          <option value="6">6</option>
+          <option value="9">9</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="1">1</option>
+          <option value="Greater than 10">Greater than 10</option>
+          <option value="2">2</option>
+          <option value="0">0</option>
+          <option value="10">10</option>
+          <option value="7">7</option>
+          <option value="5">5</option>
+          <option value="8">8</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="parental-marital-status">Parental Marital Status</label>
+        <select id="parental-marital-status" name="parental-marital-status" required>
+          <option value="" disabled selected>Select your Parent's Marital Status</option>
+          <option value="Divorced">Divorced</option>
+          <option value="Single">Single</option>
+          <option value="Separated">Separated</option>
+          <option value="Not Applicable">Not Applicable</option>
+          <option value="Married">Married</option>
+          <option value="Widowed">Widowed</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="education-mother">Mother's Education Level</label>
+        <select id="education-mother" name="education-mother" required>
+          <option value="" disabled selected>Select your Mother's Education Level</option>
+          <option value="Masters degree">Masters degree</option>
+          <option value="Not Applicable">Not Applicable</option>
+          <option value="Associates degree">Associates degree</option>
+          <option value="Some college">Some college</option>
+          <option value="Doctoral degree or above">Doctoral degree or above</option>
+          <option value="Bachelors degree">Bachelors degree</option>
+          <option value="Primary Education">Primary Education</option>
+          <option value="Some upper secondary education">Some upper secondary education</option>
+          <option value="Some primary Education">Some primary Education</option>
+          <option value="Diploma">Diploma</option>
+          <option value="No education">No education</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="education-father">Fathers's Education Level</label>
+        <select id="education-father" name="education-father" required>
+          <option value="" disabled selected>Select your Fathers's Education Level</option>
+          <option value="Primary Education">Primary Education</option>
+          <option value="Some upper secondary education">Some upper secondary education</option>
+          <option value="Doctoral degree or above">Doctoral degree or above</option>
+          <option value="Bachelors degree">Bachelors degree</option>
+          <option value="Masters degree">Masters degree</option>
+          <option value="Some college">Some college</option>
+          <option value="Diploma">Diploma</option>
+          <option value="Some primary Education">Some primary Education</option>
+          <option value="Not Applicable">Not Applicable</option>
+          <option value="Associates degree">Associates degree</option>
+          <option value="No education">No education</option>
+        </select>
+      </div>
+      <button class="center-button" id="register-button" type="submit">
+        Register
+      </button>
+      <p id="success-message"></p>
+      <span id="registration-message"></span>
+    </form>
+  </body>
+</html>

@@ -1,4 +1,3 @@
-
 class BTreeNode:
     def __init__(self, leaf=False):
         self.leaf = leaf
@@ -29,13 +28,19 @@ class BTree:
             tpl[2] = dict
             x.keys[i] = tuple(tpl)
 
+
+    def pull_node_info(self, k):
+        K = self.search(hash(k))
+        if K != None:
+            (x, i) = K
+            print("The studentID has following: ", x.keys[i][2])
+            
+            
     def search(self, k, x=None):
         """Search for key 'k' at position 'x'.
         If 'x' is not specified, then search occurs from root.
-
         Returns 'None' if 'k' is not found.
         Otherwise returns a tuple of node and index at which the key was found.
-
         Arguments:
                 k -- key to be searched
                 x -- position to search from
@@ -57,7 +62,6 @@ class BTree:
 
     def insert(self, k):
         """Insert key 'k' in the B-Tree
-
         Arguments:
                 k -- key to be inserted
         """
@@ -75,7 +79,6 @@ class BTree:
 
     def insert_nonfull(self, x, k):
         """Insert key 'k' at position 'x' in a non-full node
-
         Arguments:
                 x -- Position of node
                 k -- key to be inserted
@@ -99,7 +102,6 @@ class BTree:
 
     def split_child(self, x, i):
         """Splits the child of node at 'x' from index 'i'
-
         Arguments:
                 x -- parent node of the node to be split
                 i -- index value of the child
@@ -117,7 +119,6 @@ class BTree:
 
     def delete(self, x, k):
         """Calls helper functions to delete key 'k' after searching from node 'x'
-
         Arguments:
                 x -- node, according to whose relative position, helper functions are called
                 k -- key to be deleted
@@ -162,12 +163,10 @@ class BTree:
 
     def delete_internal_node(self, x, k, i):
         """Deletes internal node
-
         Arguments:
                 x -- internal node in which key 'k' is present
                 k -- key to be deleted
                 i -- index position of key in the list
-
         """
         order = self.order
         # Deleting the key if the node is a leaf
@@ -192,7 +191,6 @@ class BTree:
 
     def delete_predecessor_node(self, x):
         """Returns and deletes predecessor of key 'k' which is to be deleted
-
         Arguments:
                 x -- node
         """
@@ -207,7 +205,6 @@ class BTree:
 
     def delete_successor_node(self, x):
         """Returns and deletes successor of key 'k' which is to be deleted
-
         Arguments:
                 x -- node
         """
@@ -221,7 +218,6 @@ class BTree:
 
     def delete_merge(self, x, i, j):
         """Merges the children of x and one of its own keys
-
         Arguments:
                 x -- parent node
                 i -- index of one of the children
@@ -264,7 +260,6 @@ class BTree:
 
     def delete_sibling(self, x, i, j):
         """Borrows a key from jth child of x and appends it to ith child of x
-
         Arguments:
                 x -- parent node
                 i -- index of one of the children
