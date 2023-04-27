@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from hash_table import HashTable
-import datetime
+from datetime import datetime
 import csv
 
 app = Flask(__name__)
@@ -291,7 +291,11 @@ def profile():
     email = student_information[2]
     school = student_information[12]
     year = student_information[13]
-    dob = student_information[10] #Must be in this format!!
+    date_string = student_information[10]
+    date_format = "%Y-%m-%d"
+    dt = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
+    dob = dt.strftime(date_format)  #Must be in this format!!
+
     if studentID == None:
         studentID = ID
     print(studentID)
@@ -349,7 +353,10 @@ def update_student_profile():
     email = student_information[2]
     school = student_information[12]
     year = student_information[13]
-    dob = student_information[10] #Must be in this format!!
+    date_string = student_information[10]
+    date_format = "%Y-%m-%d"
+    dt = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
+    dob = dt.strftime(date_format)  # Must be in this format!!
     ID = student_information[4]
     urgencyLevel = student_information[-1]
     if request.method == 'POST':
