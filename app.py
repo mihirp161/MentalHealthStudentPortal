@@ -94,8 +94,6 @@ def home():
         studentPassword  = request.form['password']
         userType = request.form['user-type']
 
-        #TO DO:
-        #If student, go to the B_Tree
         if userType == "student":
             
             studentIds = studentID
@@ -373,7 +371,7 @@ def register_OBO():
         print("\nTotal time to insert single datum: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")      
         
         #---------------------------
-        df_global.tail().("Data/fake_dataframe_testSubset.xlsx", index=False)
+        df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
         #---------------------------
         
         
@@ -382,13 +380,10 @@ def register_OBO():
 
 @app.route('/student-home', methods=['GET'])
 def student_home():
-    #TO DO GET FIRST AND LAST NAME from the Hash Table according to the student ID
     studentIds = session.get('studentID')
     
-     
     name =  B.get_keys_value(k = studentIds, v = 'studentName')
     
-
     return render_template('student-home.html', name=name, studentID=studentIds)
 
 @app.route('/employee-home', methods=['GET'])
@@ -453,7 +448,7 @@ def survey():
         
         global df_global
     
-        #To DO store the data in the B Tree and Hash Table
+        #store the data in the B Tree and Hash Table
         df_temp = pd.DataFrame({
                                 'studentIds': [B.get_keys_value(k = studentID, v = 'studentIds')],
                                 'studentVisitDateTime': [pd.Timestamp(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))],
@@ -611,7 +606,7 @@ def profile():
             df_global.loc[df_global['studentIds'] == studentID, 'studentAcademicLevel'] =  year
             
             #---------------------------
-            df_global.tail().("Data/fake_dataframe_testSubset.xlsx", index=False)
+            df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
             #---------------------------
             
             return render_template('profile.html', name=name, address=address, phone=phone,email=email, school=school, year=year, dob=dob, ID = ID)    
