@@ -99,15 +99,18 @@ The time complexity of each function is determined by the number of nodes that n
 The other functions all have similar time complexities, as they all need to traverse the root node and all of its children in order to find the desired node or key. The only exception is the delete() function, which can have a time complexity of O(n) if the key to be deleted is not found in the root node. In this case, the function will need to traverse all of the nodes in the tree in order to find the key.
 
 
-## 11 Some examples shown with **B-Tree**
+## 11. Some examples shown with **B-Tree**
 
-1. Student Registration
+1. *Student Registration*
     ![image](https://user-images.githubusercontent.com/47681434/235155679-d2ce08d0-448d-48fb-a0d6-76d5f4311fa5.png)
 
 
-2. Student Profile
+2. *Student Profile*
     ![image](https://user-images.githubusercontent.com/47681434/235157586-33fd1374-163b-4092-8520-01a52740a16c.png)
 
-3. Student Profile > Complete Survey
+3. *Student Profile > Complete Survey*
     ![image](https://user-images.githubusercontent.com/47681434/235160823-c4d51c62-80c3-4780-95ac-b8e3bc4ac449.png)
+
+4. *Student Profile > Update Profile Info*
+    ![image](https://user-images.githubusercontent.com/47681434/235162593-eebe847b-15fc-4c82-b259-9c4622472021.png)
 
