@@ -660,27 +660,27 @@ def profile():
     ID = studentID
     #Query the variable based on the ID to get the following info
     #name = search student ID get their name
-    name = B.get_keys_value(k = studentID, v = 'studentName')
-    address =  B.get_keys_value(k = studentID, v = 'studentAddress')
-    phone = B.get_keys_value(k = studentID, v = 'studentPhone')
-    email = B.get_keys_value(k = studentID, v = 'studentEmail')
-    school = B.get_keys_value(k = studentID, v = 'studentInstitutionName')
-    year = B.get_keys_value(k = studentID, v = 'studentAcademicLevel') 
-    dob = str(datetime.strptime(str(B.get_keys_value(k = studentID, v = 'studentDOB')), "%Y-%m-%d %H:%M:%S").date()) #"YYYY-dd-mm" Must be in this format!!
+    # name = B.get_keys_value(k = studentID, v = 'studentName')
+    # address =  B.get_keys_value(k = studentID, v = 'studentAddress')
+    # phone = B.get_keys_value(k = studentID, v = 'studentPhone')
+    # email = B.get_keys_value(k = studentID, v = 'studentEmail')
+    # school = B.get_keys_value(k = studentID, v = 'studentInstitutionName')
+    # year = B.get_keys_value(k = studentID, v = 'studentAcademicLevel')
+    # dob = str(datetime.strptime(str(B.get_keys_value(k = studentID, v = 'studentDOB')), "%Y-%m-%d %H:%M:%S").date()) #"YYYY-dd-mm" Must be in this format!!
 
     # ----- James' Code --------
     # Hash Table
     student_information = hash_table.get(studentID)
-    # name = student_information[0]
-    # address = student_information[3]
-    # phone = student_information[1]
-    # email = student_information[2]
-    # school = student_information[12]
-    # year = student_information[13]
-    # date_string = student_information[10]
-    # date_format = "%Y-%m-%d"
-    # dt = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
-    # dob = dt.strftime(date_format)  # Must be in this format!!
+    name = student_information[0]
+    address = student_information[3]
+    phone = student_information[1]
+    email = student_information[2]
+    school = student_information[12]
+    year = student_information[13]
+    date_string = student_information[10]
+    date_format = "%Y-%m-%d"
+    dt = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
+    dob = dt.strftime(date_format)  # Must be in this format!!
 
     if studentID == None:
         studentID = ID
