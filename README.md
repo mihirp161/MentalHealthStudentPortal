@@ -114,11 +114,16 @@ The other functions all have similar time complexities, as they all need to trav
 
 
 4. *Student Profile > Update Profile Info*
-    ![image](https://user-images.githubusercontent.com/47681434/235162593-eebe847b-15fc-4c82-b259-9c4622472021.png)
-    
     ![image](https://user-images.githubusercontent.com/47681434/235164353-29e7af6c-2db0-474c-9fa6-ac449e6a24fb.png)
 
 
 5. *Student Profile > Delete Profile*
     ![image](https://user-images.githubusercontent.com/47681434/235163599-b11bc1af-4115-4b7e-a14e-8c51124447cb.png)
 
+
+6. *Employee Login*
+    ![image](https://user-images.githubusercontent.com/47681434/235165467-aa54ce54-e14f-449d-8acc-28a174be7a3c.png)
+
+    
+    
+    
