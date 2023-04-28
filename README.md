@@ -108,9 +108,15 @@ The other functions all have similar time complexities, as they all need to trav
 2. *Student Profile*
     ![image](https://user-images.githubusercontent.com/47681434/235157586-33fd1374-163b-4092-8520-01a52740a16c.png)
 
+
 3. *Student Profile > Complete Survey*
     ![image](https://user-images.githubusercontent.com/47681434/235160823-c4d51c62-80c3-4780-95ac-b8e3bc4ac449.png)
 
+
 4. *Student Profile > Update Profile Info*
     ![image](https://user-images.githubusercontent.com/47681434/235162593-eebe847b-15fc-4c82-b259-9c4622472021.png)
+
+
+5. *Student Profile > Delete Profile*
+    ![image](https://user-images.githubusercontent.com/47681434/235163599-b11bc1af-4115-4b7e-a14e-8c51124447cb.png)
 
