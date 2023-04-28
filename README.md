@@ -101,4 +101,5 @@ The other functions all have similar time complexities, as they all need to trav
 
 ## 11 Some examples shown with B-Tree
 
-![image](https://user-images.githubusercontent.com/47681434/235072562-c97cb434-5de3-4109-b7f3-48a1f472a34a.png)
+![image](https://user-images.githubusercontent.com/47681434/235155419-47fa625b-3166-4e9e-ab12-300550202ab2.png)
+
