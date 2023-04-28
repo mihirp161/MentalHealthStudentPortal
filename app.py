@@ -9,9 +9,6 @@ import csv
 from datetime import datetime
 import project3a_BTree as b3
 
-pd.set_option('display.max_columns', None)
-pd.set_option('display.max_rows', None)
-
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set a secret key for session
 
@@ -25,71 +22,6 @@ with open('Data/fake_mentalHealth_data.csv') as csv_file:
     for idx, row in enumerate(csv_reader):
         hash_table.put(row[4], row)
         hash_table.ID = idx + 1
-
-print(f"ID starts with {hash_table.ID + 1}")
-
-#B-Tree need to store Student ID created by Hash Function
-
-# Reference: https://pythonexamples.org/python-list-of-dictionaries/
-
-#other global vars (counter for studentID)
-df_global_nrows = 0
-
-# Read and store the datasets in a variable to be used by the application below
-B = b3.BTree(500)
-
-df_global = pd.DataFrame(columns=["studentName",
-                            "studentPhone",
-                            "studentEmail",
-                            "studentAddress",
-                            "studentIds",
-                            "studentPassword",
-                            "studentVisitDateTime",
-                            "studentSexualOrientation",
-                            "studentAgeGroup",
-                            "studentRace",
-                            "studentDOB",
-                            "studentAreaOfInterest",
-                            "studentInstitutionName",
-                            "studentAcademicLevel",
-                            "studentGPA",
-                            "studentMaritalStatus",
-                            "studentHousingCondition",
-                            "studentFamilySize",
-                            "studentParentalMaritalStatus",
-                            "studentEducationOfMother",
-                            "studentEducationOfFather",
-                            "employeesId",
-                            "employeesName",
-                            "depressedMood",
-                            "depressedHopeless",
-                            "lossOfInterestAndEnjoyment",
-                            "lossOfPleasureAndEnjoyment",
-                            "lessenedEnergy",
-                            "lessenedActive",
-                            "reducedDecisionMaking",
-                            "reducedConcentration",
-                            "reducedSelfConfidence",
-                            "reducedSelfEsteem",
-                            "ideasOfGuilt",
-                            "ideasOfUnworthiness",
-                            "bleakViewsOfTheFuture",
-                            "pessimisticViewsOfTheFuture",
-                            "ideasOrActsOfSelfHarmOrSuicide",
-                            "disturbedSleep",
-                            "diminishedAppetite",
-                            "understandingParent",
-                            "missedClasses",
-                            "smokeDrink",
-                            "lostRelative",
-                            "relationshipTrouble",
-                            "plagrisedHw",
-                            "leftJob",
-                            "takingMedication",
-                            "diagnosedBefore",
-                            "urgencyLevel"])
-
-#-----------------------------------------------------------------------------------
 
 @app.route('/')
 def index():
@@ -180,15 +112,6 @@ def register():
         hash_table.ID += 1
         studentIds = "DD" + str(hash_table.ID)
 
-        #----Mihir's Code-----
-        global df_global_nrows
-        global df_global
-
-        # studentIds = "DD" + str(df_global_nrows +1)
-
-        df_global_nrows = df_global_nrows + 1
-
-
         #prep to include items in the btree & df
         # randomly assign employees
         temp_eid_list = ['E5', 'E6', 'E3', 'E2', 'E1', 'E4']
@@ -201,80 +124,6 @@ def register():
 
         employeeId = random.choice(temp_eid_list)
         employeeName = random.choice(temp_enam_list)
-
-        df_temp = pd.DataFrame({'studentName': [studentName],
-                                'studentPhone': [studentPhone],
-                                'studentEmail': [studentEmail],
-                                'studentAddress': [studentAddress],
-                                'studentIds': [studentIds],
-                                'studentPassword': [studentPassword],
-                                'studentInstitutionName': [studentInstitutionName],
-                                'studentAcademicLevel': [studentAcademicLevel],
-                                'studentSexualOrientation': [studentSexualOrientation],
-                                'studentAgeGroup': [studentAgeGroup],
-                                'studentRace': [studentRace],
-                                'studentAreaOfInterest': [studentAreaOfInterest],
-                                'studentGPA': [studentGPA],
-                                'studentMaritalStatus': [studentMaritalStatus],
-                                'studentHousingCondition': [studentHousingCondition],
-                                'studentFamilySize': [studentFamilySize],
-                                'studentParentalMaritalStatus': [studentParentalMaritalStatus],
-                                'studentEducationOfMother': [studentEducationOfMother],
-                                'studentEducationOfFather': [studentEducationOfFather],
-                                'studentVisitDateTime': [pd.Timestamp(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))],
-                                'studentDOB': [pd.Timestamp(datetime.strptime(studentDOB + " 00:00:00", "%Y-%m-%d %H:%M:%S"))],
-                                'employeesId': [employeeId],
-                                'employeesName': [employeeName],
-                                'depressedMood': [-1],
-                                'depressedHopeless': [-1],
-                                'lossOfInterestAndEnjoyment': [-1],
-                                'lossOfPleasureAndEnjoyment': [-1],
-                                'lessenedEnergy': [-1],
-                                'lessenedActive': [-1],
-                                'reducedDecisionMaking': [-1],
-                                'reducedConcentration': [-1],
-                                'reducedSelfConfidence': [-1],
-                                'reducedSelfEsteem': [-1],
-                                'ideasOfGuilt': [-1],
-                                'ideasOfUnworthiness': [-1],
-                                'bleakViewsOfTheFuture': [-1],
-                                'pessimisticViewsOfTheFuture': [-1],
-                                'ideasOrActsOfSelfHarmOrSuicide': [-1],
-                                'disturbedSleep': [-1],
-                                'diminishedAppetite': [-1],
-                                'understandingParent': [-1],
-                                'missedClasses': [-1],
-                                'smokeDrink': [-1],
-                                'lostRelative': [-1],
-                                'relationshipTrouble': [-1],
-                                'plagrisedHw': [-1],
-                                'leftJob': [-1],
-                                'takingMedication': [-1],
-                                'diagnosedBefore': [-1],
-                                'urgencyLevel': [0]
-                                      })
-
-        #update the dataframe
-        df_global = pd.concat([df_global, df_temp], axis=0)
-        df_global.reset_index(drop=True, inplace=True)
-
-
-        df_temp.set_index("studentIds", drop=False, inplace=True)
-        temp_dict = df_temp.to_dict(orient="index")
-
-        t0 = time.time()
-
-        for p_id, p_info in temp_dict.items():
-            B.insert((hash(p_id), p_id, p_info))
-
-        t1 = time.time()
-
-        print("\nTotal time to insert single datum: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
-
-        #---------------------------
-        df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
-        #---------------------------
-
 
         #----James Code--------
         student_list = [studentName, studentPhone, studentEmail, studentAddress, studentIds,
@@ -313,23 +162,11 @@ def register_OBO():
         studentFamilySize = request.form.get("family-size")
         studentParentalMaritalStatus = request.form.get("parental-marital-status")
         studentEducationOfMother = request.form.get("education-mother")
-        studentEducationOfFather = request.form.get("education-father")
-        
-
-        #store the data in the B Tree and Hash Table
-
-        # Create student obj using the variables above, insert it to your data structure created before @app.route('/')
-        # Return its ID to the variable below 
-        
-        global df_global_nrows
-        global df_global
+        studentEducationOfFather = request.form.get("education-father")  
         
         # studentIds = "DD" + str(df_global_nrows +1)
         hash_table.ID += 1
-        studentIds = "DD" + str(hash_table.ID)
-        
-        df_global_nrows = df_global_nrows + 1
-        
+        studentIds = "DD" + str(hash_table.ID)               
         
         #prep to include items in the btree & df
         # randomly assign employees
@@ -342,81 +179,8 @@ def register_OBO():
                         'Mccarty, Nicolette']
 
         employeeId = random.choice(temp_eid_list)
-        employeeName = random.choice(temp_enam_list)
+        employeeName = random.choice(temp_enam_list)        
         
-        df_temp = pd.DataFrame({'studentName': [studentName],
-                                'studentPhone': [studentPhone],
-                                'studentEmail': [studentEmail],
-                                'studentAddress': [studentAddress],
-                                'studentIds': [studentIds],
-                                'studentPassword': ['NA'],
-                                'studentInstitutionName': [studentInstitutionName],
-                                'studentAcademicLevel': [studentAcademicLevel],
-                                'studentSexualOrientation': [studentSexualOrientation],
-                                'studentAgeGroup': [studentAgeGroup],
-                                'studentRace': [studentRace],
-                                'studentAreaOfInterest': [studentAreaOfInterest],
-                                'studentGPA': [studentGPA],
-                                'studentMaritalStatus': [studentMaritalStatus],
-                                'studentHousingCondition': [studentHousingCondition],
-                                'studentFamilySize': [studentFamilySize],
-                                'studentParentalMaritalStatus': [studentParentalMaritalStatus],
-                                'studentEducationOfMother': [studentEducationOfMother],
-                                'studentEducationOfFather': [studentEducationOfFather],
-                                'studentVisitDateTime': [pd.Timestamp(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))],
-                                'studentDOB': [pd.Timestamp(datetime.strptime(studentDOB + " 00:00:00", "%Y-%m-%d %H:%M:%S"))],
-                                'employeesId': [employeeId],
-                                'employeesName': [employeeName],
-                                'depressedMood': [-1], 
-                                'depressedHopeless': [-1],
-                                'lossOfInterestAndEnjoyment': [-1],
-                                'lossOfPleasureAndEnjoyment': [-1],
-                                'lessenedEnergy': [-1],
-                                'lessenedActive': [-1],
-                                'reducedDecisionMaking': [-1],
-                                'reducedConcentration': [-1], 
-                                'reducedSelfConfidence': [-1], 
-                                'reducedSelfEsteem': [-1], 
-                                'ideasOfGuilt': [-1], 
-                                'ideasOfUnworthiness': [-1], 
-                                'bleakViewsOfTheFuture': [-1], 
-                                'pessimisticViewsOfTheFuture': [-1], 
-                                'ideasOrActsOfSelfHarmOrSuicide': [-1],
-                                'disturbedSleep': [-1], 
-                                'diminishedAppetite': [-1], 
-                                'understandingParent': [-1], 
-                                'missedClasses': [-1], 
-                                'smokeDrink': [-1], 
-                                'lostRelative': [-1],
-                                'relationshipTrouble': [-1], 
-                                'plagrisedHw': [-1], 
-                                'leftJob': [-1], 
-                                'takingMedication': [-1], 
-                                'diagnosedBefore': [-1], 
-                                'urgencyLevel': [0]
-                            })
-        
-        #update the dataframe
-        df_global = pd.concat([df_global, df_temp], axis=0)
-        df_global.reset_index(drop=True, inplace=True)
-                
-
-        df_temp.set_index("studentIds", drop=False, inplace=True)
-        temp_dict = df_temp.to_dict(orient="index")
-        
-        t0 = time.time()
-                 
-        for p_id, p_info in temp_dict.items():
-            B.insert((hash(p_id), p_id, p_info))
-            
-        t1 = time.time()
-         
-        print("\nTotal time to insert single datum: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")      
-        
-        #---------------------------
-        df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
-        #---------------------------
-
         #------James' Code-------------
         student_list = [studentName, studentPhone, studentEmail, studentAddress, studentIds,
                         "NA", datetime.now().strftime("%Y-%m-%d %H:%M:%S"), studentSexualOrientation,
@@ -428,7 +192,6 @@ def register_OBO():
         t0 = time.time()
         hash_table.put(studentIds, student_list)
         t1 = time.time()
-
         print("\nTotal time to insert single datum: {:.05f} seconds for Hash Map: ".format(t1 - t0), "\n\n")
 
 
@@ -440,15 +203,12 @@ def student_home():
     studentIds = session.get('studentID')
 
     student_information = hash_table.get(studentIds)
-    name = student_information[0]
-    
-    # name =  B.get_keys_value(k = studentIds, v = 'studentName')
+    name = student_information[0]    
     
     return render_template('student-home.html', name=name, studentID=studentIds)
 
 @app.route('/employee-home', methods=['GET'])
-def employee_home():    
-  
+def employee_home():
     #Get employee name from the B Tree according to the employeesId
     employeesId = session.get('employeeID')
     name = "First Last"
@@ -463,7 +223,7 @@ def employee_home():
     for eid, ename in temp_enam_list.items():
       if str(eid) == str(employeesId):
           name = ename
-          break;
+          break
         
     return render_template('employee-home.html', name=name)
 
@@ -504,73 +264,51 @@ def survey():
         leftJob = request.form.get("left-job")
         takingMedication = request.form.get("taking-medication")
         diagnosedBefore = request.form.get("diagnosed-before")
-    
-        
-        global df_global
-    
-        #store the data in the B Tree and Hash Table
-        df_temp = pd.DataFrame({
-                                'studentIds': [B.get_keys_value(k = studentID, v = 'studentIds')],
-                                'studentVisitDateTime': [pd.Timestamp(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))],
-                                'depressedMood': [to_bool(depressedMood)], 
-                                'depressedHopeless': [to_bool(depressedHopeless)],
-                                'lossOfInterestAndEnjoyment': [to_bool(lossOfInterestAndEnjoyment)],
-                                'lossOfPleasureAndEnjoyment': [to_bool(lossOfPleasureAndEnjoyment)],
-                                'lessenedEnergy': [to_bool(lessenedEnergy)],
-                                'lessenedActive': [to_bool(lessenedActive)],
-                                'reducedDecisionMaking': [to_bool(reducedDecisionMaking)],
-                                'reducedConcentration': [to_bool(reducedConcentration)], 
-                                'reducedSelfConfidence': [to_bool(reducedSelfConfidence)], 
-                                'reducedSelfEsteem': [to_bool(reducedSelfEsteem)], 
-                                'ideasOfGuilt': [to_bool(ideasOfGuilt)], 
-                                'ideasOfUnworthiness': [to_bool(ideasOfUnworthiness)], 
-                                'bleakViewsOfTheFuture': [to_bool(bleakViewsOfTheFuture)], 
-                                'pessimisticViewsOfTheFuture': [to_bool(pessimisticViewsOfTheFuture)], 
-                                'ideasOrActsOfSelfHarmOrSuicide': [to_bool(ideasOrActsOfSelfHarmOrSuicide)],
-                                'disturbedSleep': [to_bool(disturbedSleep)], 
-                                'diminishedAppetite': [to_bool(diminishedAppetite)], 
-                                'understandingParent': [to_bool(understandingParent)], 
-                                'missedClasses': [to_bool(missedClasses)], 
-                                'smokeDrink': [to_bool(smokeDrink)], 
-                                'lostRelative': [to_bool(lostRelative)],
-                                'relationshipTrouble': [to_bool(relationshipTrouble)], 
-                                'plagrisedHw': [to_bool(plagrisedHw)], 
-                                'leftJob': [to_bool(leftJob)], 
-                                'takingMedication': [to_bool(takingMedication)], 
-                                'diagnosedBefore': [to_bool(diagnosedBefore)], 
-                                'urgencyLevel': [-1.0]
-                                })
-        
-        #update the dataframe
-        df_temp = df_temp.astype(df_global[df_global.columns[df_global.columns.isin(df_temp.columns)]].dtypes)
-        
-        
-        df_temp.reset_index(drop=True, inplace=True)
-        df_global.reset_index(drop=True, inplace=True)
-        
-        df_temp.set_index("studentIds", drop=False, inplace=True)
-        df_global.set_index("studentIds", drop=False, inplace=True)
-        
-        df_global.update(df_temp)
-        df_global.set_index("studentIds", drop=False, inplace=True)
-        
-        
 
-        # Convert 'urgencyLevel' column to float
-        df_global['urgencyLevel'] = df_global['urgencyLevel'].astype(float)
-        
-        # Loop through rows in df.
-        for index, row in df_global.loc[:, 'depressedMood':'urgencyLevel'].iterrows():
-            ideasOrActsOfSelfHarmOrSuicide = row["ideasOrActsOfSelfHarmOrSuicide"]
-            
+        index = [0] # you can change the value in the list to set a different index value
+
+        df_survey = pd.DataFrame({
+        'depressedMood': to_bool(depressedMood),
+        'depressedHopeless': to_bool(depressedHopeless),
+        'lossOfInterestAndEnjoyment': to_bool(lossOfInterestAndEnjoyment),
+        'lossOfPleasureAndEnjoyment': to_bool(lossOfPleasureAndEnjoyment),
+        'lessenedEnergy': to_bool(lessenedEnergy),
+        'lessenedActive': to_bool(lessenedActive),
+        'reducedDecisionMaking': to_bool(reducedDecisionMaking),
+        'reducedConcentration': to_bool(reducedConcentration),
+        'reducedSelfConfidence': to_bool(reducedSelfConfidence),
+        'reducedSelfEsteem': to_bool(reducedSelfConfidence),
+        'ideasOfGuilt': to_bool(ideasOfGuilt),
+        'ideasOfUnworthiness': to_bool(ideasOfUnworthiness),
+        'bleakViewsOfTheFuture': to_bool(bleakViewsOfTheFuture),
+        'pessimisticViewsOfTheFuture': to_bool(pessimisticViewsOfTheFuture),
+        'ideasOrActsOfSelfHarmOrSuicide': to_bool(ideasOrActsOfSelfHarmOrSuicide),
+        'disturbedSleep': to_bool(disturbedSleep),
+        'diminishedAppetite': to_bool(diminishedAppetite),
+        'understandingParent': to_bool(understandingParent),
+        'missedClasses': to_bool(missedClasses),
+        'smokeDrink': to_bool(smokeDrink),
+        'lostRelative': to_bool(lostRelative),
+        'relationshipTrouble': to_bool(relationshipTrouble),
+        'plagrisedHw': to_bool(plagrisedHw),
+        'leftJob': to_bool(leftJob),
+        'takingMedication': to_bool(takingMedication),
+        'diagnosedBefore': to_bool(diagnosedBefore),
+        'urgencyLevel': 0.0}, index=[0])
+
+        # Loop through rows in df_temp.
+        #Suggestion, depending on the average range, we could assign qualitative values instead of quantitative: High (>=0.7), Medium (0.7 > x > 0.4, Average (0.4 > x >= 0.25, Low (<0.25)
+        # See line 20 for another suggestion
+        for index, row in df_survey.iterrows():
+            # Extract values for 'b', 'c', 'd', and 'e' in current row
+            ideasOrActsOfSelfHarmOrSuicide = row["ideasOrActsOfSelfHarmOrSuicide"]       
             if ideasOrActsOfSelfHarmOrSuicide >= 1:
-                df_global.at[index, 'urgencyLevel'] = 1.0
+                df_survey.at[index, 'urgencyLevel'] = 1.0
+                normalized_avg = 1.0
             else:
                 symptoms = row.tolist()[:-1]  # exclude 'urgencyLevel' column
-                
-                # Calculate average of symptom values in df_global
-                avg = sum(symptoms) / len(symptoms)
-                
+                # Calculate average of symptom values in df_temp
+                avg = sum(symptoms) / len(symptoms)        
                 # Check if denominator is not zero
                 if max(symptoms) - min(symptoms) > 0:
                     # Normalize average value to be between 0.00 and 1.00
@@ -578,41 +316,7 @@ def survey():
                 else:
                     # Set normalized average value to NaN if denominator is zero
                     normalized_avg = np.nan
-                
-                # Assign normalized average value to 'urgencyLevel' in df_global
-                df_global.at[index, 'urgencyLevel'] = normalized_avg
-
-                print(normalized_avg)
-        
-        # Replace NaN values with 0.00
-        df_global['urgencyLevel'].fillna(0.00, inplace=True)
-
-        # print("----B Tree------")
-        # print(df_temp)
-        #
-        # student_information = hash_table.get(studentID)
-        # print("----Hash Map-----")
-        # print(student_information[0])
-        
-        
-        # df_temp.loc[df_temp['studentIds'] == studentID, 'urgencyLevel'] =  df_global['urgencyLevel'].iloc[-1]
-
-
-         
-        t0 = time.time()
-         
-        # for (col_name, col_value) in df_temp.iteritems():
-        #     B.update_keys(studentID, col_name, col_value.values[0])
-        
-        t1 = time.time()
-         
-        print("\nTotal time to update data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
-        
-        #B.pull_node_info(studentID)
-        
-        #---------------------------
-        df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
-        #---------------------------
+                df_survey.at[index, 'urgencyLevel'] = normalized_avg
 
         #------ James' Code--------
         student_information = hash_table.get(studentID)
@@ -639,13 +343,10 @@ def survey():
 @app.route('/survey-submitted', methods=['GET', 'POST'])
 def survey_submitted():
     studentID = session.get('studentID')
+
+    student_information = hash_table.get(studentID)
+    name = student_information[0]
     #Return student name from ID
-    name = B.get_keys_value(k = studentID, v = 'studentName')
-
-    #---------James' Code--------
-    # student_information = hash_table.get(studentID)
-    # name = student_information[0]
-
     return render_template('survey-submitted.html', name = name, studentID=studentID)
 
 @app.route('/deleted', methods=['GET'])
@@ -658,16 +359,7 @@ def profile():
     studentID = session.get('studentID')
 
     ID = studentID
-    #Query the variable based on the ID to get the following info
-    #name = search student ID get their name
-    # name = B.get_keys_value(k = studentID, v = 'studentName')
-    # address =  B.get_keys_value(k = studentID, v = 'studentAddress')
-    # phone = B.get_keys_value(k = studentID, v = 'studentPhone')
-    # email = B.get_keys_value(k = studentID, v = 'studentEmail')
-    # school = B.get_keys_value(k = studentID, v = 'studentInstitutionName')
-    # year = B.get_keys_value(k = studentID, v = 'studentAcademicLevel')
-    # dob = str(datetime.strptime(str(B.get_keys_value(k = studentID, v = 'studentDOB')), "%Y-%m-%d %H:%M:%S").date()) #"YYYY-dd-mm" Must be in this format!!
-
+   
     # ----- James' Code --------
     # Hash Table
     student_information = hash_table.get(studentID)
@@ -679,7 +371,7 @@ def profile():
     year = student_information[13]
     date_string = student_information[10]
     date_format = "%Y-%m-%d"
-    dt = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
+    dt = datetime.strptime(date_string.split()[0], "%Y-%m-%d")
     dob = dt.strftime(date_format)  # Must be in this format!!
 
     if studentID == None:
@@ -694,28 +386,7 @@ def profile():
             #update value on dataset
             address = request.form.get("address")
             phone = request.form.get("phone")
-            year = request.form.get("year")
-            
-            
-            t0 = time.time()
-                         
-            # Update user profile
-            B.update_keys(studentID, 'studentAddress', address)
-            B.update_keys(studentID, 'studentPhone', phone)
-            B.update_keys(studentID, 'studentAcademicLevel', year)
-            
-            t1 = time.time()
-             
-            print("\nTotal time to update data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
-            
-             
-            df_global.loc[df_global['studentIds'] == studentID, 'studentAddress'] =  address
-            df_global.loc[df_global['studentIds'] == studentID, 'studentPhone'] =  phone
-            df_global.loc[df_global['studentIds'] == studentID, 'studentAcademicLevel'] =  year
-            
-            #---------------------------
-            df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
-            #---------------------------
+            year = request.form.get("year")            
 
             t0 = time.time()
             # Hash Table Update user profile
@@ -731,24 +402,7 @@ def profile():
         elif action == 'delete':
             
             # Delete user profile
-            if 'studentID' in session:
-                
-                
-                df_global.drop(df_global.loc[df_global['studentIds']==studentID].index, inplace=True)
-                
-                
-                t0 = time.time()
-                 
-                B.delete(B.root, hash(studentID))
-                
-                t1 = time.time()
-                 
-                print("\nTotal time to delete single datum: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
-                
-                #---------------------------
-                df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
-                #---------------------------                
-                
+            if 'studentID' in session:                         
                 session.pop('studentID', None)  # Clear studentID from session if it exists
 
                 # Hash Table Delete user profile
@@ -764,27 +418,14 @@ def profile():
     return render_template('profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID)
 
 @app.route('/update-student-profile', methods=['GET', 'POST'])
-def update_student_profile():
-
-    
+def update_student_profile():    
     studentID = session.get('studentID')
-
     # Hash Table
     student_information = hash_table.get(studentID)
 
     employeesId = session.get('employeeID')
-    print(studentID)
-    print(employeesId)
-    ID = studentID
-    # name = B.get_keys_value(k = studentID, v = 'studentName')
-    # address =  B.get_keys_value(k = studentID, v = 'studentAddress')
-    # phone = B.get_keys_value(k = studentID, v = 'studentPhone')
-    # email = B.get_keys_value(k = studentID, v = 'studentEmail')
-    # school = B.get_keys_value(k = studentID, v = 'studentInstitutionName')
-    # year = B.get_keys_value(k = studentID, v = 'studentAcademicLevel')
-    # dob = str(datetime.strptime(str(B.get_keys_value(k = studentID, v = 'studentDOB')), "%Y-%m-%d %H:%M:%S").date()) #"YYYY-dd-mm" Must be in this format!!
-    # urgencyLevel = B.get_keys_value(k = studentID, v = 'urgencyLevel')
 
+    ID = studentID
     #Jamse Code
     name = student_information[0]
     address = student_information[3]
@@ -794,18 +435,31 @@ def update_student_profile():
     year = student_information[13]
     date_string = student_information[10]
     date_format = "%Y-%m-%d"
-    dt = datetime.strptime(date_string, "%Y-%m-%d")
+    dt = datetime.strptime(date_string.split()[0], "%Y-%m-%d")
     dob = dt.strftime(date_format)  # Must be in this format!!
     ID = student_information[4]
     urgencyLevel = student_information[-1]
     
-    
-    tempUrgencyLevel = urgencyLevel
-    if type(tempUrgencyLevel) == str: urgencyLevel = "Survey not Submitted"
-    elif tempUrgencyLevel >=0.85: urgencyLevel = "Extreme"
-    elif tempUrgencyLevel >=0.7: urgencyLevel = "High"
-    elif tempUrgencyLevel >=0.3: urgencyLevel = "Medium"
-    else: urgencyLevel = "Low"
+    temp_enam_list = ['Kinder, Rachael',  
+                      'Schenally, Ashley',
+                      'Rivera, Yolotzi',  
+                      'Edwards, Cacia',   
+                      'Saiz, Antonio',   
+                      'Mccarty, Nicolette']
+    if urgencyLevel in temp_enam_list:
+            tempUrgencyLevel = "Survey not Submitted"   
+            urgencyLevel  = tempUrgencyLevel       
+    else:      
+        tempUrgencyLevel = float(urgencyLevel)
+        if type(tempUrgencyLevel) == str: 
+            urgencyLevel = "Survey not Submitted"
+        elif tempUrgencyLevel >=0.85: 
+            urgencyLevel = "Extreme"
+        elif tempUrgencyLevel >=0.7: 
+            urgencyLevel = "High"
+        elif tempUrgencyLevel >=0.3: 
+            urgencyLevel = "Medium"
+        else: urgencyLevel = "Low"
 
     student_information = hash_table.get(studentID)
 
@@ -813,72 +467,25 @@ def update_student_profile():
         action = request.form['action']
         if action == 'update':
           
-            # handle update action
-            print("update")
-            #name = search student ID get their name
-            #update value on dataset
-
             address = request.form.get("address")
             phone = request.form.get("phone")
             year = request.form.get("year")
-            
-            
-            t0 = time.time()
-             
-            # Update user profile
-            B.update_keys(studentID, 'studentAddress', address)
-            B.update_keys(studentID, 'studentPhone', phone)
-            B.update_keys(studentID, 'studentAcademicLevel', year)
-            
-            t1 = time.time()
-             
-            print("\nTotal time to update data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
-            
-            #B.pull_node_info(studentID)
-            
-            
-            df_global.loc[df_global['studentIds'] == studentID, 'studentAddress'] =  address
-            df_global.loc[df_global['studentIds'] == studentID, 'studentPhone'] =  phone
-            df_global.loc[df_global['studentIds'] == studentID, 'studentAcademicLevel'] =  year
-            
-            #---------------------------
-            df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
-            #---------------------------
 
             t0 = time.time()
-            # Update user profile
             # Hash Table
             student_information[3] = address
             student_information[1] = phone
             student_information[13] = year
             t1 = time.time()
-
             print("\nTotal time to update data: {:.05f} seconds for Hash Map: ".format(t1 - t0), "\n\n")
             
             return render_template('update-student-profile.html', name=name, address=address, phone=phone,email=email, school=school,year=year, dob=dob, ID = ID, urgencyLevel=urgencyLevel)    
 
-        elif action == 'delete':
-          
-            df_global.drop(df_global.loc[df_global['studentIds']==studentID].index, inplace=True)
-
-            
-            t0 = time.time()
-
-            B.delete(B.root, hash(studentID))
-            
-            t1 = time.time()
-             
-            print("\nTotal time to delete single data: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
-            
-            #---------------------------
-            df_global.to_excel("Data/fake_mentalHealth_data.xlsx", index=False)
-            #---------------------------
-
+        elif action == 'delete':     
             t0 = time.time()
             # Hash Table
             hash_table.remove(studentID)
             t1 = time.time()
-
             print("\nTotal time to delete single data: {:.05f} seconds for Hash Map: ".format(t1 - t0), "\n\n")
             
             return render_template('account-deleted-OBO.html')
@@ -892,8 +499,6 @@ def search_student():
     if request.method == 'POST':
         
         studentID = request.form['student-id']
-
-        # TO DO Search Student
         # Hash Table
         student_information = hash_table.get(studentID)
         if student_information is not None:
@@ -907,50 +512,15 @@ def search_student():
         else:
             error_message = 'Invalid StudentID: ' + studentID
             return render_template('search-student.html', error_message=error_message)
-
-        #earch Student    
-        #If found:
-        # if B.get_keys_value(k = studentID, v = 'studentIds') != None:
-        #     session['studentID'] = studentID
-        #     return redirect(url_for('update_student_profile', studentID=studentID))
-        # #If not found
-        # else:
-        #     error_message = 'Invalid StudentID: ' + studentID
-        #     return render_template('search-student.html', error_message=error_message)
         
     return render_template('search-student.html')
 
 @app.route('/backup', methods=['GET'])
 def backup():
     
-    # Python function to print "backup"
-    df_global("Data/fake_mentalHealth_data.xlsx", index=False)
-    
-    # You can also return a response to the client if needed
     return redirect(url_for('employee_home'))    
 
 
-if __name__ == '__main__':
-    
-    #----------- btree
-    df_global = pd.read_excel('Data/fake_mentalHealth_data.xlsx')
-    df_global.index = range(len(df_global.index))
-    
-    
-    df_global_nrows = int(''.join(filter(str.isdigit, df_global['studentIds'].iloc[-1]) ))   #initial id of the dataframe
-
-    
-    df_global.set_index("studentIds", drop=False, inplace=True)
-    dict = df_global.to_dict(orient="index")
+if __name__ == '__main__':   
        
-   
-    
-    t0 = time.time()
-    for p_id, p_info in dict.items():
-        B.insert((hash(p_id), p_id, p_info))
-    t1 = time.time()
-    
-    print("\nTotal time to insert data:: {:.05f} seconds for BTREE: ".format(t1-t0), "\n\n")
-    #-----------------
-    
     app.run()
