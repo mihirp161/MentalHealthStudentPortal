@@ -46,9 +46,11 @@ The advantage of using a list data structure for separate chaining is that it is
 None. 
 
 ## 8. Distribution of Responsibility and Roles:
-Carvalheira, Ricardo: Responsible for Front-end Development and Design
-Min, James: Responsible for Data Structure, and Research
-Patel, Mihir: Responsible for Data Structure, and Data Transformation and Visualization (note, visualization is a "stretch goal.") 
+    - Carvalheira, Ricardo: Responsible for Front-end Development and Design
+
+    - Min, James: Responsible for Data Structure, and Research
+
+    - Patel, Mihir: Responsible for Data Structure, Design, and Data Transformation and Visualization (note, visualization is a "stretch goal.") 
 
 ## 9. Any changes the group made after the proposal?
 We chose not to let the students view their past visits and assigned volunteer/staff using name, dob, address, phone, email, and ID to deliver a Minimum Viable Product. For simplicity’s sake, we search using their student ID only and retrieve the student's information only without past visits and volunteer/staff. Also, employees will only search using the student ID as these are unique to one student, and no bulk search will be allowed in this MVP. For deleting and modifying, we will no longer search using name, dob, address, phone, or email because when the student logs in, they already provided their ID. So, for a better user experience, we are not asking again for their personal information to perform any operations.
@@ -122,8 +124,8 @@ The other functions all have similar time complexities, as they all need to trav
 
 
 6. *Employee Login*
-    ![image](https://user-images.githubusercontent.com/47681434/235165467-aa54ce54-e14f-449d-8acc-28a174be7a3c.png)
+    ![image](https://user-images.githubusercontent.com/47681434/235166098-7505f12a-110d-4d20-88fe-0c18d60e5369.png)
 
-    
+7. *Employee > Register OBO Stude*    
     
     
