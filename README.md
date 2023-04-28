@@ -46,11 +46,11 @@ The advantage of using a list data structure for separate chaining is that it is
 None. 
 
 ## 8. Distribution of Responsibility and Roles:
-    - Carvalheira, Ricardo: Responsible for Front-end Development and Design
+   * Carvalheira, Ricardo: Responsible for Front-end Development and Design
 
-    - Min, James: Responsible for Data Structure, and Research
+   * Min, James: Responsible for Data Structure, and Research
 
-    - Patel, Mihir: Responsible for Data Structure, Design, and Data Transformation and Visualization (note, visualization is a "stretch goal.") 
+   * Patel, Mihir: Responsible for Data Structure, Design, and Data Transformation and Visualization (note, visualization is a "stretch goal.") 
 
 ## 9. Any changes the group made after the proposal?
 We chose not to let the students view their past visits and assigned volunteer/staff using name, dob, address, phone, email, and ID to deliver a Minimum Viable Product. For simplicity’s sake, we search using their student ID only and retrieve the student's information only without past visits and volunteer/staff. Also, employees will only search using the student ID as these are unique to one student, and no bulk search will be allowed in this MVP. For deleting and modifying, we will no longer search using name, dob, address, phone, or email because when the student logs in, they already provided their ID. So, for a better user experience, we are not asking again for their personal information to perform any operations.
@@ -72,36 +72,30 @@ Overall, the worst-case time complexity of the HashTable class is O(n), where n 
 
 In **B-Tree**, There are five major functions: get_keys_value, update_keys, pull_node_info, search, insert_nonfull, split_child, insert, delete_internal_node,delete_predecessor_node,delete_successor_node, delete_merge, delete_sibling and delete:
 
-    1. get_keys_value(): O(log n)
-    
-    2. update_keys(): O(log n)
-    
-    3. pull_node_info(): O(log n)
-    
-    4. search(): O(log n) - The `search` method is used to search for a key in the B-tree. The method also starts from the root node and recursively descends through the tree until it finds the appropriate node that contains the key. The time complexity of this operation is also O(log n) where n is the number of keys in the tree.
-    5. insert_nonfull(): O(log n)
+| B-tree operations         	| Big-O    	    | Other Comments                                                                                                                                                                                                                                                                                                                                                                                                                                             	|
+|---------------------------	|-------------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| get_keys_value()          	| O(log<sub>2</sub>n) 	    |                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+| update_keys()             	| O(log<sub>2</sub>n) 	    |                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+| pull_node_info()          	| O(log<sub>2</sub>n) 	    |                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+| search()                  	| O(log<sub>2</sub>n) 	    | The `search` method is used to search for a key in the B-tree. The method also starts from the root node and recursively descends through the tree until it finds the appropriate node that contains the key. The time complexity of this operation is also O(log n) where n is the number of keys in the tree.                                                                                                                                            	|
+| insert_nonfull()          	| O(log<sub>2</sub>n) 	    |                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+| split_child()             	| O(log<sub>2</sub>n) 	    |                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+| insert()                  	| O(log<sub>2</sub>n) 	    | The `insert` method is used to insert a new key into the B-tree. The method starts from the root node and recursively descends through the tree until it finds an appropriate leaf node for insertion. The time complexity of this operation is O(log n) where n is the number of keys in the tree. This is because the B-tree maintains a balanced tree structure, where each level of the tree has a fixed number of keys.                               	|
+| delete_internal_node()    	| O(log<sub>2</sub>n) 	    |                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+| delete_predecessor_node() 	| O(log<sub>2</sub>n) 	    |                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+| delete_successor_node()   	| O(log<sub>2</sub>n) 	    |                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+| delete_merge()            	| O(log<sub>2</sub>n) 	    |                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+| delete_sibling()          	| O(log<sub>2</sub>n) 	    |                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+| delete()                  	| O(log<sub>2</sub>n) 	    | The `delete` method is used to delete a key from the B-tree. The method starts from the root node and recursively descends through the tree until it finds the appropriate node that contains the key. Once the node is found, the method uses different techniques such as merging or borrowing keys from siblings to maintain the balance of the tree. The time complexity of this operation is also O(log n) where n is the number of keys in the tree. 	|
 
-    6. split_child(): O(log n)
-
-    7. insert(): O(log n)- The `insert` method is used to insert a new key into the B-tree. The method starts from the root node and recursively descends through the tree until it finds an appropriate leaf node for insertion. The time complexity of this operation is O(log n) where n is the number of keys in the tree. This is because the B-tree maintains a balanced tree structure, where each level of the tree has a fixed number of keys.
-
-    8. delete_internal_node(): O(log n)
-
-    9. delete_predecessor_node(): O(log n)
-
-    10. delete_successor_node(): O(log n)
-
-    11. delete_merge(): O(log n)
-
-    12. delete_sibling(): O(log n)
-
-    13. delete(): O(log n) - The `delete` method is used to delete a key from the B-tree. The method starts from the root node and recursively descends through the tree until it finds the appropriate node that contains the key. Once the node is found, the method uses different techniques such as merging or borrowing keys from siblings to maintain the balance of the tree. The time complexity of this operation is also O(log n) where n is the number of keys in the tree.
 
 The time complexity of each function is determined by the number of nodes that need to be traversed in order to find the desired node or key. For example, the __init__() function only needs to traverse one node, so its time complexity is O(1). The get_keys_value() function needs to traverse the root node and all of its children in order to find the desired key, so its time complexity is O(log n). The update_keys() function needs to traverse the root node and all of its children in order to find the desired key, and then it needs to update the value of the key, so its time complexity is also O(log n).
 The other functions all have similar time complexities, as they all need to traverse the root node and all of its children in order to find the desired node or key. The only exception is the delete() function, which can have a time complexity of O(n) if the key to be deleted is not found in the root node. In this case, the function will need to traverse all of the nodes in the tree in order to find the key.
 
 
 ## 11. Some examples shown with **B-Tree**
+
+    > ALL OPERATIONS USING B-TREE WERE O(LOG N) 
 
 1. *Student Registration*
     ![image](https://user-images.githubusercontent.com/47681434/235155679-d2ce08d0-448d-48fb-a0d6-76d5f4311fa5.png)
