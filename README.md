@@ -126,6 +126,12 @@ The other functions all have similar time complexities, as they all need to trav
 6. *Employee Login*
     ![image](https://user-images.githubusercontent.com/47681434/235166098-7505f12a-110d-4d20-88fe-0c18d60e5369.png)
 
-7. *Employee > Register OBO Stude*    
-    
+
+7. *Employee > Register OBO Student*    
+    ![image](https://user-images.githubusercontent.com/47681434/235167521-40e2c863-8444-48c1-bea2-2f69a70787cc.png)
+
+
+8.  *Employee > Dearch Student Profile*    
+
+
     
