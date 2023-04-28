@@ -12,16 +12,25 @@ This lack of resources can leave students without access to the care they need, 
 The system being designed allows students to register and take mental health assessments,
 after which they will be assigned to a mental health volunteer for further support. The system allows students to track their visits and compare past surveys, and volunteers to create records and provide direct assistance. The data structures are searchable and filterable, allowing for easy input and retrieval of patient data. However, the system's goal is not to provide diagnoses but rather connect students to
 necessary resources and check self-progress, as diagnoses require trained and empathetic professionals:
+
 1. Student Side:
-a. Search - Students will be able to view their information (including name, email, phone number, address, school name, school year, date of birth) using their name, dob, address, phone, email, or a uniquely assigned ID.
-b. Insert - When a new student accesses the website, they can create a record inside the portal if they have never provided information in the system.
-c. Delete - A student can delete their information when they log into the portal. This is done so that all the records attached to that student are removed.
-d. Modify - If a student wants to update their records in a while, they can do so by logging into the portal. They may also submit surveys on their current mental state that will update the student records on the urgency they need assistance.
+    - **Search** - Students will be able to view their information (including name, email, phone number, address, school name, school year, date of birth) using their name, dob, address, phone, email, or a uniquely assigned ID.
+  
+   - **Insert** - When a new student accesses the website, they can create a record inside the portal if they have never provided information in the system.
+
+   - **Delete** - A student can delete their information when they log into the portal. This is done so that all the records attached to that student are removed.
+
+   - **Modify** - If a student wants to update their records in a while, they can do so by logging into the portal. They may also submit surveys on their current mental state that will update the student records on the urgency they need assistance.
+
 2. Staff/Volunteer Side:
-a. Search - Employees will be able to view information using their unique staff ID. They can also fetch a particular student record by using the student UD.
-b. Insert - When a new student comes in, an employee can manually enter information and register on behalf of the student.
-c. Delete - An Employee can delete a student’s information when they provide a student's ID. An employee won’t be able to delete their records (by design and to reduce complexity).
-d. Modify - An Employee may also update students’ records by providing their uniquely assigned student ID.
+  
+   - **Search** - Employees will be able to view information using their unique staff ID. They can also fetch a particular student record by using the student UD.
+
+   - **Insert** - When a new student comes in, an employee can manually enter information and register on behalf of the student.
+
+   - **Delete** - An Employee can delete a student’s information when they provide a student's ID. An employee won’t be able to delete their records (by design and to reduce complexity).
+
+   - **Modify** - An Employee may also update students’ records by providing their uniquely assigned student ID.
  
 ## 4. Data
 We are using randomly generated data based on real dataset examples to make up for the 100,000+ unique tuples. The fields in our data set will include: {Student ID: String, Email: String, Name: String, Phone Number: Integer, Age Group: String, Race Ethnicity: String, Sex: String, DOB: Date, Address: String, Survey Submitted: Date-Time (automatic on insertion), Area of Interest: String, Institution Name: String, Academic Level: String, GPA: String, Marital Status: String, Housing Condition: String, Family Size: String, Mother’s Education: String, Quantity of Visits: Integer, Employee ID: String (won’t be viewable on student’s side), Employee Name: String, Happiness Score: Float, Are you feeling depressed? - Have you ever been diagnosed with depression or anxiety before?: Boolean 
