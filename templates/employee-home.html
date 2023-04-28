@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Home</title>
+  <link rel="stylesheet" href="static/css/employee-home.css">
+</head>
+<body>
+  <header>
+    <h1>Employee Home</h1>
+    <p>What would you like to do today?</p>
+  </header>
+  <main>
+    <div class="profile">
+      <img src="static/images/profile-icon.png" alt="Profile picture" class="profile-pic">
+      <p class="profile-name">{{ name }}</p>
+    </div>
+    <div class="options">
+      <a href="{{url_for('register_OBO')}}" class="option">Register OBO Student</a>
+      <a href="{{url_for('search_student')}}" class="option">Search Student Profile</a>
+      <a href="{{url_for('home')}}" class="option">Logout</a>
+    </div>
+  </main>
+
+</body>
+</html>
