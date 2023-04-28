@@ -101,6 +101,12 @@ The other functions all have similar time complexities, as they all need to trav
 
 ## 11 Some examples shown with B-Tree
 
-![image](https://user-images.githubusercontent.com/47681434/235155679-d2ce08d0-448d-48fb-a0d6-76d5f4311fa5.png)
+1. Student Registration
+    ![image](https://user-images.githubusercontent.com/47681434/235155679-d2ce08d0-448d-48fb-a0d6-76d5f4311fa5.png)
 
+
+2. Student Profile
+    ![image](https://user-images.githubusercontent.com/47681434/235157586-33fd1374-163b-4092-8520-01a52740a16c.png)
+
+3. Student Profile > Complete Survey
 
