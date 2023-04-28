@@ -123,7 +123,9 @@ The other functions all have similar time complexities, as they all need to trav
     ![image](https://user-images.githubusercontent.com/47681434/235167521-40e2c863-8444-48c1-bea2-2f69a70787cc.png)
 
 
-8.  *Employee > Dearch Student Profile*    
+8.  *Employee > Search Student Profile*    
+![image](https://user-images.githubusercontent.com/47681434/235185561-06964285-adc7-4aa4-a71f-fc7523de3d40.png)
 
 
+//END :)
     
