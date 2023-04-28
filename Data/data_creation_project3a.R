@@ -215,3 +215,4 @@ fake_dataframe$urgencyLevel <- range01(rowSums(fake_dataframe[ ,24:49])/26)
 openxlsx::write.xlsx(fake_dataframe, "fake_mentalHealth_data.xlsx")
 
 openxlsx::write.xlsx(fake_dataframe[1:50, ], "fake_dataframe_testSubset.xlsx")
+
