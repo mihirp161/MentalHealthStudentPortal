@@ -97,3 +97,8 @@ In **B-Tree**, There are five major functions: get_keys_value, update_keys, pull
 
 The time complexity of each function is determined by the number of nodes that need to be traversed in order to find the desired node or key. For example, the __init__() function only needs to traverse one node, so its time complexity is O(1). The get_keys_value() function needs to traverse the root node and all of its children in order to find the desired key, so its time complexity is O(log n). The update_keys() function needs to traverse the root node and all of its children in order to find the desired key, and then it needs to update the value of the key, so its time complexity is also O(log n).
 The other functions all have similar time complexities, as they all need to traverse the root node and all of its children in order to find the desired node or key. The only exception is the delete() function, which can have a time complexity of O(n) if the key to be deleted is not found in the root node. In this case, the function will need to traverse all of the nodes in the tree in order to find the key.
+
+
+## 11 Some examples shown with B-Tree
+
+![image](https://user-images.githubusercontent.com/47681434/235072562-c97cb434-5de3-4109-b7f3-48a1f472a34a.png)
