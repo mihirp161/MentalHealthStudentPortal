@@ -55,26 +55,45 @@ We chose not to let the students view their past visits and assigned volunteer/s
 
 ## 10. Big O worst case time complexity analysis of the major functions/features you implemented:” 
 In Hash Map, There are five major functions: _hash, get, exist, put, and remove:
-_hash: O(1) - this function computes the hash of the key using the selected hashing function, which is a constant time operation.
-get: O(k) - this function needs to traverse the built-in list in the slot corresponding to the hash of the key, where k is the length of this list. In the worst-case scenario, when all the keys in the table collide and end up in the same slot, the time complexity becomes O(n), where n is the total number of entries in the table.
-exist: O(k) - this function is similar to get, but it returns a boolean value indicating the key's existstance in the table. Therefore, the time complexity is the same as get.
-put: O(k) - this function needs to check if the key already exists in the table before inserting a new (key, value) pair. It requires traversing the built-in list in the corresponding slot, which has a time complexity of O(k), where k is the length of the list. In the worst-case scenario, when all the keys in the table collide and end up in the same slot, the time complexity becomes O(n), where n is the total number of entries in the table. When the table needs to be expanded, the time complexity becomes O(n), where n is the total number of entries in the table.
-remove: O(k) - this function needs to search for the (key, value) pair corresponding to the key in the linked list in the corresponding slot, which has a time complexity of O(k), where k is the length of the list. In the worst-case scenario, when all the keys in the table collide and end up in the same slot, the time complexity becomes O(n), where n is the total number of entries in the table. When the table needs to be shrunk, the time complexity becomes O(n), where n is the total number of entries in the table.
+
+    1. _hash: O(1) - this function computes the hash of the key using the selected hashing function, which is a constant time operation.
+    
+    2. get: O(k) - this function needs to traverse the built-in list in the slot corresponding to the hash of the key, where k is the length of this list. In the worst-case scenario, when all the keys in the table collide and end up in the same slot, the time complexity becomes O(n), where n is the total number of entries in the table.
+
+    3. exist: O(k) - this function is similar to get, but it returns a boolean value indicating the key's existstance in the table. Therefore, the time complexity is the same as get.
+
+    4. put: O(k) - this function needs to check if the key already exists in the table before inserting a new (key, value) pair. It requires traversing the built-in list in the corresponding slot, which has a time complexity of O(k), where k is the length of the list. In the worst-case scenario, when all the keys in the table collide and end up in the same slot, the time complexity becomes O(n), where n is the total number of entries in the table. When the table needs to be expanded, the time complexity becomes O(n), where n is the total number of entries in the table.
+    
+    5. remove: O(k) - this function needs to search for the (key, value) pair corresponding to the key in the linked list in the corresponding slot, which has a time complexity of O(k), where k is the length of the list. In the worst-case scenario, when all the keys in the table collide and end up in the same slot, the time complexity becomes O(n), where n is the total number of entries in the table. When the table needs to be shrunk, the time complexity becomes O(n), where n is the total number of entries in the table.
+
 Overall, the worst-case time complexity of the HashTable class is O(n), where n is the total number of entries in the table, in case all the keys collide and end up in the same slot. However, in practice, this is unlikely to happen, and the time complexity of the major functions is expected to be O(1) or O(k), where k is the number of entries in the slot corresponding to the hash of the key.
+
 In B-Tree, There are five major functions: get_keys_value, update_keys, pull_node_info, search, insert_nonfull, split_child, insert, delete_internal_node,delete_predecessor_node,delete_successor_node, delete_merge, delete_sibling and delete:
-get_keys_value(): O(log n)
-update_keys(): O(log n)
-pull_node_info(): O(log n)
-search(): O(log n) - The `search` method is used to search for a key in the B-tree. The method also starts from the root node and recursively descends through the tree until it finds the appropriate node that contains the key. The time complexity of this operation is also O(log n) where n is the number of keys in the tree.
+
+    1. get_keys_value(): O(log n)
+    
+    2. update_keys(): O(log n)
+    
+    3. pull_node_info(): O(log n)
+    
+    4. search(): O(log n) - The `search` method is used to search for a key in the B-tree. The method also starts from the root node and recursively descends through the tree until it finds the appropriate node that contains the key. The time complexity of this operation is also O(log n) where n is the number of keys in the tree.
 insert_nonfull(): O(log n)
-split_child(): O(log n)
-insert(): O(log n)- The `insert` method is used to insert a new key into the B-tree. The method starts from the root node and recursively descends through the tree until it finds an appropriate leaf node for insertion. The time complexity of this operation is O(log n) where n is the number of keys in the tree. This is because the B-tree maintains a balanced tree structure, where each level of the tree has a fixed number of keys.
-delete_internal_node(): O(log n)
-delete_predecessor_node(): O(log n)
-delete_successor_node(): O(log n)
-delete_merge(): O(log n)
-delete_sibling(): O(log n)
-delete(): O(log n) - The `delete` method is used to delete a key from the B-tree. The method starts from the root node and recursively descends through the tree until it finds the appropriate node that contains the key. Once the node is found, the method uses different techniques such as merging or borrowing keys from siblings to maintain the balance of the tree. The time complexity of this operation is also O(log n) where n is the number of keys in the tree.
+
+    5. split_child(): O(log n)
+
+    6. insert(): O(log n)- The `insert` method is used to insert a new key into the B-tree. The method starts from the root node and recursively descends through the tree until it finds an appropriate leaf node for insertion. The time complexity of this operation is O(log n) where n is the number of keys in the tree. This is because the B-tree maintains a balanced tree structure, where each level of the tree has a fixed number of keys.
+
+    7. delete_internal_node(): O(log n)
+
+    8. delete_predecessor_node(): O(log n)
+
+    9. delete_successor_node(): O(log n)
+
+    10. delete_merge(): O(log n)
+
+    11. delete_sibling(): O(log n)
+
+    12. delete(): O(log n) - The `delete` method is used to delete a key from the B-tree. The method starts from the root node and recursively descends through the tree until it finds the appropriate node that contains the key. Once the node is found, the method uses different techniques such as merging or borrowing keys from siblings to maintain the balance of the tree. The time complexity of this operation is also O(log n) where n is the number of keys in the tree.
 
 The time complexity of each function is determined by the number of nodes that need to be traversed in order to find the desired node or key. For example, the __init__() function only needs to traverse one node, so its time complexity is O(1). The get_keys_value() function needs to traverse the root node and all of its children in order to find the desired key, so its time complexity is O(log n). The update_keys() function needs to traverse the root node and all of its children in order to find the desired key, and then it needs to update the value of the key, so its time complexity is also O(log n).
 The other functions all have similar time complexities, as they all need to traverse the root node and all of its children in order to find the desired node or key. The only exception is the delete() function, which can have a time complexity of O(n) if the key to be deleted is not found in the root node. In this case, the function will need to traverse all of the nodes in the tree in order to find the key.
