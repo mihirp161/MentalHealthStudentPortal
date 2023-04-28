@@ -1,3 +1,10 @@
+#/**************************************************************/
+#
+# COP3530, Spring 2023; Data Generation Script */
+# Any questions?! Please message Mihir Patel. Thank you :)
+#
+#/***************************************************************/
+
 options(scipen = 9999)
 library(randomNames)
 library(openxlsx)
