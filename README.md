@@ -133,5 +133,5 @@ The other functions all have similar time complexities, as they all need to trav
 ### Accolades
 *Our project was nominated to the Top Projects list out of 450+ online student classes.*
 
-![image](https://user-images.githubusercontent.com/47681434/236592726-f127c00a-2b70-44d2-a345-54045d119474.png)
+![image](https://user-images.githubusercontent.com/47681434/236592750-0483cd12-b6a3-488f-8af2-a346eedbf1e1.png)
 
