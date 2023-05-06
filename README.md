@@ -128,4 +128,10 @@ The other functions all have similar time complexities, as they all need to trav
 
 
 //END :)
-    
+
+
+### Accolades
+*Our project was nominated to the Top Projects list out of 450+ online student classes.*
+
+![image](https://user-images.githubusercontent.com/47681434/236592196-4206f3a1-13fa-473b-bb7f-8a222694ccbd.png)
+
