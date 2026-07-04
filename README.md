@@ -135,3 +135,7 @@ The other functions all have similar time complexities, as they all need to trav
 
 ![image](https://user-images.githubusercontent.com/47681434/236592750-0483cd12-b6a3-488f-8af2-a346eedbf1e1.png)
 
+
+*Our project was citated in [A Data-Oriented Academic Burnout Monitoring and Assessment System Based on Student Academic Behavior](https://www.researchgate.net/publication/403691127_A_Data-Oriented_Academic_Burnout_Monitoring_and_Assessment_System_Based_on_Student_Academic_Behavior) (pdf in the repo).*
+<img width="1235" height="672" alt="ResearchGate" src="https://github.com/user-attachments/assets/145e2a8a-03b6-43fd-bfdb-daba4ea1a20f" />
+
